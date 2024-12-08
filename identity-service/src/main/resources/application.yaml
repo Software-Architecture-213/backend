@@ -1,0 +1,14 @@
+server:
+  servlet:
+    context-path: /identity
+  port: 8888
+
+spring:
+  application:
+    name: identity-service
+
+com:
+  example:
+    firebase:
+      web-api-key: AIzaSyDRHtZVri40q8l3K2kXyF3kkcFQGEn6SdA
+      private-key: private-key.json
