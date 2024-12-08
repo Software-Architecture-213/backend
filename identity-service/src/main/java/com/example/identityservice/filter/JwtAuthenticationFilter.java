@@ -18,6 +18,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -63,8 +68,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     final var userId = Optional.ofNullable(firebaseToken.getClaims().get(USER_ID_CLAIM))
                             .orElseThrow(() -> new IllegalStateException("User ID claim missing"));
 
-                    // Set the authentication in the SecurityContext
-                    final var authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
+                    Map<String, Object> claims = firebaseToken.getClaims();
+                    String role = (String) claims.get("role");
+                    List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+                    final var authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 } catch (FirebaseAuthException e){

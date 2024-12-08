@@ -1,7 +1,10 @@
 package com.example.identityservice.dto.request.auth;
 
+import com.example.identityservice.enums.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -22,6 +25,9 @@ public class UserCreationRequest {
     @NotBlank(message = "Display name must not be empty")
     @Size(max = 50, message = "Display name length must not exceed 50 characters")
     private String displayName;
+
+    @NotNull(message = "Role must not be null")
+    private Role role;
 
 //    @Pattern(
 //            regexp = "^\\+[1-9][0-9]{1,14}$",

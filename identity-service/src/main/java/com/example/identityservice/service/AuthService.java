@@ -14,6 +14,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -40,8 +43,11 @@ public class AuthService {
         }*/
 
         try {
-            firebaseAuth.createUser(request);
+            UserRecord userRecord = firebaseAuth.createUser(request);
             log.info("User successfully created: {}", userCreationRequest.getEmail());
+            Map<String, Object> claims = Map.of("role", userCreationRequest.getRole().name());
+            firebaseAuth.setCustomUserClaims(userRecord.getUid(), claims);
+            log.info("Custom claims set for user ID {}: {}", userRecord.getUid(), claims);
         } catch (final FirebaseAuthException exception) {
             if (exception.getMessage().contains("EMAIL_EXISTS")) {
                 throw new AccountAlreadyExistsException("Account with provided email already exists");
