@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get("", async (req, res, next) => {
     try {
-      const users = await GameService.getGames();
-      res.json(users);
+      const games = await GameService.getGames();
+      res.json(games);
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const connectMongoDB = require("./db/mongoose") 
 require("dotenv").config();
 
 const gameRoutes = require("./routes/gameRoutes");
@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Routes
-app.use("/v1", gameRoutes);
+app.use("/games", gameRoutes);
 
 app.use("/", (req, res) => {
   res.json({message :"Welcome to Game Service"})
@@ -25,9 +25,7 @@ app.use(errorHandler);
 // Connect to MongoDB and start the server
 const startServer = async () => {
   try {
-    // await mongoose.connect(process.env.MONGO_URI);
-
-    // console.log("Connected to MongoDB");
+    // await connectMongoDB();
 
     app.listen(process.env.PORT || 3000, () => {
       console.log(`Server running on port ${process.env.PORT || 3000}`);
