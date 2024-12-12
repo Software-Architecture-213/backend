@@ -78,8 +78,14 @@ public class AuthController {
     }
 
     @PublicEndpoint
-    @PostMapping("/validateToken")
-    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestBody String token) {
+    @GetMapping("/jwt-introspect")
+    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestParam(name = "token") String token) {
+        if (token == null || token.isEmpty()) {
+            return ResponseEntity.badRequest().body(ValidatedTokenResponse.builder()
+            .isValidated(false)
+            .message("Invalid token.")
+            .build());
+        }
         ValidatedTokenResponse response = authService.validateToken(token);
         return ResponseEntity.ok(response);
     }

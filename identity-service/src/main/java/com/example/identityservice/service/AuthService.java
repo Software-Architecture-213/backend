@@ -141,9 +141,10 @@ public class AuthService {
 
     public ValidatedTokenResponse validateToken(@NonNull final String token) {
         try {
-            FirebaseToken decodeToken = FirebaseAuth.getInstance().verifyIdToken(token);
-
+            FirebaseToken decodeToken = firebaseAuth.verifyIdToken(token);
             return ValidatedTokenResponse.builder()
+                    .userId(decodeToken.getClaims().get("user_id").toString())
+                    .role(decodeToken.getClaims().get("role").toString())
                     .isValidated(true)
                     .message("Token validation successful.")
                     .build();
