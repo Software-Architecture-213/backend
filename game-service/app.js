@@ -5,12 +5,14 @@ require("dotenv").config();
 
 const gameRoutes = require("./routes/gameRoutes");
 const errorHandler = require("./middlewares/errorHandler");
+const jwtVerifyHandler = require("./middlewares/jwtVerifyHandler")
 
 // Initialize the Express app
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(jwtVerifyHandler)
 
 // Routes
 app.use("/games", gameRoutes);
