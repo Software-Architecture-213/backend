@@ -6,12 +6,13 @@ import com.example.brandservice.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/collections")
+@RequestMapping("/collection")
 public class BrandController {
 
     private final BrandService brandService;
@@ -45,6 +46,8 @@ public class BrandController {
     }
 
     // Get all brands
+    @PreAuthorize("hasRole('BRAND')")
+//    @PreAuthorize("hasAnyRole('BRAND', 'ADMIN')")
     @GetMapping
     public ResponseEntity<List<BrandResponse>> getAllBrands() {
         List<BrandResponse> brandResponses = brandService.getAllBrands();

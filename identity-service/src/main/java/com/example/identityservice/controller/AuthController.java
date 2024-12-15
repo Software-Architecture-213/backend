@@ -3,7 +3,6 @@ package com.example.identityservice.controller;
 import com.example.identityservice.configuration.PublicEndpoint;
 import com.example.identityservice.dto.request.auth.UserCreationRequest;
 import com.example.identityservice.dto.request.auth.UserLoginRequest;
-import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.response.auth.*;
 import com.example.identityservice.service.AuthService;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -59,11 +57,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<HttpStatus> updateUserByEmail(@RequestParam("email") String email, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
-        authService.updateByEmail(email, userUpdateRequest);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
 
     @PublicEndpoint
     @PostMapping(value = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -88,16 +81,5 @@ public class AuthController {
         }
         ValidatedTokenResponse response = authService.validateToken(token);
         return ResponseEntity.ok(response);
-    }
-
-    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserInfoResponse> getUserInfo(
-            @RequestParam(value = "userId", required = false) String userId,
-            @RequestParam(value = "email", required = false) String email) {
-        if (userId == null && email == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        UserInfoResponse userInfo = authService.getUserInfo(userId, email);
-        return ResponseEntity.ok(userInfo);
     }
 }

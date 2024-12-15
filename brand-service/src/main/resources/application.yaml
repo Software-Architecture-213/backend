@@ -1,7 +1,9 @@
 server:
   servlet:
-    context-path: /brand
-  port: 8081
+    context-path: /brands
+  port: 8082
+service:
+  identity-url: ${IDENTITY_SERVICE_URL}
 
 spring:
   application:

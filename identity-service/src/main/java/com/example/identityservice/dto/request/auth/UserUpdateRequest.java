@@ -1,9 +1,13 @@
 package com.example.identityservice.dto.request.auth;
 
+import com.example.identityservice.enums.Gender;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -28,4 +32,9 @@ public class UserUpdateRequest {
 
     @Size(max = 255, message = "Photo URL length must not exceed 255 characters")
     private String photoUrl;
+
+    @NotNull(message = "Date of birth must not be null")
+    private Date dateOfBirth;
+    @NotNull(message = "Gender must be MALE or FEMALE")
+    private Gender gender;
 }

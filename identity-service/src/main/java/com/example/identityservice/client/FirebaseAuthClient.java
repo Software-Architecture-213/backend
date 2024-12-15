@@ -33,7 +33,7 @@ public class FirebaseAuthClient {
     private static final String REFRESH_TOKEN_URL = "https://securetoken.googleapis.com/v1/token";
     private final FirebaseAuth firebaseAuth;
 
-    public TokenSuccessResponse login(@NonNull final UserLoginRequest userLoginRequest) {
+    public TokenSuccessResponse login(@NonNull final UserLoginRequest userLoginRequest)  {
         final var requestBody = prepareRequestBody(userLoginRequest);
         final var response = sendSignInRequest(requestBody);
         return TokenSuccessResponse.builder()

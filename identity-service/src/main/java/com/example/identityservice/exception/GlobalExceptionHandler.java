@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
 
         String errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getDefaultMessage())
-                .reduce("", (acc, err) -> acc + err + "\n");
+                .reduce("", (acc, err) -> acc + err + "; ");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 ApiResponse.builder()

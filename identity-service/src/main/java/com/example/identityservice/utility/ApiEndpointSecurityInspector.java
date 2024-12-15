@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -16,19 +19,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PATCH;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ApiEndpointSecurityInspector {
 
     private final RequestMappingHandlerMapping requestHandlerMapping;
+    private static final Logger logger = LoggerFactory.getLogger(ApiEndpointSecurityInspector.class);
+
 
     @Getter
     private final List<String> publicGetEndpoints = new ArrayList<>();
     @Getter
     private final List<String> publicPostEndpoints = new ArrayList<>();
+    @Getter
+    private final List<String> publicPutEndpoints = new ArrayList<>();
+    @Getter
+    private final List<String> publicPatchEndpoints = new ArrayList<>();
+    @Getter
+    private final List<String> publicDeleteEndpoints = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -42,6 +57,12 @@ public class ApiEndpointSecurityInspector {
                     publicGetEndpoints.addAll(apiPaths);
                 } else if (httpMethod.equals(POST)) {
                     publicPostEndpoints.addAll(apiPaths);
+                } else if (httpMethod.equals(PUT)) {
+                    publicPutEndpoints.addAll(apiPaths);
+                } else if (httpMethod.equals(PATCH)) {
+                    publicPatchEndpoints.addAll(apiPaths);
+                } else if (httpMethod.equals(DELETE)) {
+                    publicDeleteEndpoints.addAll(apiPaths);
                 }
             }
         });
@@ -55,7 +76,7 @@ public class ApiEndpointSecurityInspector {
         return unsecuredApiPaths.stream().anyMatch(apiPath -> {
             boolean match = new AntPathMatcher().match(apiPath, request.getRequestURI());
             if (match) {
-                System.out.println("Match found for path: " + apiPath);
+                logger.info("Match found for path: {}", apiPath);
             }
             return match;
         });
@@ -68,6 +89,12 @@ public class ApiEndpointSecurityInspector {
             return publicGetEndpoints;
         } else if (httpMethod.equals(POST)) {
             return publicPostEndpoints;
+        } else if (httpMethod.equals(PUT)) {
+            return publicPutEndpoints;
+        } else if (httpMethod.equals(PATCH)) {
+            return publicPatchEndpoints;
+        } else if (httpMethod.equals(DELETE)) {
+            return publicDeleteEndpoints;
         }
         return Collections.emptyList();
     }

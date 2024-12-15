@@ -1,12 +1,12 @@
 package com.example.identityservice.dto.request.auth;
 
+import com.example.identityservice.enums.Gender;
 import com.example.identityservice.enums.Role;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -29,13 +29,16 @@ public class UserCreationRequest {
     @NotNull(message = "Role must not be null")
     private Role role;
 
-//    @Pattern(
-//            regexp = "^\\+[1-9][0-9]{1,14}$",
-//            message = "Phone number must be E.164 compliant (e.g., +84123456789)"
-//    )
-//    @Nullable
-//    private String phoneNumber;
-//
-//    @Size(max = 255, message = "Photo URL length must not exceed 255 characters")
-//    private String photoUrl;
+
+    @Pattern(
+            regexp = "^\\+[1-9][0-9]{1,11}$",
+            message = "Phone number must be E.164 compliant (e.g., +84123456789)"
+    )
+    @NotNull(message = "Phone number must not be null")
+    private String phoneNumber;
+
+    @NotNull(message = "Date of birth must not be null")
+    private Date dateOfBirth;
+    @NotNull(message = "Gender must be MALE or FEMALE")
+    private Gender gender;
 }

@@ -20,12 +20,9 @@ public enum ErrorCode {
     BAD_REQUEST(400, "Bad request", HttpStatus.BAD_REQUEST),
     INVALID_LOGIN_CREDENTIALS(401, "Invalid login credentials", HttpStatus.UNAUTHORIZED),
     TOKEN_VERIFICATION_FAILURE(401, "Authentication failure: Token missing, invalid or expired", HttpStatus.UNAUTHORIZED),
-    ACCOUNT_ALREADY_EXISTS(409, "Account already exists", HttpStatus.CONFLICT),
+    ACCOUNT_ALREADY_EXISTS(409, "Account with provided phone number or email already exists", HttpStatus.CONFLICT),
     ;
-    ErrorCode(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+
 
     private int code;
     private String message;

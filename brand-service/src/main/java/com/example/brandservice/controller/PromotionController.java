@@ -3,7 +3,7 @@ package com.example.brandservice.controller;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.service.PromotionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/promotions")
+@RequiredArgsConstructor
 public class PromotionController {
 
     private final PromotionService promotionService;
 
-    @Autowired
-    public PromotionController(PromotionService promotionService) {
-        this.promotionService = promotionService;
-    }
 
     // Create a new promotion
     @PostMapping
@@ -45,16 +42,10 @@ public class PromotionController {
     }
 
     // Get all promotions for a specific brand
-    @GetMapping("/brand/{brandId}")
-    public ResponseEntity<List<PromotionResponse>> getPromotionsByBrandId(@PathVariable String brandId) {
+    @GetMapping("")
+    public ResponseEntity<List<PromotionResponse>> getPromotionsByBrandId(@RequestParam("brandId") String brandId) {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandId);
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
 
-    // Get all promotions
-    @GetMapping
-    public ResponseEntity<List<PromotionResponse>> getAllPromotions() {
-        List<PromotionResponse> promotions = promotionService.getAllPromotions();
-        return new ResponseEntity<>(promotions, HttpStatus.OK);
-    }
 }

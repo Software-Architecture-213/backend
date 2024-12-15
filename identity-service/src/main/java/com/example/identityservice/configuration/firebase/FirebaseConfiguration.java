@@ -39,7 +39,6 @@ public class FirebaseConfiguration {
     public Firestore firestore(final FirebaseApp firebaseApp) {
         return FirestoreClient.getFirestore(firebaseApp);
     }
-
     @Bean
     public FirebaseAuth firebaseAuth(final FirebaseApp firebaseApp) {
         return FirebaseAuth.getInstance(firebaseApp);

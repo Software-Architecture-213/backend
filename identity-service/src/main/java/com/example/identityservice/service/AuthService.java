@@ -6,15 +6,21 @@ import com.example.identityservice.dto.request.auth.UserLoginRequest;
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.response.auth.*;
 import com.example.identityservice.exception.AccountAlreadyExistsException;
+import com.example.identityservice.exception.AppException;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +32,7 @@ public class AuthService {
 
     private final FirebaseAuth firebaseAuth;
     private final FirebaseAuthClient firebaseAuthClient;
+    private final Firestore firestore;
 
     @SneakyThrows
     public void create(@NonNull final UserCreationRequest userCreationRequest) {
@@ -34,13 +41,11 @@ public class AuthService {
                 .setEmail(userCreationRequest.getEmail())
                 .setPassword(userCreationRequest.getPassword())
                 .setEmailVerified(Boolean.TRUE)
-                .setDisplayName(userCreationRequest.getDisplayName());
-                //.setPhoneNumber(userCreationRequest.getPhoneNumber());
-                //.setPhotoUrl(userCreationRequest.getPhotoUrl());
-
-        /*if (!Strings.isNullOrEmpty(userCreationRequest.getPhotoUrl())) {
-            request.setPhotoUrl(userCreationRequest.getPhotoUrl());
-        }*/
+                .setDisplayName(userCreationRequest.getDisplayName())
+                .setPhoneNumber(userCreationRequest.getPhoneNumber())
+//                .setDisabled(true) /* set true for OTP or account activation for admin implementation later */
+                .setDisabled(false);
+        /* photoUrl will be set when update profile */
 
         try {
             UserRecord userRecord = firebaseAuth.createUser(request);
@@ -48,6 +53,11 @@ public class AuthService {
             Map<String, Object> claims = Map.of("role", userCreationRequest.getRole().name());
             firebaseAuth.setCustomUserClaims(userRecord.getUid(), claims);
             log.info("Custom claims set for user ID {}: {}", userRecord.getUid(), claims);
+            DocumentReference userDoc = firestore.collection("users").document(userRecord.getUid());
+            Map<String, Object> additionalFields = new HashMap<>();
+            additionalFields.put("dateOfBirth", userCreationRequest.getDateOfBirth());
+            additionalFields.put("gender", userCreationRequest.getGender());
+            userDoc.set(additionalFields).get();
         } catch (final FirebaseAuthException exception) {
             if (exception.getMessage().contains("EMAIL_EXISTS")) {
                 throw new AccountAlreadyExistsException("Account with provided email already exists");
@@ -60,7 +70,8 @@ public class AuthService {
     }
 
     public TokenSuccessResponse login(@NonNull final UserLoginRequest userLoginRequest) {
-        return firebaseAuthClient.login(userLoginRequest);
+            return firebaseAuthClient.login(userLoginRequest);
+
     }
 
     public FirebaseGoogleSignInResponse loginWithGoogle(@NonNull final String idToken) throws FirebaseAuthException {
@@ -74,68 +85,6 @@ public class AuthService {
 
     public RefreshTokenSuccessResponse refreshAccessToken(@NonNull final String refreshToken) {
         return firebaseAuthClient.refreshAccessToken(refreshToken);
-    }
-
-    public void updateByEmail(@NonNull String email, @NonNull UserUpdateRequest userUpdateRequest) {
-        try {
-            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
-
-            update(userRecord.getUid(), userUpdateRequest);
-        } catch (FirebaseAuthException e) {
-            throw new RuntimeException("Error finding user by email: " + e.getMessage(), e);
-        }
-    }
-
-    public void update(@NonNull String uid, @NonNull UserUpdateRequest userUpdateRequest) {
-        final var request = new UserRecord.UpdateRequest(uid);
-
-        if (userUpdateRequest.getEmail() != null) {
-            request.setEmail(userUpdateRequest.getEmail());
-        }
-        if (userUpdateRequest.getDisplayName() != null) {
-            request.setDisplayName(userUpdateRequest.getDisplayName());
-        }
-        /*if (userUpdateRequest.getPhoneNumber() != null) {
-            request.setPhoneNumber(userUpdateRequest.getPhoneNumber());
-        }
-        if (userUpdateRequest.getPhotoUrl() != null
-                && !Strings.isNullOrEmpty(userUpdateRequest.getPhotoUrl())) {
-            request.setPhotoUrl(userUpdateRequest.getPhotoUrl());
-        }*/
-        if (userUpdateRequest.getPassword() != null) {
-            request.setPassword(userUpdateRequest.getPassword());
-        }
-
-        try {
-            firebaseAuth.updateUser(request);
-        } catch (final Exception exception) {
-            throw new RuntimeException("Error updating user: " + exception.getMessage(), exception);
-        }
-    }
-
-    public UserInfoResponse getUserInfo(String userId, String email) {
-        try {
-            UserRecord userRecord;
-            if (userId != null) {
-                userRecord = firebaseAuth.getUser(userId);
-            } else if (email != null) {
-                userRecord = firebaseAuth.getUserByEmail(email);
-            } else {
-                throw new IllegalArgumentException("Either userId or email must be provided.");
-            }
-
-            return UserInfoResponse.builder()
-                    .uid(userRecord.getUid())
-                    .email(userRecord.getEmail())
-                    .displayName(userRecord.getDisplayName())
-                    .emailVerified(userRecord.isEmailVerified())
-                    .phoneNumber(userRecord.getPhoneNumber())
-                    .photoUrl(userRecord.getPhotoUrl())
-                    .build();
-
-        } catch (FirebaseAuthException e) {
-            throw new RuntimeException("Error retrieving user information: " + e.getMessage(), e);
-        }
     }
 
 

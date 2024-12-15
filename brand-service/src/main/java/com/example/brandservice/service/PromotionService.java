@@ -96,19 +96,14 @@ public class PromotionService {
 
     // Fetch all promotions for a specific brand
     public List<PromotionResponse> getPromotionsByBrandId(String brandId) {
-        List<Promotion> promotions = promotionRepository.findByBrandId(brandId);
-
+        List<Promotion> promotions;
+         if (brandId != null && !brandId.isBlank()) {
+            promotions = promotionRepository.findByBrandId(brandId);
+         }
+         promotions = promotionRepository.findAll();
         // Manually map List<Promotion> to List<PromotionResponse>
         return promotions.stream()
                 .map(promotionMapper::promotionToPromotionResponse)
-                .collect(Collectors.toList());
-    }
-
-    // Fetch all promotions
-    public List<PromotionResponse> getAllPromotions() {
-        List<Promotion> promotions = promotionRepository.findAll();
-        return promotions.stream()
-                .map(promotionMapper::promotionToPromotionResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
