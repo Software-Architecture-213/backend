@@ -2,10 +2,8 @@ package com.example.identityservice.dto.response.auth;
 
 import com.example.identityservice.enums.Gender;
 import com.example.identityservice.enums.Role;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +20,7 @@ public class UserInfoResponse {
     private String phoneNumber;
     private String photoUrl;
     private Role role;
-    private boolean disabled;
+    private boolean isDisabled;
 
     /* Override to format date */
     public String getDateOfBirth() {

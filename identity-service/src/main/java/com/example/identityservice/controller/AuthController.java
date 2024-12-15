@@ -5,6 +5,7 @@ import com.example.identityservice.dto.request.auth.UserCreationRequest;
 import com.example.identityservice.dto.request.auth.UserLoginRequest;
 import com.example.identityservice.dto.response.auth.*;
 import com.example.identityservice.service.AuthService;
+import com.example.identityservice.service.OTPService;
 import com.google.firebase.auth.FirebaseAuthException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final OTPService otpService;
 
     @PublicEndpoint
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -81,5 +83,19 @@ public class AuthController {
         }
         ValidatedTokenResponse response = authService.validateToken(token);
         return ResponseEntity.ok(response);
+    }
+
+    @PublicEndpoint
+    @PostMapping("/otp/generate")
+    public ResponseEntity<String> generateOTP(@RequestParam String email) {
+        otpService.generateAndSendOTP(email);
+        return ResponseEntity.ok("OTP sent to " + email);
+    }
+
+    @PublicEndpoint
+    @PostMapping("/otp/validate")
+    public ResponseEntity<String> validateOTP(@RequestParam String email, @RequestParam String otp) {
+        boolean isValid = otpService.validateOTP(email, otp);
+        return isValid ? ResponseEntity.ok("OTP is valid!") : ResponseEntity.badRequest().body("Invalid or expired OTP.");
     }
 }
