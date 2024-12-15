@@ -6,9 +6,21 @@ server:
 spring:
   application:
     name: identity-service
-
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: ${EMAIl.USERNAME}
+    password: ${EMAIl.PASSWORD}
+    properties:
+      mail:
+        stmp:
+          auth: true
+          starttls:
+            enable:true
 com:
   example:
     firebase:
       web-api-key: AIzaSyDRHtZVri40q8l3K2kXyF3kkcFQGEn6SdA
       private-key: private-key.json
+
+
