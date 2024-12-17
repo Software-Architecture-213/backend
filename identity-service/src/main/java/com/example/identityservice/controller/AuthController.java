@@ -61,9 +61,9 @@ public class AuthController {
 
 
     @PublicEndpoint
-    @PostMapping(value = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/refresh-token", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TokenSuccessResponse> refreshToken(@RequestBody Map<String, String> body) {
-        String refreshToken = body.get("refreshToken");
+        String refreshToken = body.get("token");
         RefreshTokenSuccessResponse refreshTokenResponse = authService.refreshAccessToken(refreshToken);
         TokenSuccessResponse response = TokenSuccessResponse.builder()
                 .accessToken(refreshTokenResponse.getId_token())
@@ -73,8 +73,9 @@ public class AuthController {
     }
 
     @PublicEndpoint
-    @GetMapping("/jwt-introspect")
-    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestParam(name = "token") String token) {
+    @PostMapping("/jwt-introspect")
+    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
         if (token == null || token.isEmpty()) {
             return ResponseEntity.badRequest().body(ValidatedTokenResponse.builder()
             .isValidated(false)

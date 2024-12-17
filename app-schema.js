@@ -11,9 +11,9 @@ GameSchema({
     guideline: { type: String },
     allowItemExchange: { type: Boolean, default: false }, // Cho phép trao đổi vật phẩm hay không  
     createdAt: { type: Date, default: Date.now }, // Ngày tạo trò chơi  
-  });
+});
   
-  ItemSchema({
+ItemSchema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Item ID  
     name: { type: String, required: true }, // Tên vật phẩm  
     description: { type: String }, // Mô tả vật phẩm  
@@ -25,9 +25,9 @@ GameSchema({
     }, // Hiếm có của vật phẩm  
     tradable: { type: Boolean, default: true }, // Có thể trao đổi hay không  
     gameId: { type: mongoose.Schema.Types.ObjectId, ref: 'Game' }, // Liên kết tới trò chơi  
-  });
+});
   
-  PromotionSchema({
+PromotionSchema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Promotion ID  
     name: { type: String, required: true }, // Tên khuyến mãi  
     description: { type: String }, // Mô tả khuyến mãi  
@@ -42,8 +42,8 @@ GameSchema({
     }, // Trạng thái khuyến mãi  
     vouchers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Voucher' }], // Danh sách voucher trong khuyến mãi
     games: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Game' }], // Danh sách trò chơi tham gia khuyến mãi  
-  });
-  VoucherSchema ({
+});
+VoucherSchema ({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Voucher ID  
     code: { type: String, required: true, unique: true }, // Mã voucher duy nhất  
     qrCode: { type: String, required: true }, // QR Code  
@@ -57,7 +57,5 @@ GameSchema({
       default: 'active' 
     }, // Trạng thái voucher  
     promotionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Promotion' }, // Liên kết tới Promotion
-  });
-  
-  
+});
   

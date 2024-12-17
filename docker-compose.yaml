@@ -7,7 +7,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
   db:
-    image: postgres:latest
+    image: postgres:latest # for brand-service
     ports:
       - "5435:5432"
     container_name: database
@@ -15,3 +15,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: database
+  
