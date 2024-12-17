@@ -124,8 +124,7 @@ public class FirebaseAuthClient {
                 .setEmailVerified(Boolean.TRUE)
                 .setDisplayName(userCreationRequest.getDisplayName())
                 .setPhoneNumber(userCreationRequest.getPhoneNumber())
-//                .setDisabled(true) /* set true for OTP or account activation for admin implementation later */
-                .setDisabled(false);
+               .setDisabled(true); /* set true for OTP or account activation for admin implementation later */
         /* photoUrl will be set when update profile */
 
         try {

@@ -7,16 +7,17 @@ spring:
   application:
     name: identity-service
   mail:
-    host: smtp.example.com
+    host: smtp.gmail.com
     port: 587
-    username: ${EMAIl.USERNAME}
-    password: ${EMAIl.PASSWORD}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
     properties:
       mail:
-        stmp:
+        smtp:  # Correct the spelling here
           auth: true
           starttls:
-            enable:true
+            enable: true  # Add a space after the colon
+
 com:
   example:
     firebase:
