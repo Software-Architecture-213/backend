@@ -21,8 +21,8 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class OTPService {
-    private JavaMailSender mailSender;
-    private FirebaseUserClient firebaseUserClient;
+    private final JavaMailSender mailSender;
+    private final FirebaseUserClient firebaseUserClient;
     private final Map<String, OTPData> otpStorage = new HashMap<>();
 
     public String generateAndSendOTP(String email) {
