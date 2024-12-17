@@ -14,10 +14,15 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String name;
+    String email;
+    String password;
     String field;
     String address;
-    Double gpsLat;
-    Double gpsLong;
+
+    @Embedded
+    GPS gps;
+
     // active / inactive
     String status;
 }
+
