@@ -37,7 +37,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"phuonggteyy@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"displayName\": \"Tey\",\r\n  \"role\": \"USER\",\r\n  \"phoneNumber\": \"+84123456785\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"gender\": \"FEMALE\"\r\n}\r\n",
+							"raw": "{\r\n  \"email\": \"asdasd@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"displayName\": \"User 1\",\r\n  \"role\": \"USER\",\r\n  \"phoneNumber\": \"+84123456785\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"gender\": \"FEMALE\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -55,7 +55,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"phuonggteyy@gmail.com\",\r\n    \"password\" : \"123456\"\r\n }",
+							"raw": "{\r\n    \"email\" : \"asdasd@gmail.com\",\r\n    \"password\" : \"123456\"\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -166,7 +166,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"truonganhtuan3092@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"asdasd@gmail.com\",\r\n    \"otpCode\" : \"379827\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
