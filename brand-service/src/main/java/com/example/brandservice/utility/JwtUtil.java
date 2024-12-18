@@ -47,7 +47,7 @@ public class JwtUtil {
             return Jwts.builder()
                     .setSubject(subject)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 30)) // Refresh token expires in 30 days
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // Refresh token expires in 30 days
                     .signWith(secretKey, SignatureAlgorithm.HS256) // Use the secure 256-bit key for signing
                     .compact();
         } catch (Exception e) {
@@ -70,4 +70,17 @@ public class JwtUtil {
             return null;
         }
     }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true; // Token is valid
+        } catch (Exception e) {
+            return false; // Token is invalid or expired
+        }
+    }
+
 }
