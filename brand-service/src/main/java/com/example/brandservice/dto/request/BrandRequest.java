@@ -1,15 +1,17 @@
 package com.example.brandservice.dto.request;
 
+import com.example.brandservice.model.GPS;
 import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BrandRequest {
+    private String email;
+    private String password;
     private String name;
     private String field;
     private String address;
-    private Double gpsLat;
-    private Double gpsLong;
+    private GPS gps;
     private String status;
 }

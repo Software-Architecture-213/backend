@@ -5,6 +5,9 @@ server:
 service:
   identity-url: ${IDENTITY_SERVICE_URL}
 
+jwt:
+  secret: ${PRIVATE}
+
 spring:
   application:
     name: brand-service

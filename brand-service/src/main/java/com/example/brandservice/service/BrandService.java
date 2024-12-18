@@ -16,7 +16,6 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
-
     @Autowired
     public BrandService(BrandRepository brandRepository, BrandMapper brandMapper) {
         this.brandRepository = brandRepository;
@@ -41,8 +40,7 @@ public class BrandService {
         brand.setName(brandRequest.getName());
         brand.setField(brandRequest.getField());
         brand.setAddress(brandRequest.getAddress());
-        brand.setGpsLat(brandRequest.getGpsLat());
-        brand.setGpsLong(brandRequest.getGpsLong());
+        brand.setGps(brandRequest.getGps());
         brand.setStatus(brandRequest.getStatus());
         Brand updatedBrand = brandRepository.save(brand);
         return brandMapper.brandToBrandResponse(updatedBrand);

@@ -16,10 +16,11 @@ public interface BrandMapper {
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "email", source = "email"),
+            @Mapping(target = "password", source = "password"),
             @Mapping(target = "field", source = "field"),
             @Mapping(target = "address", source = "address"),
-            @Mapping(target = "gpsLat", source = "gpsLat"),
-            @Mapping(target = "gpsLong", source = "gpsLong"),
+            @Mapping(target = "gps", source = "gps"),
             @Mapping(target = "status", source = "status")
     })
     Brand brandRequestToBrand(BrandRequest brandRequest);
@@ -28,10 +29,10 @@ public interface BrandMapper {
     @Mappings({
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(target = "email", source = "email"),
             @Mapping(target = "field", source = "field"),
             @Mapping(target = "address", source = "address"),
-            @Mapping(target = "gpsLat", source = "gpsLat"),
-            @Mapping(target = "gpsLong", source = "gpsLong"),
+            @Mapping(target = "gps", source = "gps"),
             @Mapping(target = "status", source = "status")
     })
     BrandResponse brandToBrandResponse(Brand brand);
