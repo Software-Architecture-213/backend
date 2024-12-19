@@ -1,6 +1,8 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.configuration.PublicEndpoint;
+import com.example.identityservice.dto.request.auth.OTPGenerateRequest;
+import com.example.identityservice.dto.request.auth.OTPValidateRequest;
 import com.example.identityservice.dto.request.auth.UserCreationRequest;
 import com.example.identityservice.dto.request.auth.UserLoginRequest;
 import com.example.identityservice.dto.response.auth.*;
@@ -88,15 +90,16 @@ public class AuthController {
 
     @PublicEndpoint
     @PostMapping("/otp/generate")
-    public ResponseEntity<String> generateOTP(@RequestParam String email) {
-        otpService.generateAndSendOTP(email);
-        return ResponseEntity.ok("OTP sent to " + email);
+    public ResponseEntity<String> generateOTP(@RequestBody @Valid OTPGenerateRequest request) {
+
+        otpService.generateAndSendOTP(request.getEmail());
+        return ResponseEntity.ok("OTP sent to " + request.getEmail());
     }
 
     @PublicEndpoint
     @PostMapping("/otp/validate")
-    public ResponseEntity<String> validateOTP(@RequestParam String email, @RequestParam String otp) {
-        boolean isValid = otpService.validateOTP(email, otp);
+    public ResponseEntity<String> validateOTP(@RequestBody @Valid OTPValidateRequest request) {
+        boolean isValid = otpService.validateOTP(request.getEmail(), request.getOtpCode());
         return isValid ? ResponseEntity.ok("OTP is valid!") : ResponseEntity.badRequest().body("Invalid or expired OTP.");
     }
 }
