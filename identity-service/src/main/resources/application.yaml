@@ -17,6 +17,8 @@ spring:
           auth: true
           starttls:
             enable: true  # Add a space after the colon
+cloudinary:
+  url: cloudinary://${CLOUDINARY_KEY}:${CLOUDINARY_SECRET}@${CLOUDINARY_NAME}
 
 com:
   example:

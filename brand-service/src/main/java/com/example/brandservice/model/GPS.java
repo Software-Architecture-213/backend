@@ -6,6 +6,6 @@ import lombok.Data;
 @Embeddable
 @Data
 public class GPS {
-    Double lat;
-    Double lng;
+    Double latitude;
+    Double longitude;
 }

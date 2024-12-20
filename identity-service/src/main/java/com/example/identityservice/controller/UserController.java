@@ -4,11 +4,13 @@ import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,9 +38,14 @@ public class UserController {
     }
 
 
-    @PutMapping("/update")
-    public ResponseEntity<UserInfoResponse> updateUserByEmail(@RequestParam("email") String email, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateByEmail(email, userUpdateRequest));
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserInfoResponse> updateUserByEmail(@PathVariable String userId, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
+    }
+
+    @PostMapping("/upload-image/{userId}")
+    public ResponseEntity<UserInfoResponse> updatePhoto(@PathVariable String userId, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePhoto(userId, file));
     }
 
 }

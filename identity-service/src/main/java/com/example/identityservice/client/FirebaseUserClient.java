@@ -37,10 +37,12 @@ public class FirebaseUserClient {
             String role = userRecord.getCustomClaims().get("role").toString();
             DocumentSnapshot documentSnapshot = firestore.collection("users").document(userRecord.getUid()).get().get();
             String gender = documentSnapshot.exists() && documentSnapshot.contains("gender")
-                    ? documentSnapshot.getString("gender") : "MALE";
+                    ? documentSnapshot.getString("gender")
+                    : "MALE";
             Date dateOfBirth = documentSnapshot.exists() && documentSnapshot.contains("dateOfBirth")
-                    ? documentSnapshot.getDate("dateOfBirth") : null;
-            return  UserInfoResponse.builder().userId(userRecord.getUid())
+                    ? documentSnapshot.getDate("dateOfBirth")
+                    : null;
+            return UserInfoResponse.builder().userId(userRecord.getUid())
                     .email(userRecord.getEmail())
                     .dateOfBirth(dateOfBirth)
                     .gender(Gender.valueOf(gender))
@@ -66,32 +68,46 @@ public class FirebaseUserClient {
     }
 
     public UserInfoResponse updateByUid(@NonNull String uid, @NonNull UserUpdateRequest userUpdateRequest) {
-        final var request = new UserRecord.UpdateRequest(uid);
-        if (userUpdateRequest.getEmail() != null) {
-            request.setEmail(userUpdateRequest.getEmail());
-        }
-        if (userUpdateRequest.getDisplayName() != null) {
-            request.setDisplayName(userUpdateRequest.getDisplayName());
-        }
-        if (userUpdateRequest.getPhoneNumber() != null) {
-            request.setPhoneNumber(userUpdateRequest.getPhoneNumber());
-        }
-        if (userUpdateRequest.getPhotoUrl() != null && !userUpdateRequest.getPhotoUrl().isBlank()) {
-            request.setPhotoUrl(userUpdateRequest.getPhotoUrl());
-        }
-        if (userUpdateRequest.getDisabled() != null) {
-            request.setDisabled(userUpdateRequest.getDisabled());
-        }
-        /* Move to another service for change password */
-//        if (userUpdateRequest.getPassword() != null) {
-//            request.setPassword(userUpdateRequest.getPassword());
-//        }
         try {
+            final var request = new UserRecord.UpdateRequest(uid);
+            if (userUpdateRequest.getEmail() != null) {
+                request.setEmail(userUpdateRequest.getEmail());
+            }
+            if (userUpdateRequest.getDisplayName() != null) {
+                request.setDisplayName(userUpdateRequest.getDisplayName());
+            }
+            if (userUpdateRequest.getPhoneNumber() != null) {
+                request.setPhoneNumber(userUpdateRequest.getPhoneNumber());
+            }
+            if (userUpdateRequest.getPhotoUrl() != null && !userUpdateRequest.getPhotoUrl().isBlank()) {
+                request.setPhotoUrl(userUpdateRequest.getPhotoUrl());
+            }
+            if (userUpdateRequest.getDisabled() != null) {
+                request.setDisabled(userUpdateRequest.getDisabled());
+            }
+            /* Move to another service for change password */
+            // if (userUpdateRequest.getPassword() != null) {
+            // request.setPassword(userUpdateRequest.getPassword());
+            // }
+
             // Update Firebase Auth user record
             UserRecord userRecord = firebaseAuth.updateUser(request);
 
             // Update additional data in Firestore (e.g., gender and date of birth)
             DocumentReference userDocRef = firestore.collection("users").document(uid);
+            DocumentSnapshot documentSnapshot = userDocRef.get().get();
+
+            // Extract gender
+            String gender = "MALE"; // Default gender
+            if (documentSnapshot.exists() && documentSnapshot.contains("gender")) {
+                gender = documentSnapshot.getString("gender");
+            }
+
+            // Extract date of birth
+            Date dateOfBirth = null; // Default date of birth
+            if (documentSnapshot.exists() && documentSnapshot.contains("dateOfBirth")) {
+                dateOfBirth = documentSnapshot.getDate("dateOfBirth");
+            }
 
             if (userUpdateRequest.getGender() != null) {
                 userDocRef.update("gender", userUpdateRequest.getGender().name());
@@ -103,16 +119,16 @@ public class FirebaseUserClient {
             return UserInfoResponse.builder()
                     .userId(userRecord.getUid())
                     .email(userRecord.getEmail())
-                    .dateOfBirth(userUpdateRequest.getDateOfBirth())
-                    .gender(userUpdateRequest.getGender())
+                    .dateOfBirth(dateOfBirth)
+                    .gender(Gender.valueOf(gender))
                     .displayName(userRecord.getDisplayName())
                     .phoneNumber(userRecord.getPhoneNumber())
                     .photoUrl(userRecord.getPhotoUrl())
                     .role(Role.valueOf(userRecord.getCustomClaims().get("role").toString()))
                     .isDisabled(userRecord.isDisabled())
                     .build();
-        } catch (FirebaseAuthException e) {
+        } catch (FirebaseAuthException | InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error updating user information: " + e.getMessage(), e);
-        }
+        } 
     }
 }
