@@ -38,13 +38,15 @@ public class UserController {
     }
 
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserInfoResponse> updateUserByEmail(@PathVariable String userId, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+    @PutMapping("")
+    public ResponseEntity<UserInfoResponse> updateUserByEmail(Authentication authentication, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+        String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
     }
 
-    @PostMapping("/upload-image/{userId}")
-    public ResponseEntity<UserInfoResponse> updatePhoto(@PathVariable String userId, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload-image")
+    public ResponseEntity<UserInfoResponse> updatePhoto(Authentication authentication, @RequestParam("file") MultipartFile file) {
+        String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePhoto(userId, file));
     }
 
