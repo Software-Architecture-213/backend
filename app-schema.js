@@ -54,6 +54,7 @@ PromotionSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Promotion ID
 	name: { type: String, required: true }, // Tên khuyến mãi
 	description: { type: String }, // Mô tả khuyến mãi
+	imageUrl: { type: String }, // Hình ảnh khuyến mãi
 	startDate: { type: Date, required: true }, // Thời gian bắt đầu
 	endDate: { type: Date, required: true }, // Thời gian kết thúc
 	brandId: {
@@ -83,6 +84,7 @@ VoucherSchema({
 		enum: ["online", "offline"],
 		required: true,
 	}, // Loại voucher
+	imageUrl: { type: String }, // Hình ảnh voucher
 	qrCode: { type: String, required: true }, // QR Code
 	image: { type: String }, // Hình ảnh voucher
 	value: { type: Number, required: true }, // Giá trị của voucher
@@ -136,6 +138,7 @@ ItemTransactionSchema({
 BrandSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Brand ID
 	displayName: { type: String, required: true, unique: true }, // Tên thương hiệu
+	imageUrl: { type: String }, // Hình ảnh thương hiệu
 	username: { type: String, required: true, unique: true }, // Tên đăng nhập
 	password: { type: String, required: true }, // Mật khẩu
 	field: { type: String, required: true }, // Lĩnh vực hoạt động
@@ -180,6 +183,16 @@ UserSchema({
 	], // Danh sách khuyến mãi yêu thích
 	createdAt: { type: Date, default: Date.now }, // Ngày tạo
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật
+});
+
+UserGameSchema({
+	userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+	gameId: { type: mongoose.Schema.Types.ObjectId, ref: "Game" },
+	score: { type: Number, default: 0 },
+	remainingTurns: { type: Number, default: 10 },
+	earnedTurns: { type: Number, default: 0 },
+	createdAt: { type: Date, default: Date.now },
+	updatedAt: { type: Date, default: Date.now },
 });
 
 NotificationSchema({
