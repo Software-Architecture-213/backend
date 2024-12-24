@@ -1,11 +1,13 @@
 package com.example.brandservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,9 +24,15 @@ public class Promotion {
     Brand brand;
     String name;
     String imageUrl;
+    String category;
     int numOfVouchers;
+    int remainingVouchers;
     Date startDate;
     Date endDate;
 
     String status;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "promotion", fetch = FetchType.LAZY)
+    List<Voucher> vouchers;
+
 }

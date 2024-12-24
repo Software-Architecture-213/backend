@@ -47,7 +47,6 @@ public class BrandController {
 
     // Get all brands
     @PreAuthorize("hasRole('BRAND')")
-//    @PreAuthorize("hasAnyRole('BRAND', 'ADMIN')")
     @GetMapping
     public ResponseEntity<List<BrandResponse>> getAllBrands() {
         List<BrandResponse> brandResponses = brandService.getAllBrands();

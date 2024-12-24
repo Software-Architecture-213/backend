@@ -6,7 +6,9 @@ import com.example.brandservice.mapper.BrandMapper;
 import com.example.brandservice.model.Brand;
 import com.example.brandservice.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,6 +46,12 @@ public class BrandService {
         brand.setStatus(brandRequest.getStatus());
         Brand updatedBrand = brandRepository.save(brand);
         return brandMapper.brandToBrandResponse(updatedBrand);
+    }
+
+    public BrandResponse getUserInfoByEmail(String email) {
+        return brandMapper.brandToBrandResponse(brandRepository.findByEmail(email).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found")
+        ));
     }
 
     public List<BrandResponse> getAllBrands() {

@@ -23,6 +23,6 @@ public class Brand {
     GPS gps;
 
     // active / inactive
+    @Column(columnDefinition = "varchar(255) default 'INACTIVE'")
     String status;
 }
-

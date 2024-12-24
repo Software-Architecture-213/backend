@@ -11,6 +11,7 @@ public class PromotionRequest {
     private String brandId;
     private String name;
     private String imageUrl;
+    private String category;
     private int numOfVouchers;
     private Date startDate;
     private Date endDate;
