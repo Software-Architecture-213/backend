@@ -1,5 +1,6 @@
     package com.example.brandservice.model;
 
+    import com.fasterxml.jackson.annotation.JsonBackReference;
     import jakarta.persistence.*;
     import lombok.AccessLevel;
     import lombok.Data;
@@ -18,6 +19,7 @@
         String id;
 
         @ManyToOne(fetch = FetchType.LAZY)
+        @JsonBackReference
         @JoinColumn(name = "promotion_id", referencedColumnName = "id")
         Promotion promotion;
 

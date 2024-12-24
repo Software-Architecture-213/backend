@@ -38,7 +38,7 @@ public interface PromotionMapper {
             @Mapping(target = "startDate", source = "startDate"),
             @Mapping(target = "endDate", source = "endDate"),
             @Mapping(target = "status", source = "status"),
-            @Mapping(target = "voucherList", ignore = true)
+            @Mapping(target = "vouchers", source = "vouchers")
     })
     PromotionResponse promotionToPromotionResponse(Promotion promotion);
 }

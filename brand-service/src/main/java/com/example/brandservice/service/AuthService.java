@@ -1,6 +1,5 @@
 package com.example.brandservice.service;
 
-import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.BrandRequest;
 import com.example.brandservice.dto.request.LoginRequest;
 import com.example.brandservice.dto.response.RefreshTokenResponse;
@@ -10,15 +9,10 @@ import com.example.brandservice.model.Brand;
 import com.example.brandservice.repository.BrandRepository;
 import com.example.brandservice.utility.JwtUtil;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.*;
-import java.io.Console;
 import java.util.Optional;
 
 @Service
@@ -49,7 +43,7 @@ public class AuthService {
         String accessToken = null;
         String refreshToken = null;
         try {
-            accessToken = jwtUtil.generateToken(brand.getEmail());
+            accessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getEmail());
             refreshToken = jwtUtil.generateRefreshToken(brand.getEmail());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -68,8 +62,11 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");
         }
 
+        Brand brand = brandRepository.findById(subject).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token")
+        );
         // Generate a new access token
-        String newAccessToken = jwtUtil.generateToken(subject);
+        String newAccessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getEmail());
 
         // Calculate the expiration time (example: 3600 seconds = 1 hour)
         String expiresIn = "3600";  // Adjust this based on your token expiration strategy

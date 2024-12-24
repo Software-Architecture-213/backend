@@ -24,8 +24,8 @@ public class PromotionController {
     // Create a new promotion
     @PostMapping
     public ResponseEntity<PromotionResponse> createPromotion(Authentication authentication, @RequestBody PromotionRequest promotionRequest) {
-        String email = (String) authentication.getPrincipal();
-        BrandResponse brandResponse = brandService.getUserInfoByEmail(email);
+        String brandId = (String) authentication.getPrincipal();
+        BrandResponse brandResponse = brandService.getBrandById(brandId);
         promotionRequest.setBrandId(brandResponse.getId());
         PromotionResponse createdPromotion = promotionService.createPromotion(promotionRequest);
         return new ResponseEntity<>(createdPromotion, HttpStatus.CREATED);
@@ -56,10 +56,8 @@ public class PromotionController {
 
     @GetMapping("/my-promotions")
     public ResponseEntity<List<PromotionResponse>> getPromotions(Authentication authentication) {
-        // Extract the email (sub) from the Authentication object
-        String email = (String) authentication.getPrincipal();
-        // Call the service to fetch user info using the email
-        BrandResponse brandResponse = brandService.getUserInfoByEmail(email);
+        String brandId = (String) authentication.getPrincipal();
+        BrandResponse brandResponse = brandService.getBrandById(brandId);
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandResponse.getId());
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }

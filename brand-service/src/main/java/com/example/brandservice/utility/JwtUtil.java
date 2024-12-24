@@ -24,18 +24,21 @@ public class JwtUtil {
         }
     }
 
-    // Generate a JWT token using HS256
-    public String generateToken(String subject) {
+    // Generate a JWT token with additional claims
+    public String generateToken(String brandId, String role, String email) {
         try {
             Key secretKey = getSecretKey();
             return Jwts.builder()
-                    .setSubject(subject)
+                    .setSubject(brandId) // Add subject (sub)
+                    .claim("brandId", brandId) // Add brandId
+                    .claim("role", role)       // Add role
+                    .claim("email", email)     // Add email
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour expiration
-                    .signWith(secretKey, SignatureAlgorithm.HS256) // Using the secure 256-bit key for signing
+                    .signWith(secretKey, SignatureAlgorithm.HS256) // Sign with the secret key
                     .compact();
         } catch (Exception e) {
-            e.printStackTrace(); // Log the error appropriately
+            e.printStackTrace();
             return null;
         }
     }
@@ -47,8 +50,8 @@ public class JwtUtil {
             return Jwts.builder()
                     .setSubject(subject)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // Refresh token expires in 30 days
-                    .signWith(secretKey, SignatureAlgorithm.HS256) // Use the secure 256-bit key for signing
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // 30 days expiration
+                    .signWith(secretKey, SignatureAlgorithm.HS256) // Sign with the secret key
                     .compact();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,7 +59,7 @@ public class JwtUtil {
         }
     }
 
-    // Method to extract subject from the token
+    // Extract the subject (sub) from the token
     public String extractSubject(String token) {
         try {
             Key secretKey = getSecretKey();
@@ -71,6 +74,37 @@ public class JwtUtil {
         }
     }
 
+    // Extract a specific claim from the token
+    public String extractClaim(String token, String claimKey) {
+        try {
+            Key secretKey = getSecretKey();
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get(claimKey, String.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Extract brandId from the token
+    public String extractBrandId(String token) {
+        return extractClaim(token, "brandId");
+    }
+
+    // Extract role from the token
+    public String extractRole(String token) {
+        return extractClaim(token, "role");
+    }
+
+    // Extract email from the token
+    public String extractEmail(String token) {
+        return extractClaim(token, "email");
+    }
+
+    // Validate the token
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -82,5 +116,4 @@ public class JwtUtil {
             return false; // Token is invalid or expired
         }
     }
-
 }

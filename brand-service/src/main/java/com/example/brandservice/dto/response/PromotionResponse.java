@@ -20,5 +20,5 @@ public class PromotionResponse {
     private Date startDate;
     private Date endDate;
     private String status;
-    private List<Voucher> voucherList;
+    private List<Voucher> vouchers;
 }
