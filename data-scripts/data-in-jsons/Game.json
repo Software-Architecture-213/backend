@@ -1,0 +1,54 @@
+[
+	{
+		"_id": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
+		"name": "Katinat Quiz Challenge",
+		"type": "quiz",
+		"imageUrl": "https://katinat.vn/game-image.jpg",
+		"description": "Join the Katinat Quiz Challenge and test your knowledge about Katinat's history and menu. Answer questions correctly to earn rewards!",
+		"guideline": "1. Answer 5 multiple choice questions correctly about Katinat's history and products. \n2. Each correct answer earns you points, and completing all 5 questions earns you a voucher. \n3. You can participate once every day during the promotion period. \n4. The faster you answer, the more points you earn.",
+		"allowItemExchange": true,
+		"difficulty": "medium",
+		"promotionId": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"name": "Katinat Shake Challenge",
+		"type": "shake",
+		"imageUrl": "https://katinat.vn/shake-game-image.jpg",
+		"description": "Shake your phone to earn prizes! Play Katinat Shake Challenge and receive awesome rewards with every shake.",
+		"guideline": "1. Shake your phone vigorously to unlock rewards. \n2. Each shake gives you a random prize, which could include discounts or a special gift. \n3. You can shake once per day. \n4. Earn bonus points by shaking for longer durations.",
+		"allowItemExchange": false,
+		"difficulty": "easy",
+		"promotionId": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"name": "PhucLong Knowledge Quiz",
+		"type": "quiz",
+		"imageUrl": "https://phuclong.vn/quiz-game-image.jpg",
+		"description": "Test your knowledge of PhucLong's menu and history in the PhucLong Knowledge Quiz! Earn exciting prizes with every correct answer.",
+		"guideline": "1. Answer 10 questions about PhucLong’s menu and its history. \n2. Each question has a time limit, so answer quickly to get bonus points. \n3. The faster you answer, the higher the chance of earning valuable prizes. \n4. You can play once a day and accumulate points for bigger rewards.",
+		"allowItemExchange": true,
+		"difficulty": "medium",
+		"promotionId": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"name": "PhucLong Shake Surprise",
+		"type": "shake",
+		"imageUrl": "https://phuclong.vn/shake-surprise-game.jpg",
+		"description": "Shake your phone to win exciting surprises with PhucLong Shake Surprise! It’s quick, fun, and rewarding!",
+		"guideline": "1. Shake your phone to reveal a surprise gift. \n2. You can get different rewards such as discounts, free drinks, or bonus loyalty points. \n3. Shake 5 times a day for your best chance to win. \n4. Each shake lasts for 10 seconds, so shake vigorously to maximize your chances.",
+		"allowItemExchange": false,
+		"difficulty": "easy",
+		"promotionId": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
+]
