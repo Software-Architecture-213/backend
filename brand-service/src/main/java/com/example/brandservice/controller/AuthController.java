@@ -55,11 +55,9 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<BrandResponse> getMyProfile(Authentication authentication) {
-        // Extract the email (sub) from the Authentication object
-        String email = (String) authentication.getPrincipal();
+        String brandId = (String) authentication.getPrincipal();
 
-        // Call the service to fetch user info using the email
-        BrandResponse response = brandService.getUserInfoByEmail(email);
+        BrandResponse response = brandService.getBrandById(brandId);
 
         return ResponseEntity.ok(response);
     }
