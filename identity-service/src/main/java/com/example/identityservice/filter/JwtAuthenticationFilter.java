@@ -1,5 +1,6 @@
 package com.example.identityservice.filter;
 
+import com.example.identityservice.client.FirebaseAuthClient;
 import com.example.identityservice.dto.ApiResponse;
 import com.example.identityservice.exception.GlobalExceptionHandler;
 import com.example.identityservice.exception.TokenVerificationException;
@@ -39,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private GlobalExceptionHandler globalExceptionController;
 
-    private final FirebaseAuth firebaseAuth;
+    private final FirebaseAuthClient firebaseAuthClient;
     private final ApiEndpointSecurityInspector apiEndpointSecurityInspector;
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
@@ -62,31 +63,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 try {
                     // Verify the Firebase token
-                    final var firebaseToken = firebaseAuth.verifyIdToken(token);
+                    final var tokenData = firebaseAuthClient.verifyIdToken(token);
 
-                    // Extract user ID from claims (or throw an exception if it's missing)
-                    final var userId = Optional.ofNullable(firebaseToken.getClaims().get(USER_ID_CLAIM))
-                            .orElseThrow(() -> new IllegalStateException("User ID claim missing"));
+                    if (tokenData == null || !tokenData.isValidated()) {
+                        ResponseEntity<ApiResponse> errorResponse = globalExceptionController.handleTokenVerificationException(new TokenVerificationException());
+                        writeErrorResponse(response, errorResponse);
+                        return;
+                    }
 
-                    Map<String, Object> claims = firebaseToken.getClaims();
-                    String role = (String) claims.get("role");
+                    String role = tokenData.getRole();
                     List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
-                    final var authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
+                    final var authentication = new UsernamePasswordAuthenticationToken(tokenData.getUserId(), null, authorities);
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                } catch (FirebaseAuthException e){
-                    // Log the error and respond with a 401 Unauthorized status
-                    logger.error("Authentication failed: {}", e);
-                    /*response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.getWriter().write("Authentication failed: " + e);*/
-                    //return; // Prevent further processing of the request
-
-                    ResponseEntity<ApiResponse> errorResponse = globalExceptionController.handleFirebaseAuthException(e);
-                    writeErrorResponse(response, errorResponse);
-                    return;
-
                 } catch (IllegalStateException e) {
-
                     logger.error("Authentication failed: {}", e);
 
                     ResponseEntity<ApiResponse> errorResponse = globalExceptionController.handleTokenVerificationException(new TokenVerificationException());

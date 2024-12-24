@@ -37,7 +37,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"asdasd@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"displayName\": \"User 1\",\r\n  \"role\": \"USER\",\r\n  \"phoneNumber\": \"+84123456785\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"gender\": \"FEMALE\"\r\n}\r\n",
+							"raw": "{\r\n  \"email\": \"truonganhtuan3092@gmail.com\",\r\n  \"password\": \"123456\",\r\n  \"displayName\": \"User 1\",\r\n  \"role\": \"USER\",\r\n  \"phoneNumber\": \"+84123456785\",\r\n  \"dateOfBirth\": \"1990-01-01\",\r\n  \"gender\": \"FEMALE\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -55,7 +55,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"asdasd@gmail.com\",\r\n    \"password\" : \"123456\"\r\n }",
+							"raw": "{\r\n    // \"email\" : \"truonganhtuan3092@gmail.com\",\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" : \"123456\"\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -112,7 +112,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiVHVhbiBUcnVvbmciLCJyb2xlIjoiVVNFUiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9rdHBtLTIxMyIsImF1ZCI6Imt0cG0tMjEzIiwiYXV0aF90aW1lIjoxNzM0MjY2NDEwLCJ1c2VyX2lkIjoidlZKMGZEWHVEZGFZM2JNWkNzcnZzemYzbURLMiIsInN1YiI6InZWSjBmRFh1RGRhWTNiTVpDc3J2c3pmM21ESzIiLCJpYXQiOjE3MzQyNjY0MTAsImV4cCI6MTczNDI3MDAxMCwiZW1haWwiOiJ0dWFuLnRydW9uZzA1QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaG9uZV9udW1iZXIiOiIrODQxMjM0NTY3ODIiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInR1YW4udHJ1b25nMDVAZ21haWwuY29tIl0sInBob25lIjpbIis4NDEyMzQ1Njc4MiJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.MhLiJbUzKmuhcf0rJxe5FS0ecwRGok55usmVj_wsU6L8m2iQwQiR0ZC9Vq7YJFH60u64nGAWfHajR_-kU3ePavdtiKUSI23gP6CKv_-0jCOZ1qnEvsLZ0xyf1w6HMgudNIQ6wRDwOAVrc6OVkORfD4WKZXy3ejuaQ56Fsk50vSTF0RX5VDqnJtE1juWbUP4ptfoma9S34pDtxY1cFQUvhQ5xad34LUry0aG9yqetJzhjRwU0x1RQNfqYEs1dyBzsuZrUn3xYIykpfq31WSHSd_suz2D076NAp8k61xitEy6EDBNXIj8ghXIYHnjRQ1hNG9aBPRmaB6Xb2YQV9OoW3g"
+								"token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFhYWMyNzEwOTkwNDljMGRmYzA1OGUwNjEyZjA4ZDA2YzMwYTA0MTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20va3RwbS0yMTMiLCJhdWQiOiJrdHBtLTIxMyIsImF1dGhfdGltZSI6MTczNDc3MDExOSwidXNlcl9pZCI6IlREcGtrZHhHdE5hWGVOWUQ2WDQ3c2lpaWlNUDIiLCJzdWIiOiJURHBra2R4R3ROYVhlTllENlg0N3NpaWlpTVAyIiwiaWF0IjoxNzM0NzcwMTE5LCJleHAiOjE3MzQ3NzM3MTksImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis4NDEyMzQ1Njc4MyIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZ21haWwuY29tIl0sInBob25lIjpbIis4NDEyMzQ1Njc4MyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.RVpJ8VIf6L8LhdZw07681AMPqdjxDG82eG0_DG_5H-q1ABvJfjCzYgyOC0dLl10LWwksk5MiM_ngAN9klSrEGmmUpodqTcccQhn_jgfb5pENNP9lhszRWu0Xpc-F6Fe8SfoGI4pLtDdc9ybCGjnl3D_dGfZSYb_uUhY_HFfjoFsk4ESGEO9BDNfrtXgZaoNj7XosxovDi6wiebcmoQva7kJt__nMDlI2OJpHVsrwnJnmftJcPDCQvJgQJWFmZLFEXUdsmD38lH7hVAdRIzlLFy1imeIKg28zXqsXrJz1HAZrNMmKTYJAzLECSWpUEVvr1b6uP4OSram-XCr5GmxYng"
 							}
 						},
 						"method": "GET",
@@ -142,13 +142,58 @@
 					"response": []
 				},
 				{
+					"name": "Upload Photo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFhYWMyNzEwOTkwNDljMGRmYzA1OGUwNjEyZjA4ZDA2YzMwYTA0MTUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20va3RwbS0yMTMiLCJhdWQiOiJrdHBtLTIxMyIsImF1dGhfdGltZSI6MTczNDc3MDExOSwidXNlcl9pZCI6IlREcGtrZHhHdE5hWGVOWUQ2WDQ3c2lpaWlNUDIiLCJzdWIiOiJURHBra2R4R3ROYVhlTllENlg0N3NpaWlpTVAyIiwiaWF0IjoxNzM0NzcwMTE5LCJleHAiOjE3MzQ3NzM3MTksImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX251bWJlciI6Iis4NDEyMzQ1Njc4MyIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZ21haWwuY29tIl0sInBob25lIjpbIis4NDEyMzQ1Njc4MyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.RVpJ8VIf6L8LhdZw07681AMPqdjxDG82eG0_DG_5H-q1ABvJfjCzYgyOC0dLl10LWwksk5MiM_ngAN9klSrEGmmUpodqTcccQhn_jgfb5pENNP9lhszRWu0Xpc-F6Fe8SfoGI4pLtDdc9ybCGjnl3D_dGfZSYb_uUhY_HFfjoFsk4ESGEO9BDNfrtXgZaoNj7XosxovDi6wiebcmoQva7kJt__nMDlI2OJpHVsrwnJnmftJcPDCQvJgQJWFmZLFEXUdsmD38lH7hVAdRIzlLFy1imeIKg28zXqsXrJz1HAZrNMmKTYJAzLECSWpUEVvr1b6uP4OSram-XCr5GmxYng"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ideapad/Pictures/static-assets-upload6448175730584127860.webp"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:80/api/identity/users/upload-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"api",
+								"identity",
+								"users",
+								"upload-image"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiVHVhbiBUcnVvbmciLCJyb2xlIjoiVVNFUiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9rdHBtLTIxMyIsImF1ZCI6Imt0cG0tMjEzIiwiYXV0aF90aW1lIjoxNzM0MDIwOTcwLCJ1c2VyX2lkIjoibW44Wkt6VXlCQVdRbnh3Y0pSVFFTbzNjNVU2MiIsInN1YiI6Im1uOFpLelV5QkFXUW54d2NKUlRRU28zYzVVNjIiLCJpYXQiOjE3MzQwMjA5NzAsImV4cCI6MTczNDAyNDU3MCwiZW1haWwiOiJhbmh0dWFuMTIzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImFuaHR1YW4xMjNAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.Th56ozVJ_gHrTO4N1aWGeOlshsJSPOMAs1eN6wmI1frslgEblm-5OCoVSVkQGbqq8nbWmjOPFAblAgLXsbYS_EuUCe73CyFbWQpCGqElzxBEjD4j-u2oU9dJSx_9hfc-u6hLdcUEte89PYXxc70FvCRMo0zpfv5mY_rNlLTEZEj2n-6Y_oIS0lNP5qbpiFt04ohs2nJAMKbNVQiQVqefie2O7lfZJQBer4JJgnHNzwK_zrmqNc83cWvuKnSA4X6TO9cT3DZGETEaSvD75GAzKwPWnehJfnm3Ie5toS7LhafiSxTDQueyCMKINqPxhbsNq6B2Ocikw1ambg3r0buQfg",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Generate OTP",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"truonganhtuan3092@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"tuantest@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
