@@ -1,7 +1,9 @@
 package com.example.identityservice.service;
 import com.example.identityservice.client.FirebaseUserClient;
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
+import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
+import com.example.identityservice.dto.response.user.UsersInfoResponse;
 import com.example.identityservice.exception.AppException;
 import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.utility.CloudinaryUtil;
@@ -20,6 +22,10 @@ public class UserService {
     public UserInfoResponse getUserInfo(String userId, String email) {
        return firebaseUserClient.getUserInfo(userId, email);
     }
+
+    public UsersInfoResponse getUsersInfo(UsersInfoRequest usersInfoRequest) {
+        return firebaseUserClient.getUsers(usersInfoRequest.getPageToken(), usersInfoRequest.getMaxResults());
+     }
 
     public UserInfoResponse updateByEmail(@NonNull String email, @NonNull UserUpdateRequest userUpdateRequest) {
         return firebaseUserClient.updateByEmail(email, userUpdateRequest);

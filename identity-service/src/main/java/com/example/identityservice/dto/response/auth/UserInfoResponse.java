@@ -2,6 +2,7 @@ package com.example.identityservice.dto.response.auth;
 
 import com.example.identityservice.enums.Gender;
 import com.example.identityservice.enums.Role;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,16 +10,17 @@ import lombok.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import jakarta.annotation.Nullable;
 
 @Data
 @Builder
 public class UserInfoResponse {
     private String userId;
     private String email;
-    @Nullable
+
+    @JsonInclude(JsonInclude.Include.NON_NULL) // Excludes null fields
     private Date dateOfBirth;
     private Gender gender;
+
     private String displayName;
     private boolean emailVerified;
     private String phoneNumber;
@@ -28,6 +30,9 @@ public class UserInfoResponse {
 
     /* Override to format date */
     public String getDateOfBirth() {
+        if (dateOfBirth == null) {
+            return "";
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(dateOfBirth);
     }

@@ -2,19 +2,24 @@ package com.example.identityservice.client;
 
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
+import com.example.identityservice.dto.response.user.UsersInfoResponse;
 import com.example.identityservice.enums.Gender;
-import com.example.identityservice.enums.Role;
+import com.example.identityservice.mapper.UserMapper;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.ListUsersPage;
 import com.google.firebase.auth.UserRecord;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -34,7 +39,6 @@ public class FirebaseUserClient {
             } else {
                 throw new IllegalArgumentException("Either userId or email must be provided.");
             }
-            String role = userRecord.getCustomClaims().get("role").toString();
             DocumentSnapshot documentSnapshot = firestore.collection("users").document(userRecord.getUid()).get().get();
             String gender = documentSnapshot.exists() && documentSnapshot.contains("gender")
                     ? documentSnapshot.getString("gender")
@@ -42,16 +46,10 @@ public class FirebaseUserClient {
             Date dateOfBirth = documentSnapshot.exists() && documentSnapshot.contains("dateOfBirth")
                     ? documentSnapshot.getDate("dateOfBirth")
                     : null;
-            return UserInfoResponse.builder().userId(userRecord.getUid())
-                    .email(userRecord.getEmail())
-                    .dateOfBirth(dateOfBirth)
-                    .gender(Gender.valueOf(gender))
-                    .displayName(userRecord.getDisplayName())
-                    .phoneNumber(userRecord.getPhoneNumber())
-                    .photoUrl(userRecord.getPhotoUrl())
-                    .isDisabled(userRecord.isDisabled())
-                    .role(Role.valueOf(role))
-                    .build();
+            UserInfoResponse res = UserMapper.INSTANCE.fromRecordToResponse(userRecord);
+            res.setDateOfBirth(dateOfBirth);
+            res.setGender(Gender.valueOf(gender));
+            return res;
 
         } catch (FirebaseAuthException | InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error retrieving user information: " + e.getMessage(), e);
@@ -115,20 +113,44 @@ public class FirebaseUserClient {
             if (userUpdateRequest.getDateOfBirth() != null) {
                 userDocRef.update("dateOfBirth", userUpdateRequest.getDateOfBirth());
             }
-            // Return updated user information
-            return UserInfoResponse.builder()
-                    .userId(userRecord.getUid())
-                    .email(userRecord.getEmail())
-                    .dateOfBirth(dateOfBirth)
-                    .gender(Gender.valueOf(gender))
-                    .displayName(userRecord.getDisplayName())
-                    .phoneNumber(userRecord.getPhoneNumber())
-                    .photoUrl(userRecord.getPhotoUrl())
-                    .role(Role.valueOf(userRecord.getCustomClaims().get("role").toString()))
-                    .isDisabled(userRecord.isDisabled())
-                    .build();
+            UserInfoResponse res = UserMapper.INSTANCE.fromRecordToResponse(userRecord);
+            res.setDateOfBirth(dateOfBirth);
+            res.setGender(Gender.valueOf(gender));
+            return res;
         } catch (FirebaseAuthException | InterruptedException | ExecutionException e) {
             throw new RuntimeException("Error updating user information: " + e.getMessage(), e);
         } 
+    }
+
+    public UsersInfoResponse getUsers(String pageToken, int maxResults) {
+        try {
+            ListUsersPage listUsersPage = firebaseAuth.listUsers(pageToken, maxResults);
+            Iterable<ExportedUserRecord> iterable =  listUsersPage.getValues();
+            List<UserInfoResponse> userInfoResponses = new ArrayList<>();
+            iterable.forEach(userInfoResponse -> userInfoResponses.add(UserMapper.INSTANCE.fromRecordToResponse(userInfoResponse)));
+            for (UserInfoResponse userInfoResponse : userInfoResponses) {
+                DocumentReference userDocRef = firestore.collection("users").document(userInfoResponse.getUserId());
+                DocumentSnapshot documentSnapshot = userDocRef.get().get();
+                String gender = "MALE"; // Default gender
+                if (documentSnapshot.exists() && documentSnapshot.contains("gender")) {
+                    gender = documentSnapshot.getString("gender");
+                }
+                Date dateOfBirth = null; // Default date of birth
+                if (documentSnapshot.exists() && documentSnapshot.contains("dateOfBirth")) {
+                    dateOfBirth = documentSnapshot.getDate("dateOfBirth");
+                }
+                userInfoResponse.setGender(Gender.valueOf(gender));
+                userInfoResponse.setDateOfBirth(dateOfBirth);
+            }
+            return UsersInfoResponse.builder()
+            .data(userInfoResponses)
+            .nextPageToken(listUsersPage.getNextPageToken())
+            .build();
+            
+        } catch (FirebaseAuthException | InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error get users information: " + e.getMessage(), e);
+
+        }
+
     }
 }
