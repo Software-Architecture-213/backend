@@ -5,8 +5,10 @@ import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.mapper.PromotionMapper;
 import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Brand;
+import com.example.brandservice.model.Voucher;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.BrandRepository;
+import com.example.brandservice.repository.VoucherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +23,14 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final BrandRepository brandRepository;
     private final PromotionMapper promotionMapper;
+    private final VoucherRepository voucherRepository;
 
     @Autowired
-    public PromotionService(PromotionRepository promotionRepository, BrandRepository brandRepository, PromotionMapper promotionMapper) {
+    public PromotionService(PromotionRepository promotionRepository, BrandRepository brandRepository, PromotionMapper promotionMapper, VoucherRepository voucherRepository) {
         this.promotionRepository = promotionRepository;
         this.brandRepository = brandRepository;
         this.promotionMapper = promotionMapper;
+        this.voucherRepository = voucherRepository;
     }
 
     // Create a new promotion
@@ -42,7 +46,7 @@ public class PromotionService {
         // Map the PromotionRequest to a Promotion entity
         Promotion promotion = promotionMapper.promotionRequestToPromotion(promotionRequest);
         promotion.setBrand(brand); // Set the Brand in the Promotion entity
-
+        promotion.setRemainingVouchers(promotion.getNumOfVouchers());
         // Save the promotion entity
         Promotion savedPromotion = promotionRepository.save(promotion);
 

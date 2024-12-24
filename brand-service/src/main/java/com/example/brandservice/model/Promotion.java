@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,9 +23,14 @@ public class Promotion {
     Brand brand;
     String name;
     String imageUrl;
+    String category;
     int numOfVouchers;
+    int remainingVouchers;
     Date startDate;
     Date endDate;
 
     String status;
+    @OneToMany(mappedBy = "promotion", fetch = FetchType.LAZY)
+    List<Voucher> vouchers;
+
 }

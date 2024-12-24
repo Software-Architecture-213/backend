@@ -14,9 +14,10 @@ public interface PromotionMapper {
 
     // Mapping fields from PromotionRequest to Promotion
     @Mappings({
-            @Mapping(target = "id", ignore = true), // Ignore ID as it may be auto-generated
-            @Mapping(target = "brand", ignore = true), // Handle brand mapping in service if necessary
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "brand", ignore = true),
             @Mapping(target = "imageUrl", source = "imageUrl"),
+            @Mapping(source = "category", target = "category"),
             @Mapping(target = "name", source = "name"),
             @Mapping(target = "numOfVouchers", source = "numOfVouchers"),
             @Mapping(target = "startDate", source = "startDate"),
@@ -30,11 +31,14 @@ public interface PromotionMapper {
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "brandId", source = "brand.id"),
             @Mapping(target = "name", source = "name"),
+            @Mapping(source = "category", target = "category"),
             @Mapping(target = "imageUrl", source = "imageUrl"),
             @Mapping(target = "numOfVouchers", source = "numOfVouchers"),
+            @Mapping(target = "remainingVouchers", source = "remainingVouchers"),
             @Mapping(target = "startDate", source = "startDate"),
             @Mapping(target = "endDate", source = "endDate"),
-            @Mapping(target = "status", source = "status")
+            @Mapping(target = "status", source = "status"),
+            @Mapping(target = "voucherList", ignore = true)
     })
     PromotionResponse promotionToPromotionResponse(Promotion promotion);
 }

@@ -1,11 +1,14 @@
 package com.example.brandservice.controller;
 
 import com.example.brandservice.dto.request.PromotionRequest;
+import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.dto.response.PromotionResponse;
+import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,11 +19,14 @@ import java.util.List;
 public class PromotionController {
 
     private final PromotionService promotionService;
-
+    private final BrandService brandService;
 
     // Create a new promotion
     @PostMapping
-    public ResponseEntity<PromotionResponse> createPromotion(@RequestBody PromotionRequest promotionRequest) {
+    public ResponseEntity<PromotionResponse> createPromotion(Authentication authentication, @RequestBody PromotionRequest promotionRequest) {
+        String email = (String) authentication.getPrincipal();
+        BrandResponse brandResponse = brandService.getUserInfoByEmail(email);
+        promotionRequest.setBrandId(brandResponse.getId());
         PromotionResponse createdPromotion = promotionService.createPromotion(promotionRequest);
         return new ResponseEntity<>(createdPromotion, HttpStatus.CREATED);
     }
@@ -34,17 +40,27 @@ public class PromotionController {
         return new ResponseEntity<>(updatedPromotion, HttpStatus.OK);
     }
 
-    // Get a promotion by its ID
-    @GetMapping("/{promotionId}")
-    public ResponseEntity<PromotionResponse> getPromotionById(@PathVariable String promotionId) {
-        PromotionResponse promotionResponse = promotionService.getPromotionById(promotionId);
-        return new ResponseEntity<>(promotionResponse, HttpStatus.OK);
-    }
+//    // Get a promotion by its ID
+//    @GetMapping("/{promotionId}")
+//    public ResponseEntity<PromotionResponse> getPromotionById(@PathVariable String promotionId) {
+//        PromotionResponse promotionResponse = promotionService.getPromotionById(promotionId);
+//        return new ResponseEntity<>(promotionResponse, HttpStatus.OK);
+//    }
 
     // Get all promotions for a specific brand
     @GetMapping("")
     public ResponseEntity<List<PromotionResponse>> getPromotionsByBrandId(@RequestParam("brandId") String brandId) {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandId);
+        return new ResponseEntity<>(promotions, HttpStatus.OK);
+    }
+
+    @GetMapping("/my-promotions")
+    public ResponseEntity<List<PromotionResponse>> getPromotions(Authentication authentication) {
+        // Extract the email (sub) from the Authentication object
+        String email = (String) authentication.getPrincipal();
+        // Call the service to fetch user info using the email
+        BrandResponse brandResponse = brandService.getUserInfoByEmail(email);
+        List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandResponse.getId());
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
 
