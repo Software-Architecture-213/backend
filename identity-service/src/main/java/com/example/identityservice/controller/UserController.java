@@ -4,6 +4,7 @@ import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
+import com.example.identityservice.enums.Role;
 import com.example.identityservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -36,8 +37,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "")
-    public ResponseEntity<UsersInfoResponse> getUsersInfo(@ModelAttribute UsersInfoRequest usersInfoRequest) {
+    public ResponseEntity<UsersInfoResponse> getUsersInfo(Authentication authentication, @ModelAttribute UsersInfoRequest usersInfoRequest) {
         UsersInfoResponse userInfo = userService.getUsersInfo(usersInfoRequest);
+        final var notAdminUsers = userInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
+        userInfo.setData(notAdminUsers);
         return ResponseEntity.ok(userInfo);
     }
 

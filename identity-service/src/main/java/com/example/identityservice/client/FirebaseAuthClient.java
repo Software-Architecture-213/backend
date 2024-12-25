@@ -9,6 +9,8 @@ import com.example.identityservice.dto.response.auth.RefreshTokenSuccessResponse
 import com.example.identityservice.dto.response.auth.TokenSuccessResponse;
 import com.example.identityservice.dto.response.auth.ValidatedTokenResponse;
 import com.example.identityservice.exception.AccountAlreadyExistsException;
+import com.example.identityservice.exception.AppException;
+import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.exception.InvalidLoginCredentialsException;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
@@ -75,7 +77,7 @@ public class FirebaseAuthClient {
             if (exception.getResponseBodyAsString().contains(INVALID_CREDENTIALS_ERROR)) {
                 throw new InvalidLoginCredentialsException("Failed to refresh token.", exception);
             }
-            throw exception;
+            throw new AppException(ErrorCode.INACTIVATED_ACCOUNT);
         }
     }
 
