@@ -85,7 +85,6 @@ VoucherSchema({
 		required: true,
 	}, // Loại voucher
 	imageUrl: { type: String }, // Hình ảnh voucher
-	image: { type: String }, // Hình ảnh voucher
 	valueType: {
 		type: String,
 		enum: ["fixed", "percentage", "item", "free"],
