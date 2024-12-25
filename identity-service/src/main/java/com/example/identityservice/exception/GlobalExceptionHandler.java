@@ -87,4 +87,15 @@ public class GlobalExceptionHandler {
                         .build()
                 );
     }
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ApiResponse> handleGenericExceptions(AppException ex) {
+        log.error("An unexpected error occurred: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.valueOf(ex.getErrorCode().getCode())).body(
+                ApiResponse.builder()
+                        .code(ex.getErrorCode().getCode())
+                        .message(ex.getMessage())
+                        .build()
+                );
+    }
 }
