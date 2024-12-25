@@ -1,6 +1,7 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.configuration.PublicEndpoint;
+import com.example.identityservice.dto.ApiResponse;
 import com.example.identityservice.dto.request.auth.OTPGenerateRequest;
 import com.example.identityservice.dto.request.auth.OTPValidateRequest;
 import com.example.identityservice.dto.request.auth.UserCreationRequest;
@@ -30,9 +31,10 @@ public class AuthController {
 
     @PublicEndpoint
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> createUser(@Valid @RequestBody final UserCreationRequest userCreationRequest) {
+    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody final UserCreationRequest userCreationRequest) {
+
         authService.create(userCreationRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(ApiResponse.builder().code(200).message("Register successfully!").build());
     }
 
     @PublicEndpoint
