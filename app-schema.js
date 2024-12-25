@@ -78,7 +78,7 @@ PromotionSchema({
 // Voucher Giảm Giá (Schema này sẽ là base để tạo các voucher cho người dùng)
 VoucherSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Voucher ID
-	codeName: { type: String, required: true, unique: true }, // Tên mã voucher chung của sự kiện (VD: KATINAT20)
+	code: { type: String, required: true, unique: true }, // Tên mã voucher chung của sự kiện (VD: KATINAT20)
 	type: {
 		type: String,
 		enum: ["online", "offline"],
@@ -108,11 +108,11 @@ VoucherSchema({
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật voucher
 });
 
-UserVoucherSchema({
+VoucherUserSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // UserVoucher ID
 	userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Người sở hữu
+	email: { type: String }, // Email người sở hữu
 	voucherId: { type: mongoose.Schema.Types.ObjectId, ref: "Voucher" }, // Voucher
-	code: { type: String, required: true }, // Mã xác thực voucher, dùng như kiểu 2FA để xác thực (vd: 1 dãy uuid)
 	qrCode: { type: String }, // QR Code
 	status: {
 		type: String,

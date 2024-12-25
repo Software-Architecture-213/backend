@@ -1,7 +1,7 @@
 [
 	{
 		"_id": "1f8e0044-5305-4782-a6a0-d3f98a3d106d",
-		"codeName": "KATINAT2024",
+		"code": "KATINAT2024",
 		"type": "online",
 		"imageUrl": "https://katinat.vn/voucher-image.jpg",
 		"valueType": "percentage",
@@ -17,7 +17,7 @@
 	},
 	{
 		"_id": "aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd",
-		"codeName": "KATINATGIFT2024",
+		"code": "KATINATGIFT2024",
 		"type": "offline",
 		"imageUrl": "https://katinat.vn/voucher-gift-image.jpg",
 		"valueType": "fixed",
@@ -33,7 +33,7 @@
 	},
 	{
 		"_id": "a7c6e3db-53c5-47bb-9d85-50c470dd024f",
-		"codeName": "KATINATFREEDRINK2024",
+		"code": "KATINATFREEDRINK2024",
 		"type": "offline",
 		"imageUrl": "https://katinat.vn/free-drink-image.jpg",
 		"valueType": "item",
@@ -49,7 +49,7 @@
 	},
 	{
 		"_id": "df345b84-d61e-4c4d-b8d3-f9ea24f0f455",
-		"codeName": "PHUCLONG2024",
+		"code": "PHUCLONG2024",
 		"type": "online",
 		"imageUrl": "https://phuclong.vn/voucher-image.jpg",
 		"valueType": "percentage",
@@ -65,7 +65,7 @@
 	},
 	{
 		"_id": "e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d",
-		"codeName": "PHUCLONGGIFT2024",
+		"code": "PHUCLONGGIFT2024",
 		"type": "offline",
 		"imageUrl": "https://phuclong.vn/voucher-gift-image.jpg",
 		"valueType": "item",
