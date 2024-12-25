@@ -75,17 +75,16 @@ PromotionSchema({
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật khuyến mãi
 });
 
-// Voucher Giảm Giá
+// Voucher Giảm Giá (Schema này sẽ là base để tạo các voucher cho người dùng)
 VoucherSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Voucher ID
-	code: { type: String, required: true, unique: true }, // Mã voucher duy nhất
+	codeName: { type: String, required: true, unique: true }, // Tên mã voucher chung của sự kiện (VD: KATINAT20)
 	type: {
 		type: String,
 		enum: ["online", "offline"],
 		required: true,
 	}, // Loại voucher
 	imageUrl: { type: String }, // Hình ảnh voucher
-	qrCode: { type: String, required: true }, // QR Code
 	image: { type: String }, // Hình ảnh voucher
 	valueType: {
 		type: String,
@@ -104,10 +103,26 @@ VoucherSchema({
 		default: "active",
 	}, // Trạng thái voucher
 	promotionId: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" }, // Liên kết tới Promotion
-	usageLimit: { type: Number, default: 1 }, // Số lần tối đa voucher có thể được sử dụng
-	usedCount: { type: Number, default: 0 }, // Số lần voucher đã được sử dụng
+	maxCounts: { type: Number, default: 1 }, // Số voucher tối đa từ sự kiện
+	createdCounts: { type: Number, default: 0 }, // Số voucher đã phát hành
 	createdAt: { type: Date, default: Date.now }, // Ngày tạo voucher
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật voucher
+});
+
+UserVoucherSchema({
+	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // UserVoucher ID
+	userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Người sở hữu
+	voucherId: { type: mongoose.Schema.Types.ObjectId, ref: "Voucher" }, // Voucher
+	code: { type: String, required: true }, // Mã xác thực voucher, dùng như kiểu 2FA để xác thực (vd: 1 dãy uuid)
+	qrCode: { type: String }, // QR Code
+	status: {
+		type: String,
+		enum: ["active", "redeemed", "expired"],
+		default: "active",
+	},
+	redeemedAt: { type: Date }, // Ngày sử dụng voucher
+	createdAt: { type: Date, default: Date.now }, // Ngày sở hữu
+	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật
 });
 
 // A schema for defining the rules of converting items to vouchers
