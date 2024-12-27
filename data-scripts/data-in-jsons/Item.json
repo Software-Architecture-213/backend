@@ -1,0 +1,105 @@
+[
+	// Items for Katinat Quiz Challenge (Quiz Game)
+	{
+		"_id": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5",
+		"name": "Katinat Loyalty Card",
+		"description": "A special loyalty card that gives you discounts at Katinat. Earn one by answering questions about the brand!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290231/item/katinat_loyalty_card.jpg",
+		"rarity": "rare",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+
+	// Items for Katinat Shake Challenge (Shake Game)
+	{
+		"_id": "a18fe575-68b1-4535-9d6c-853fa4eaf401",
+		"name": "Katinat Coffee Mug",
+		"description": "A limited edition Katinat mug that you can use to enjoy your favorite drinks. Earn one by shaking your phone!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290130/item/katinat_coffee_mug.jpg",
+		"rarity": "uncommon",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "13bf2b6c-b45a-47b4-a68a-3bda5f84094a",
+		"name": "Katinat Tote Bag",
+		"description": "A stylish tote bag branded by Katinat for carrying your drinks and other items. Shake for a chance to win it!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290266/item/katinat_tote.jpg",
+		"rarity": "uncommon",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "1bbfd813-08ba-4787-91e4-79cf490d9c29",
+		"name": "Katinat Free Drink Voucher",
+		"description": "A voucher for one free drink at any Katinat location. Shake your phone to get lucky!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290180/item/katinat_free_drink_voucher.jpg",
+		"rarity": "common",
+		"tradable": false,
+		"maxQuantity": 1,
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+
+	// Items for PhucLong Knowledge Quiz (Quiz Game)
+	{
+		"_id": "d97f9b63-81b3-45c5-a5f8-92f8b12b88d1",
+		"name": "PhucLong Loyalty Card",
+		"description": "A PhucLong loyalty card to enjoy discounts at their stores. Earn this item by answering the quiz questions correctly!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290433/item/phuclong_royalty_card.jpg",
+		"rarity": "rare",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+
+	// Items for PhucLong Shake Surprise (Shake Game)
+	{
+		"_id": "2f9c3bfa-b9f9-488e-8ff3-604f0fbe7c87",
+		"name": "PhucLong Thermal Flask",
+		"description": "A high-quality thermal flask branded by PhucLong to keep your drinks hot or cold. Shake to win it!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290337/item/phuclong_thermal_flask.jpg",
+		"rarity": "uncommon",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "ea52e988-73d0-4a35-a840-23d7647a25e7",
+		"name": "PhucLong T-Shirt",
+		"description": "A trendy T-shirt with PhucLong’s logo, perfect for casual wear. Shake your phone for a chance to get one!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290308/item/phuclong_tshirt.jpg",
+		"rarity": "common",
+		"tradable": true,
+		"maxQuantity": 1,
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "b43c8a02-8a64-4c07-9c6e-24926bfc43e2",
+		"name": "PhucLong Free Drink Voucher",
+		"description": "A voucher for a free drink at PhucLong. Shake your phone and you might just win this!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290370/item/phuclong_free_drink_voucher.jpg",
+		"rarity": "common",
+		"tradable": false,
+		"maxQuantity": 1,
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
+]

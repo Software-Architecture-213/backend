@@ -1,0 +1,57 @@
+[
+	{
+		"_id": "58c1e1ab-3e2f-4b69-b3f3-a62bcb4f764a",
+		"userId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"email": "user1@example.com",
+		"voucherId": "1f8e0044-5305-4782-a6a0-d3f98a3d106d",
+		"qrCode": "qr-62f7e567-1f8e0044",
+		"status": "active",
+		"redeemedAt": null,
+		"createdAt": "2024-12-24T12:00:00Z",
+		"updatedAt": "2024-12-24T12:00:00Z"
+	},
+	{
+		"_id": "87453d2f-8f1a-4097-99ab-3136de59fa6d",
+		"userId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"email": "user2@example.com",
+		"voucherId": "aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd",
+		"qrCode": "qr-d219c0e1-aef28f85",
+		"status": "active",
+		"redeemedAt": null,
+		"createdAt": "2024-12-24T12:05:00Z",
+		"updatedAt": "2024-12-24T12:05:00Z"
+	},
+	{
+		"_id": "c198e4bf-9411-4ad8-bc49-2ecdfaeb4ef8",
+		"userId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e",
+		"email": "user3@example.com",
+		"voucherId": "a7c6e3db-53c5-47bb-9d85-50c470dd024f",
+		"qrCode": "qr-3c41bc11-a7c6e3db",
+		"status": "active",
+		"redeemedAt": null,
+		"createdAt": "2024-12-24T12:10:00Z",
+		"updatedAt": "2024-12-24T12:10:00Z"
+	},
+	{
+		"_id": "f74b69b1-09f8-48b8-b5e8-9f2c9f78ad7d",
+		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"email": "user4@example.com",
+		"voucherId": "df345b84-d61e-4c4d-b8d3-f9ea24f0f455",
+		"qrCode": "qr-9a41b8fc-df345b84",
+		"status": "active",
+		"redeemedAt": null,
+		"createdAt": "2024-12-24T12:15:00Z",
+		"updatedAt": "2024-12-24T12:15:00Z"
+	},
+	{
+		"_id": "e95f8ed3-6cf9-4a98-8f9f-d8c3c649fa7e",
+		"userId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"email": "user1@example.com",
+		"voucherId": "e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d",
+		"qrCode": "qr-62f7e567-e8c2d7d9",
+		"status": "active",
+		"redeemedAt": null,
+		"createdAt": "2024-12-24T12:20:00Z",
+		"updatedAt": "2024-12-24T12:20:00Z"
+	}
+]
