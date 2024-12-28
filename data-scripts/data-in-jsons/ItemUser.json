@@ -1,0 +1,56 @@
+[
+	{
+		"_id": "f56d1a47-d0ea-4de9-a9e7-84f1c7b636b9",
+		"userId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"itemId": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5",
+		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "b5b43d96-9fa7-4c4a-b566-d4fa49e017de",
+		"userId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"itemId": "a18fe575-68b1-4535-9d6c-853fa4eaf401",
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "65c8992b-6ef9-4d6c-a9b5-1e6e31b74593",
+		"userId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"itemId": "13bf2b6c-b45a-47b4-a68a-3bda5f84094a",
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "e7862b75-1d10-4d1d-8eaf-babf6169e2be",
+		"userId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e",
+		"itemId": "d97f9b63-81b3-45c5-a5f8-92f8b12b88d1",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "ae431289-80e7-4ee7-b8b2-29d10f12d27f",
+		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"itemId": "2f9c3bfa-b9f9-488e-8ff3-604f0fbe7c87",
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "6ec8fd43-e2db-4a27-bcbb-f26c0bb60227",
+		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"itemId": "ea52e988-73d0-4a35-a840-23d7647a25e7",
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5",
+		"quantity": 1,
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
+]

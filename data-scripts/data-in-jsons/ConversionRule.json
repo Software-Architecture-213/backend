@@ -1,0 +1,80 @@
+[
+	{
+		"_id": "63a6c58d-87d5-4561-b6f0-bdabfa6c9f9b",
+		"requiredItems": [
+			{
+				"itemId": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5", // Katinat Loyalty Card
+				"quantity": 1
+			}
+		],
+		"voucherId": "1f8e0044-5305-4782-a6a0-d3f98a3d106d", // KATINAT2024 (20% off)
+		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67", // Katinat Quiz Challenge
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "a7d84e1f-2f8d-43e1-9395-4fc689be19d3",
+		"requiredItems": [
+			{
+				"itemId": "1bbfd813-08ba-4787-91e4-79cf490d9c29", // Katinat Free Drink Voucher
+				"quantity": 1
+			}
+		],
+		"voucherId": "a7c6e3db-53c5-47bb-9d85-50c470dd024f", // KATINATFREEDRINK2024 (Free drink)
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48", // Katinat Shake Challenge
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "d7c39856-d7d1-4f2e-a8a9-02d05ca8cd28",
+		"requiredItems": [
+			{
+				"itemId": "a18fe575-68b1-4535-9d6c-853fa4eaf401", // Katinat Coffee Mug
+				"quantity": 1
+			}
+		],
+		"voucherId": "aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd", // KATINATGIFT2024 (50,000 VND gift)
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48", // Katinat Shake Challenge
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "62a798db-2095-47ba-8779-c4d104a5c926",
+		"requiredItems": [
+			{
+				"itemId": "13bf2b6c-b45a-47b4-a68a-3bda5f84094a", // Katinat Tote Bag
+				"quantity": 1
+			}
+		],
+		"voucherId": "1f8e0044-5305-4782-a6a0-d3f98a3d106d", // KATINAT2024 (20% off)
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48", // Katinat Shake Challenge
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "a67f2f74-64b6-45f2-8c27-08055741c746",
+		"requiredItems": [
+			{
+				"itemId": "d97f9b63-81b3-45c5-a5f8-92f8b12b88d1", // PhucLong Loyalty Card
+				"quantity": 1
+			}
+		],
+		"voucherId": "df345b84-d61e-4c4d-b8d3-f9ea24f0f455", // PHUCLONG2024 (15% off)
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758", // PhucLong Knowledge Quiz
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "48f5777e-e8b6-43f1-937b-74d34ec9b378",
+		"requiredItems": [
+			{
+				"itemId": "2f9c3bfa-b9f9-488e-8ff3-604f0fbe7c87", // PhucLong Thermal Flask
+				"quantity": 1
+			}
+		],
+		"voucherId": "e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d", // PHUCLONGGIFT2024 (Free gift set)
+		"gameId": "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5", // PhucLong Shake Surprise
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
+]

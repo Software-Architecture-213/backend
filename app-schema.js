@@ -75,32 +75,53 @@ PromotionSchema({
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật khuyến mãi
 });
 
-// Voucher Giảm Giá
+// Voucher Giảm Giá (Schema này sẽ là base để tạo các voucher cho người dùng)
 VoucherSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Voucher ID
-	code: { type: String, required: true, unique: true }, // Mã voucher duy nhất
+	code: { type: String, required: true, unique: true }, // Tên mã voucher chung của sự kiện (VD: KATINAT20)
 	type: {
 		type: String,
 		enum: ["online", "offline"],
 		required: true,
 	}, // Loại voucher
 	imageUrl: { type: String }, // Hình ảnh voucher
-	qrCode: { type: String, required: true }, // QR Code
-	image: { type: String }, // Hình ảnh voucher
-	value: { type: Number, required: true }, // Giá trị của voucher
+	valueType: {
+		type: String,
+		enum: ["fixed", "percentage", "item", "free"],
+		required: true,
+	},
+	value: {
+		type: Number,
+		required: true,
+	},
 	description: { type: String }, // Mô tả voucher
 	expiredAt: { type: Date, required: true }, // Ngày hết hạn
 	status: {
 		type: String,
-		enum: ["active", "redeemed", "expired"],
+		enum: ["active", "expired"],
 		default: "active",
 	}, // Trạng thái voucher
-	redeemedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Người dùng sử dụng voucher
 	promotionId: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" }, // Liên kết tới Promotion
-	usageLimit: { type: Number, default: 1 }, // Số lần tối đa voucher có thể được sử dụng
-	usedCount: { type: Number, default: 0 }, // Số lần voucher đã được sử dụng
+	maxCounts: { type: Number, default: 1 }, // Số voucher tối đa từ sự kiện
+	createdCounts: { type: Number, default: 0 }, // Số voucher đã phát hành
 	createdAt: { type: Date, default: Date.now }, // Ngày tạo voucher
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật voucher
+});
+
+VoucherUserSchema({
+	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // UserVoucher ID
+	userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Người sở hữu
+	email: { type: String }, // Email người sở hữu
+	voucherId: { type: mongoose.Schema.Types.ObjectId, ref: "Voucher" }, // Voucher
+	qrCode: { type: String }, // QR Code
+	status: {
+		type: String,
+		enum: ["active", "redeemed", "expired"],
+		default: "active",
+	},
+	redeemedAt: { type: Date }, // Ngày sử dụng voucher
+	createdAt: { type: Date, default: Date.now }, // Ngày sở hữu
+	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật
 });
 
 // A schema for defining the rules of converting items to vouchers
@@ -176,7 +197,8 @@ UserSchema({
 		enum: ["active", "inactive"],
 		default: "active",
 	}, // Trạng thái người dùng
-	inventory: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }], // Danh sách vật phẩm người dùng sở hữu
+	// Consider deleting inventory field and using ItemUserSchema instead
+	//inventory: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }], // Danh sách vật phẩm người dùng sở hữu
 	configs: { type: Number, default: 10 }, // Lượt chơi của người dùng
 	favoritePromotions: [
 		{ type: mongoose.Schema.Types.ObjectId, ref: "Promotion" },
