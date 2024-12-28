@@ -1,17 +1,19 @@
 package com.example.brandservice.dto.request;
 
-import com.example.brandservice.model.GPS;
+import com.example.brandservice.model.Brand;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BrandRequest {
-    private String email;
-    private String password;
-    private String name;
-    private String field;
-    private String address;
-    private GPS gps;
-    private String status;
+    String displayName;
+    String imageUrl;
+    String username;
+    String password;
+    String field;
+    Brand.GPS gps;
+    Brand.BrandStatus status;
 }

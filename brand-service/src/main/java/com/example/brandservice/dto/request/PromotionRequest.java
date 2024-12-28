@@ -1,19 +1,23 @@
 package com.example.brandservice.dto.request;
 
+import com.example.brandservice.model.Promotion;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PromotionRequest {
-    private String brandId;
-    private String name;
-    private String imageUrl;
-    private String category;
-    private int numOfVouchers;
-    private Date startDate;
-    private Date endDate;
-    private String status;
+    String name;
+    String description;
+    String imageUrl;
+    Date startDate;
+    Date endDate;
+    String brandId;
+    double budget;
+    double remainingBudget;
+    Promotion.PromotionStatus status;
 }

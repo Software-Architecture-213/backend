@@ -5,46 +5,38 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.rmi.server.UID;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "brands")
+@Table(name = "voucher_user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Brand {
+public class VoucherUser {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-    String displayName;
-    String imageUrl;
-    String username;
-    String password;
-    String field;
-    @Embedded
-    GPS gps;
-    // active / inactive
+    UID userId;
 
-//    @Enumerated(EnumType.STRING)
-    BrandStatus status;
+    @ManyToOne
+    @JoinColumn(name = "voucher_id", referencedColumnName = "id")
+    Voucher voucher;
+
+    String qrCode;
+    VoucherUserStatus status;
+
+    Date redeemedAt;
 
     @Column(name = "created_at")
     LocalDateTime createAt;
     @Column(name = "updated_at")
     LocalDateTime updateAt;
 
-    @Embeddable
-    @Data
-    public static class GPS {
-        Double latitude;
-        Double longitude;
-    }
-
-    public enum BrandStatus {
+    public enum VoucherUserStatus{
         ACTIVE,
-        INACTIVE
+        REDEEMED,
+        EXPIRED
     }
-
 }
-
-
 

@@ -5,27 +5,28 @@ import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.mapper.BrandMapper;
 import com.example.brandservice.model.Brand;
 import com.example.brandservice.repository.BrandRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class BrandService {
 
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
-    @Autowired
-    public BrandService(BrandRepository brandRepository, BrandMapper brandMapper) {
-        this.brandRepository = brandRepository;
-        this.brandMapper = brandMapper;
-    }
 
+    @Transactional
     public BrandResponse createBrand(BrandRequest brandRequest) {
         Brand brand = brandMapper.brandRequestToBrand(brandRequest);
+        brand.setCreateAt(LocalDateTime.now());
         Brand savedBrand = brandRepository.save(brand);
         return brandMapper.brandToBrandResponse(savedBrand);
     }
@@ -39,17 +40,18 @@ public class BrandService {
     public BrandResponse updateBrand(String id, BrandRequest brandRequest) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
-        brand.setName(brandRequest.getName());
+        brand.setDisplayName(brandRequest.getDisplayName());
+        brand.setImageUrl(brandRequest.getImageUrl());
         brand.setField(brandRequest.getField());
-        brand.setAddress(brandRequest.getAddress());
         brand.setGps(brandRequest.getGps());
         brand.setStatus(brandRequest.getStatus());
+        brand.setUpdateAt(LocalDateTime.now());
         Brand updatedBrand = brandRepository.save(brand);
         return brandMapper.brandToBrandResponse(updatedBrand);
     }
 
     public BrandResponse getUserInfoByEmail(String email) {
-        return brandMapper.brandToBrandResponse(brandRepository.findByEmail(email).orElseThrow(
+        return brandMapper.brandToBrandResponse(brandRepository.findByUsername(email).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found")
         ));
     }

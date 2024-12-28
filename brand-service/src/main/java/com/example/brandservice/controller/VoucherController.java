@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/vouchers")
 public class VoucherController {
@@ -26,6 +28,18 @@ public class VoucherController {
             // Create a voucher using the service layer
             VoucherResponse voucherResponse = voucherService.createVoucher(voucherRequest);
             return new ResponseEntity<>(voucherResponse, HttpStatus.CREATED);
+        } catch (Exception e) {
+            // Handle any exceptions that occur during the creation
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{promotionId}")
+    public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
+        try {
+            // Create a voucher using the service layer
+            List<VoucherResponse> voucherResponse = voucherService.getVoucherByPromotionId(promotionId);
+            return new ResponseEntity<>(voucherResponse, HttpStatus.OK);
         } catch (Exception e) {
             // Handle any exceptions that occur during the creation
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

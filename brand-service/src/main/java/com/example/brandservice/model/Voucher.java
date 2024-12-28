@@ -1,34 +1,69 @@
-    package com.example.brandservice.model;
+package com.example.brandservice.model;
 
-    import com.fasterxml.jackson.annotation.JsonBackReference;
-    import jakarta.persistence.*;
-    import lombok.AccessLevel;
-    import lombok.Data;
-    import lombok.experimental.FieldDefaults;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
-    import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.Date;
 
-    @Entity
-    @Data
-    @Table(name = "vouchers")
-    @FieldDefaults(level = AccessLevel.PRIVATE)
-    public class Voucher {
+@Entity
+@Data
+@Table(name = "vouchers")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Voucher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
+    String code;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.UUID)
-        String id;
+//    @Enumerated(EnumType.STRING)
+    VoucherType type;
+    String imageUrl;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JsonBackReference
-        @JoinColumn(name = "promotion_id", referencedColumnName = "id")
-        Promotion promotion;
+//    @Enumerated(EnumType.STRING)
+    VoucherValue valueType;
 
-        // Thông tin về voucher hoặc trò chơi
-        String voucherCode;
-        String qrCode;
-        String imageUrl;
-        Double value;
-        String description;
-        Date expirationDate;
-        String status;
+    Double value;
+    String description;
+
+    @Column(name = "expired_at")
+    LocalDateTime expiredAt;
+
+//    @Enumerated(EnumType.STRING)
+    VoucherStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
+    Promotion promotion;
+
+    Integer maxCounts;
+    Integer createCounts;
+
+    @Column(name = "created_at")
+    LocalDateTime createAt;
+    @Column(name = "updated_at")
+    LocalDateTime updateAt;
+
+    public enum VoucherType {
+        ONLINE,
+        OFFLINE
     }
+
+    public enum VoucherStatus {
+        ACTIVE,
+        EXPIRED
+    }
+
+    public enum VoucherValue {
+        FIXED,
+        PERCENTAGE,
+        ITEM,
+        FREE
+    }
+}
+
+

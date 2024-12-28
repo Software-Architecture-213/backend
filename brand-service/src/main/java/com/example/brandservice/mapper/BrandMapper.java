@@ -10,30 +10,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BrandMapper {
-    BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);
-
     // Mapping fields from BrandRequest to Brand
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "name", source = "name"),
-            @Mapping(target = "email", source = "email"),
-            @Mapping(target = "password", source = "password"),
-            @Mapping(target = "field", source = "field"),
-            @Mapping(target = "address", source = "address"),
-            @Mapping(target = "gps", source = "gps"),
-            @Mapping(target = "status", source = "status")
-    })
     Brand brandRequestToBrand(BrandRequest brandRequest);
 
     // Mapping fields from Brand to BrandResponse
-    @Mappings({
-            @Mapping(target = "id", source = "id"),
-            @Mapping(target = "name", source = "name"),
-            @Mapping(target = "email", source = "email"),
-            @Mapping(target = "field", source = "field"),
-            @Mapping(target = "address", source = "address"),
-            @Mapping(target = "gps", source = "gps"),
-            @Mapping(target = "status", source = "status")
-    })
     BrandResponse brandToBrandResponse(Brand brand);
 }
