@@ -36,7 +36,7 @@ public class VoucherController {
     }
 
     @PublicEndpoint
-    @GetMapping("/{promotionId}")
+    @GetMapping("/promotion/{promotionId}")
     public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
         try {
             // Create a voucher using the service layer
