@@ -1,6 +1,7 @@
 package com.example.identityservice.service;
 import com.example.identityservice.client.FirebaseUserClient;
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
+import com.example.identityservice.dto.request.user.EnableUserRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
@@ -49,5 +50,9 @@ public class UserService {
         }
         UserUpdateRequest updateRequest = UserUpdateRequest.builder().photoUrl(newPhotoUrl).build();
         return firebaseUserClient.updateByUid(userId, updateRequest);
+    }
+
+    public UserInfoResponse enableUser(EnableUserRequest userRequest) {
+        return firebaseUserClient.enableUser(userRequest.getUserId(), userRequest.isEnable());
     }
 }

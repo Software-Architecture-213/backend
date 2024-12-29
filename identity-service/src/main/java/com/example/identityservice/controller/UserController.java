@@ -1,6 +1,7 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
+import com.example.identityservice.dto.request.user.EnableUserRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
@@ -55,6 +56,13 @@ public class UserController {
             @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{userId}/enable")
+    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String userId, @RequestBody EnableUserRequest request) {
+        request.setUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.enableUser(request));
     }
 
     @PostMapping("/upload-image")

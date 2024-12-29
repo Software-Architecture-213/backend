@@ -15,7 +15,7 @@ public enum ErrorCode {
     USERNAME_INVALID(400,"Username is invalid", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(400,"Password is invalid", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(401,"Unauthenticated", HttpStatus.UNAUTHORIZED),
-    INACTIVATED_ACCOUNT(401,"Please check your mail to activate your account", HttpStatus.UNAUTHORIZED),
+    INACTIVATED_ACCOUNT(401,"Please check your mail or contact to admin to activate your account", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(401,"Dont have permission", HttpStatus.FORBIDDEN),
     INTERNAL_SERVER_ERROR(500, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST(400, "Bad request", HttpStatus.BAD_REQUEST),

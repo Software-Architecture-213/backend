@@ -153,4 +153,8 @@ public class FirebaseUserClient {
         }
 
     }
+
+    public UserInfoResponse enableUser(String userId, boolean enable) {
+        return updateByUid(userId, UserUpdateRequest.builder().disabled(!enable).build());
+    }
 }
