@@ -55,7 +55,8 @@ public class Voucher {
 
     public enum VoucherStatus {
         ACTIVE,
-        EXPIRED
+        EXPIRED,
+        INACTIVE
     }
 
     public enum VoucherValue {

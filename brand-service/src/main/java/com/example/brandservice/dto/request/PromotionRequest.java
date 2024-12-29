@@ -18,6 +18,5 @@ public class PromotionRequest {
     Date endDate;
     String brandId;
     double budget;
-    double remainingBudget;
     Promotion.PromotionStatus status;
 }

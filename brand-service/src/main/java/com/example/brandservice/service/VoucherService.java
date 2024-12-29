@@ -59,6 +59,21 @@ public class VoucherService {
                 .toList();
     }
 
+    public VoucherResponse getVoucherById(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(
+                () -> new RuntimeException("Voucher not found")
+        );
+
+        return voucherMapper.toVoucherResponse(voucher);
+    }
+
+    public List<VoucherResponse> getAllVouchers() {
+        List<Voucher> vouchers = voucherRepository.findAll();
+        return vouchers.stream()
+                .map(voucherMapper::toVoucherResponse)
+                .toList();
+    }
+
     public VoucherResponse updateVoucher(String id, VoucherRequest voucherRequest) {
         Optional<Voucher> optionalVoucher = voucherRepository.findById(id);
         if (optionalVoucher.isPresent()) {

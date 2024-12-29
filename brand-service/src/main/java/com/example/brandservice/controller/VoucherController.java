@@ -1,5 +1,6 @@
 package com.example.brandservice.controller;
 
+import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.VoucherRequest;
 import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.service.VoucherService;
@@ -34,6 +35,7 @@ public class VoucherController {
         }
     }
 
+    @PublicEndpoint
     @GetMapping("/{promotionId}")
     public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
         try {
@@ -42,6 +44,28 @@ public class VoucherController {
             return new ResponseEntity<>(voucherResponse, HttpStatus.OK);
         } catch (Exception e) {
             // Handle any exceptions that occur during the creation
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("")
+    public ResponseEntity<List<VoucherResponse>> getAllVouchers() {
+        try {
+            List<VoucherResponse> voucherResponseList = voucherService.getAllVouchers();
+            return new ResponseEntity<>(voucherResponseList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("/{voucherId}")
+    public ResponseEntity<VoucherResponse> getVoucherById(@PathVariable String voucherId) {
+        try {
+            VoucherResponse voucherResponse = voucherService.getVoucherById(voucherId);
+            return new ResponseEntity<>(voucherResponse, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
