@@ -37,6 +37,7 @@ public class PromotionService {
         Promotion promotion = promotionMapper.promotionRequestToPromotion(promotionRequest);
         promotion.setBrand(brand); // Set the Brand in the Promotion entity
         promotion.setCreateAt(LocalDateTime.now());
+        promotion.setRemainingBudget(promotion.getBudget());
         // Save the promotion entity
         Promotion savedPromotion = promotionRepository.save(promotion);
 
@@ -64,7 +65,7 @@ public class PromotionService {
         promotion.setEndDate(promotionRequest.getEndDate());
         promotion.setBrand(brand);
         promotion.setBudget(promotionRequest.getBudget());
-        promotion.setRemainingBudget(promotionRequest.getRemainingBudget());
+        promotion.setRemainingBudget(promotionRequest.getBudget());
         promotion.setStatus(promotionRequest.getStatus());
         promotion.setUpdateAt(LocalDateTime.now());
         // Save the updated promotion entity
@@ -94,5 +95,12 @@ public class PromotionService {
                 .toList();
          }
          return null;
+    }
+
+    public List<PromotionResponse> getAllPromotions() {
+        List<Promotion> promotions = promotionRepository.findAll();
+        return promotions.stream()
+                .map(promotionMapper::promotionToPromotionResponse)
+                .toList();
     }
 }

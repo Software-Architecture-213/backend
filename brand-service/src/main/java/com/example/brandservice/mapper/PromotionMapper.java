@@ -11,6 +11,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface PromotionMapper {
     // Mapping fields from PromotionRequest to Promotion
+    @Mapping(target = "remainingBudget", ignore = true)
     Promotion promotionRequestToPromotion(PromotionRequest promotionRequest);
 
     // Mapping fields from Promotion to PromotionResponse

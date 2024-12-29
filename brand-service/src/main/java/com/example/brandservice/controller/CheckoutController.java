@@ -1,6 +1,7 @@
 package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
+import com.example.brandservice.dto.request.CartRequest;
 import com.example.brandservice.service.PaypalService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paypal.sdk.models.Order;
@@ -25,10 +26,9 @@ public class CheckoutController {
 
     @PublicEndpoint
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Order> createOrder(@RequestBody CartRequest request) {
         try {
-            String cart = objectMapper.writeValueAsString(request.get("cart"));
-            Order response = paypalService.createOrder(cart);
+            Order response = paypalService.createOrder(request);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 // PaypalClient.java
 package com.example.brandservice.client;
 
+import com.example.brandservice.dto.request.CartRequest;
 import com.paypal.sdk.PaypalServerSdkClient;
 import com.paypal.sdk.controllers.OrdersController;
 import com.paypal.sdk.exceptions.ApiException;
@@ -31,19 +32,21 @@ public class PaypalClient {
         this.client = paypalSdkClient;
     }
 
-    public Order createOrder(String cart) throws IOException, ApiException {
+    public Order createOrder(CartRequest cart) throws IOException, ApiException {
 
         OrdersCreateInput ordersCreateInput = new OrdersCreateInput.Builder(
                 null,
                 new OrderRequest.Builder(
                         CheckoutPaymentIntent.CAPTURE,
-                        Arrays.asList(
+                        Collections.singletonList(
                                 new PurchaseUnitRequest.Builder(
                                         new AmountWithBreakdown.Builder(
                                                 "USD",
-                                                "100.00")
+                                                cart.getPrice())
                                                 .build())
-                                        .build()))
+                                        .referenceId(cart.getId())
+                                        .build())
+                        )
                         .build())
                 .build();
 
