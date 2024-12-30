@@ -2,13 +2,17 @@ package com.example.brandservice.service;
 
 import com.example.brandservice.dto.request.VoucherRequest;
 import com.example.brandservice.dto.response.VoucherResponse;
+import com.example.brandservice.exception.AppException;
+import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.VoucherMapper;
 import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Voucher;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.VoucherRepository;
+import com.example.brandservice.utility.CloudinaryUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,7 +26,7 @@ public class VoucherService {
     private final VoucherRepository voucherRepository;
     private final VoucherMapper voucherMapper;
     private final PromotionRepository promotionRepository;
-
+    private final CloudinaryService cloudinaryService;
     public VoucherResponse createVoucher(VoucherRequest voucherRequest) {
         // Fetch the promotion associated with the voucher
         Promotion promotion = promotionRepository.findById(voucherRequest.getPromotionId())
@@ -85,5 +89,23 @@ public class VoucherService {
         } else {
             throw new RuntimeException("Voucher not found");
         }
+    }
+
+    public VoucherResponse uploadPhoto(String voucherId, MultipartFile file) {
+        Voucher voucher= voucherRepository.findById(voucherId).orElseThrow(
+                () -> new RuntimeException("Voucher not found")
+        );
+
+        String oldPhotoUrl = voucher.getImageUrl();
+        String oldPublicId = CloudinaryUtil.extractPublicIdFromUrl(oldPhotoUrl);
+        if (oldPublicId != null){
+            cloudinaryService.deleteImage(oldPublicId);
+        }
+        String newPhotoUrl = cloudinaryService.uploadImage(file);
+        if (newPhotoUrl == null){
+            throw new AppException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+        voucher.setImageUrl(newPhotoUrl);
+        return voucherMapper.toVoucherResponse(voucherRepository.save(voucher));
     }
 }
