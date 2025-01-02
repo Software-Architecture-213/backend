@@ -28,4 +28,5 @@ public class PromotionResponse {
     List<Voucher> vouchers;
     Date createAt;
     Date updateAt;
+    List<String> games;
 }
