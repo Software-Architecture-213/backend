@@ -1,7 +1,7 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
-import com.example.identityservice.dto.request.user.EnableUserRequest;
+import com.example.identityservice.dto.request.user.DisableUserRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
@@ -37,10 +37,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "")
     public ResponseEntity<UsersInfoResponse> getUsersInfo(Authentication authentication, @ModelAttribute UsersInfoRequest usersInfoRequest) {
-        UsersInfoResponse userInfo = userService.getUsersInfo(usersInfoRequest);
-        final var notAdminUsers = userInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
-        userInfo.setData(notAdminUsers);
-        return ResponseEntity.ok(userInfo);
+        UsersInfoResponse usersInfo = userService.getUsersInfo(usersInfoRequest);
+        final var notAdminUsers = usersInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
+        usersInfo.setData(notAdminUsers);
+        return ResponseEntity.ok(usersInfo);
     }
 
     @GetMapping("/me")
@@ -57,10 +57,10 @@ public class UserController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{userId}/enable")
-    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String userId, @RequestBody EnableUserRequest request) {
-        request.setUserId(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(userService.enableUser(request));
+    @PostMapping("/{email}/disable")
+    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String email, @RequestBody DisableUserRequest request) {
+        request.setEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.disableUser(request));
     }
 
     @PostMapping("/me/upload-image")

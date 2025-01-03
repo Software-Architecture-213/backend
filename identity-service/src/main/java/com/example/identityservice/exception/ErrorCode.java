@@ -19,6 +19,8 @@ public enum ErrorCode {
     UNAUTHORIZED(401,"Dont have permission", HttpStatus.FORBIDDEN),
     INTERNAL_SERVER_ERROR(500, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST(400, "Bad request", HttpStatus.BAD_REQUEST),
+    PHONE_TOO_SHORT(400, "Phone number too short", HttpStatus.BAD_REQUEST),
+    PHONE_TOO_LONG(400, "Phone number too long", HttpStatus.BAD_REQUEST),
     INVALID_LOGIN_CREDENTIALS(401, "Invalid login credentials", HttpStatus.UNAUTHORIZED),
     TOKEN_VERIFICATION_FAILURE(401, "Authentication failure: Token missing, invalid or expired", HttpStatus.UNAUTHORIZED),
     ACCOUNT_ALREADY_EXISTS(409, "Account with provided phone number or email already exists", HttpStatus.CONFLICT),

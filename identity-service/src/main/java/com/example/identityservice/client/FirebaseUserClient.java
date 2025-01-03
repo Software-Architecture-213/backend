@@ -154,7 +154,7 @@ public class FirebaseUserClient {
 
     }
 
-    public UserInfoResponse enableUser(String userId, boolean enable) {
-        return updateByUid(userId, UserUpdateRequest.builder().disabled(!enable).build());
+    public UserInfoResponse disableUser(String email, boolean disable) {
+        return updateByEmail(email, UserUpdateRequest.builder().disabled(disable).build());
     }
 }

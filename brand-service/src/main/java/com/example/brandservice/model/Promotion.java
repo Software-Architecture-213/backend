@@ -31,7 +31,7 @@ public class Promotion {
     Double budget;
     Double remainingBudget;
 
-//    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     PromotionStatus status;
 
     @JsonManagedReference

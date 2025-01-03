@@ -7,10 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnableUserRequest {
+public class DisableUserRequest {
         
     @JsonIgnore
-    private String userId;
+    private String email;
 
-    private boolean enable;
+    private String message;
+    private boolean disabled;
 }

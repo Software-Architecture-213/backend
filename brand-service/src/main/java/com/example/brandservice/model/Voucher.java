@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -19,11 +18,11 @@ public class Voucher {
     String id;
     String code;
 
-//    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     VoucherType type;
     String imageUrl;
 
-//    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     VoucherValue valueType;
 
     Double value;
@@ -32,7 +31,7 @@ public class Voucher {
     @Column(name = "expired_at")
     LocalDateTime expiredAt;
 
-//    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     VoucherStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
