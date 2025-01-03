@@ -2,15 +2,19 @@ package com.example.brandservice.service;
 
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.PromotionResponse;
+import com.example.brandservice.exception.AppException;
+import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.PromotionMapper;
 import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Brand;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.BrandRepository;
 import com.example.brandservice.repository.VoucherRepository;
+import com.example.brandservice.utility.CloudinaryUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -24,7 +28,8 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final BrandRepository brandRepository;
     private final PromotionMapper promotionMapper;
-    private final VoucherRepository voucherRepository;
+    private final CloudinaryService cloudinaryService;
+
 
     // Create a new promotion
     public PromotionResponse createPromotion(PromotionRequest promotionRequest) {
@@ -52,20 +57,15 @@ public class PromotionService {
                 () -> new RuntimeException("Promotion not found")
         );
 
-        // Get the brand by ID
-        Brand brand = brandRepository.findById(promotionRequest.getBrandId()).orElseThrow(
-                () -> new RuntimeException("Brand not found")
-        );
-
         // Update the promotion details
         promotion.setName(promotionRequest.getName());
         promotion.setDescription(promotionRequest.getDescription());
-        promotion.setImageUrl(promotionRequest.getImageUrl());
         promotion.setStartDate(promotionRequest.getStartDate());
         promotion.setEndDate(promotionRequest.getEndDate());
-        promotion.setBrand(brand);
+        if (promotionRequest.getBudget() > promotion.getBudget()){
+            promotion.setRemainingBudget(promotionRequest.getBudget() - promotion.getBudget() + promotion.getRemainingBudget());
+        }
         promotion.setBudget(promotionRequest.getBudget());
-        promotion.setRemainingBudget(promotionRequest.getBudget());
         promotion.setStatus(promotionRequest.getStatus());
         promotion.setUpdateAt(LocalDateTime.now());
         // Save the updated promotion entity
@@ -73,6 +73,24 @@ public class PromotionService {
 
         // Return the updated promotion as a response DTO
         return promotionMapper.promotionToPromotionResponse(updatedPromotion);
+    }
+
+    public PromotionResponse uploadPhoto(String promotionId, MultipartFile file) {
+        Promotion promotion = promotionRepository.findById(promotionId).orElseThrow(
+                () -> new RuntimeException("Promotion not found")
+        );
+
+        String oldPhotoUrl = promotion.getImageUrl();
+        String oldPublicId = CloudinaryUtil.extractPublicIdFromUrl(oldPhotoUrl);
+        if (oldPublicId != null){
+            cloudinaryService.deleteImage(oldPublicId);
+        }
+        String newPhotoUrl = cloudinaryService.uploadImage(file);
+        if (newPhotoUrl == null){
+            throw new AppException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+        promotion.setImageUrl(newPhotoUrl);
+        return promotionMapper.promotionToPromotionResponse(promotionRepository.save(promotion));
     }
 
     // Fetch a promotion by ID

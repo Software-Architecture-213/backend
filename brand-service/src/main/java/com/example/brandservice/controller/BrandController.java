@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,12 +33,20 @@ public class BrandController {
     }
 
     // Update an existing brand
-    @PutMapping("/{brandId}")
+    @PutMapping()
     public ResponseEntity<BrandResponse> updateBrand(
-            @PathVariable String brandId,
+            Authentication authentication,
             @RequestBody BrandRequest brandRequest) {
+        String brandId = (String) authentication.getPrincipal();
         BrandResponse updatedBrand = brandService.updateBrand(brandId, brandRequest);
         return new ResponseEntity<>(updatedBrand, HttpStatus.OK);
+    }
+
+    @PostMapping("/upload-image")
+    public ResponseEntity<BrandResponse> updatePhoto(Authentication authentication,
+                                                        @RequestParam("file") MultipartFile file) {
+        String brandId = (String) authentication.getPrincipal();
+        return ResponseEntity.status(HttpStatus.OK).body(brandService.updatePhoto(brandId, file));
     }
 
     // Get a brand by its ID

@@ -1,5 +1,6 @@
 package com.example.brandservice.model;
 
+import com.example.brandservice.converter.GameListConverter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -37,6 +38,10 @@ public class Promotion {
     @JsonManagedReference
     @OneToMany(mappedBy = "promotion", fetch = FetchType.LAZY)
     List<Voucher> vouchers;
+
+    @Convert(converter = GameListConverter.class)
+    @Column(columnDefinition = "TEXT")
+    List<String> games;
 
     @Column(name = "created_at")
     LocalDateTime createAt;

@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,5 @@ public class PromotionRequest {
     String brandId;
     double budget;
     Promotion.PromotionStatus status;
+    List<String> games;
 }
