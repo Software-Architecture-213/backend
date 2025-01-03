@@ -27,6 +27,7 @@ public class UserInfoResponse {
     private String photoUrl;
     private Role role;
     private boolean isDisabled;
+    private Date lastSignIn;
 
     /* Override to format date */
     public String getDateOfBirth() {
@@ -35,5 +36,13 @@ public class UserInfoResponse {
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(dateOfBirth);
+    }
+
+    public String getLastSignIn() {
+        if (lastSignIn == null || lastSignIn.toString().contains("1970")) {
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(lastSignIn);
     }
 }

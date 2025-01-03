@@ -1,14 +1,13 @@
 package com.example.identityservice.controller;
 
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
+import com.example.identityservice.dto.request.user.DisableUserRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
 import com.example.identityservice.enums.Role;
 import com.example.identityservice.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -38,10 +37,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "")
     public ResponseEntity<UsersInfoResponse> getUsersInfo(Authentication authentication, @ModelAttribute UsersInfoRequest usersInfoRequest) {
-        UsersInfoResponse userInfo = userService.getUsersInfo(usersInfoRequest);
-        final var notAdminUsers = userInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
-        userInfo.setData(notAdminUsers);
-        return ResponseEntity.ok(userInfo);
+        UsersInfoResponse usersInfo = userService.getUsersInfo(usersInfoRequest);
+        final var notAdminUsers = usersInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
+        usersInfo.setData(notAdminUsers);
+        return ResponseEntity.ok(usersInfo);
     }
 
     @GetMapping("/me")
@@ -50,14 +49,21 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserInfo(userId, null));
     }
 
-    @PutMapping("")
+    @PutMapping("/me")
     public ResponseEntity<UserInfoResponse> updateUserByEmail(Authentication authentication,
             @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
     }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{email}/disable")
+    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String email, @RequestBody DisableUserRequest request) {
+        request.setEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body(userService.disableUser(request));
+    }
 
-    @PostMapping("/upload-image")
+    @PostMapping("/me/upload-image")
     public ResponseEntity<UserInfoResponse> updatePhoto(Authentication authentication,
             @RequestParam("file") MultipartFile file) {
         String userId = (String) authentication.getPrincipal();

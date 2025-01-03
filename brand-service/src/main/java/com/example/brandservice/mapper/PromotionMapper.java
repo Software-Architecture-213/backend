@@ -12,9 +12,11 @@ import org.mapstruct.factory.Mappers;
 public interface PromotionMapper {
     // Mapping fields from PromotionRequest to Promotion
     @Mapping(target = "remainingBudget", ignore = true)
+    @Mapping(target = "games", source = "games")
     Promotion promotionRequestToPromotion(PromotionRequest promotionRequest);
 
     // Mapping fields from Promotion to PromotionResponse
     @Mapping(target = "brandId", source = "brand.id")
+//    @Mapping(target = "description", source = "description")
     PromotionResponse promotionToPromotionResponse(Promotion promotion);
 }

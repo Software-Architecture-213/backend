@@ -2,12 +2,14 @@ package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.VoucherRequest;
+import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class VoucherController {
     }
 
     @PublicEndpoint
-    @GetMapping("/{promotionId}")
+    @GetMapping("/promotion/{promotionId}")
     public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
         try {
             // Create a voucher using the service layer
@@ -82,5 +84,11 @@ public class VoucherController {
             // Handle cases where the voucher might not be found
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/upload-image/{voucherId}")
+    public ResponseEntity<VoucherResponse> updatePhoto(@PathVariable String voucherId,
+                                                         @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.OK).body(voucherService.uploadPhoto(voucherId, file));
     }
 }

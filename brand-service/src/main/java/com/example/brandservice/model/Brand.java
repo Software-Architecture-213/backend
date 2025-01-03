@@ -24,7 +24,7 @@ public class Brand {
     GPS gps;
     // active / inactive
 
-//    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     BrandStatus status;
 
     @Column(name = "created_at")

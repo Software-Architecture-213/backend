@@ -6,11 +6,8 @@ import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.exception.AppException;
 import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.utility.OTPUtil;
-import com.google.firebase.auth.FirebaseAuth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +18,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class OTPService {
-    private final JavaMailSender mailSender;
+    private final MailService mailService;
     private final FirebaseUserClient firebaseUserClient;
     private final Map<String, OTPData> otpStorage = new HashMap<>();
 
@@ -32,7 +29,7 @@ public class OTPService {
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
         }
         otpStorage.put(email, new OTPData(otp, LocalDateTime.now().plusMinutes(5))); // Expiry 5 minutes
-        sendEmail(email, otp);
+        mailService.sendMail(email, "Your OTP Code", "Your One-Time Password (OTP) is: " + otp + "\n\nThis OTP is valid for 5 minutes.");
         return otp;
     }
 
@@ -46,21 +43,6 @@ public class OTPService {
             return true;
         }
         return false;
-    }
-
-    private void sendEmail(String to, String otp) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Your OTP Code");
-        message.setText("Your One-Time Password (OTP) is: " + otp + "\n\nThis OTP is valid for 5 minutes.");
-        // Use JavaMailSender to send the email
-        try {
-            mailSender.send(message);
-            log.info("OTP sent to " + to);
-        } catch (Exception e) {
-            log.info("Failed to send email to " + to);
-            e.printStackTrace();
-        }
     }
 
         private record OTPData(String otp, LocalDateTime expiryTime) {

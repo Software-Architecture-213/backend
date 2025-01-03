@@ -147,6 +147,12 @@ public class FirebaseAuthClient {
             if (exception.getMessage().contains("PHONE_NUMBER_EXISTS")) {
                 throw new AccountAlreadyExistsException("Account with provided phone number already exists");
             }
+            if (exception.getMessage().contains("INVALID_PHONE_NUMBER : TOO_SHORT")) {
+                throw new AppException(ErrorCode.PHONE_TOO_SHORT);
+            }
+            if (exception.getMessage().contains("INVALID_PHONE_NUMBER : TOO_LONG")) {
+                throw new AppException(ErrorCode.PHONE_TOO_LONG);
+            }
             throw new RuntimeException("Error creating user: " + exception.getMessage(), exception);
         }
     }

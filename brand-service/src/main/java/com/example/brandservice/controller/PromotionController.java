@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -54,6 +55,13 @@ public class PromotionController {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandId);
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
+
+    @PostMapping("/upload-image/{promotionId}")
+    public ResponseEntity<PromotionResponse> updatePhoto(@PathVariable String promotionId,
+                                                     @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.OK).body(promotionService.uploadPhoto(promotionId, file));
+    }
+
 
     @PublicEndpoint
     @GetMapping
