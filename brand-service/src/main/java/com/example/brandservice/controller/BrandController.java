@@ -1,5 +1,6 @@
 package com.example.brandservice.controller;
 
+import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.BrandRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.service.BrandService;
@@ -39,6 +40,7 @@ public class BrandController {
     }
 
     // Get a brand by its ID
+    @PublicEndpoint
     @GetMapping("/{brandId}")
     public ResponseEntity<BrandResponse> getBrandById(@PathVariable String brandId) {
         BrandResponse brandResponse = brandService.getBrandById(brandId);
@@ -46,7 +48,7 @@ public class BrandController {
     }
 
     // Get all brands
-    @PreAuthorize("hasRole('BRAND')")
+    @PublicEndpoint
     @GetMapping
     public ResponseEntity<List<BrandResponse>> getAllBrands() {
         List<BrandResponse> brandResponses = brandService.getAllBrands();

@@ -7,26 +7,21 @@ import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Voucher;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.VoucherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final VoucherMapper voucherMapper;
     private final PromotionRepository promotionRepository;
-
-    @Autowired
-    public VoucherService(VoucherRepository voucherRepository, VoucherMapper voucherMapper, PromotionRepository promotionRepository) {
-        this.voucherRepository = voucherRepository;
-        this.voucherMapper = voucherMapper;
-        this.promotionRepository = promotionRepository;
-    }
 
     public VoucherResponse createVoucher(VoucherRequest voucherRequest) {
         // Fetch the promotion associated with the voucher
@@ -36,7 +31,7 @@ public class VoucherService {
         // Map the voucher request to a voucher entity
         Voucher voucher = voucherMapper.toVoucher(voucherRequest);
         voucher.setPromotion(promotion);  // Set the promotion on the voucher
-
+        voucher.setCreateAt(LocalDateTime.now());
         // If the promotion already has a list of vouchers, add the new voucher to it
         if (promotion.getVouchers() == null) {
             promotion.setVouchers(new ArrayList<>());  // Create a new list if none exists
@@ -55,6 +50,29 @@ public class VoucherService {
         return voucherMapper.toVoucherResponse(voucher);
     }
 
+    public List<VoucherResponse> getVoucherByPromotionId(String promotionId) {
+        promotionRepository.findById(promotionId).orElseThrow(
+                () -> new RuntimeException("Promotion not found"));
+        List<Voucher> vouchers = voucherRepository.findAllByPromotionId(promotionId);
+        return vouchers.stream()
+                .map(voucherMapper::toVoucherResponse)
+                .toList();
+    }
+
+    public VoucherResponse getVoucherById(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId).orElseThrow(
+                () -> new RuntimeException("Voucher not found")
+        );
+
+        return voucherMapper.toVoucherResponse(voucher);
+    }
+
+    public List<VoucherResponse> getAllVouchers() {
+        List<Voucher> vouchers = voucherRepository.findAll();
+        return vouchers.stream()
+                .map(voucherMapper::toVoucherResponse)
+                .toList();
+    }
 
     public VoucherResponse updateVoucher(String id, VoucherRequest voucherRequest) {
         Optional<Voucher> optionalVoucher = voucherRepository.findById(id);

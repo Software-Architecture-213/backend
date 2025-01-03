@@ -1,15 +1,26 @@
 package com.example.brandservice.dto.response;
 
-import com.example.brandservice.model.GPS;
+import com.example.brandservice.model.Brand;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BrandResponse {
-    private String id;
-    private String email;
-    private String name;
-    private String field;
-    private String address;
-    private GPS gps;
-    private String status;
+    String id;
+    String displayName;
+    String imageUrl;
+    String username;
+    String field;
+    Brand.GPS gps;
+    Brand.BrandStatus status;
+    Date createAt;
+    Date updateAt;
 }

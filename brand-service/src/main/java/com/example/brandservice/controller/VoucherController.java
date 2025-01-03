@@ -1,5 +1,6 @@
 package com.example.brandservice.controller;
 
+import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.VoucherRequest;
 import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.service.VoucherService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/vouchers")
@@ -28,6 +31,41 @@ public class VoucherController {
             return new ResponseEntity<>(voucherResponse, HttpStatus.CREATED);
         } catch (Exception e) {
             // Handle any exceptions that occur during the creation
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("/{promotionId}")
+    public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
+        try {
+            // Create a voucher using the service layer
+            List<VoucherResponse> voucherResponse = voucherService.getVoucherByPromotionId(promotionId);
+            return new ResponseEntity<>(voucherResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle any exceptions that occur during the creation
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("")
+    public ResponseEntity<List<VoucherResponse>> getAllVouchers() {
+        try {
+            List<VoucherResponse> voucherResponseList = voucherService.getAllVouchers();
+            return new ResponseEntity<>(voucherResponseList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("/{voucherId}")
+    public ResponseEntity<VoucherResponse> getVoucherById(@PathVariable String voucherId) {
+        try {
+            VoucherResponse voucherResponse = voucherService.getVoucherById(voucherId);
+            return new ResponseEntity<>(voucherResponse, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

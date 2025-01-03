@@ -1,5 +1,6 @@
 package com.example.brandservice.controller;
 
+import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.dto.response.PromotionResponse;
@@ -48,12 +49,31 @@ public class PromotionController {
 //    }
 
     // Get all promotions for a specific brand
-    @GetMapping("")
+    @GetMapping("/brand")
     public ResponseEntity<List<PromotionResponse>> getPromotionsByBrandId(@RequestParam("brandId") String brandId) {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandId);
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
 
+    @PublicEndpoint
+    @GetMapping
+    public ResponseEntity<List<PromotionResponse>> getAllPromotions() {
+        try {
+            List<PromotionResponse> listPromotion = promotionService.getAllPromotions();
+            return new ResponseEntity<>(listPromotion, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PublicEndpoint
+    @GetMapping("/{promotionId}")
+    public ResponseEntity<PromotionResponse> getPromotionById(@PathVariable String promotionId) {
+        PromotionResponse promotion = promotionService.getPromotionById(promotionId);
+        return new ResponseEntity<>(promotion, HttpStatus.OK);
+    }
+
+    @PublicEndpoint
     @GetMapping("/my-promotions")
     public ResponseEntity<List<PromotionResponse>> getPromotions(Authentication authentication) {
         String brandId = (String) authentication.getPrincipal();
@@ -61,5 +81,4 @@ public class PromotionController {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandResponse.getId());
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
-
 }

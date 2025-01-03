@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -24,16 +26,17 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public void register(BrandRequest request) {
-        Optional<Brand> existingBrand = brandRepository.findByEmail(request.getEmail());
+        Optional<Brand> existingBrand = brandRepository.findByUsername(request.getUsername());
         if (existingBrand.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
-
-        brandRepository.save(brandMapper.brandRequestToBrand(request));
+        Brand brand = brandMapper.brandRequestToBrand(request);
+        brand.setCreateAt(LocalDateTime.now());
+        brandRepository.save(brand);
     }
 
     public TokenResponse login(LoginRequest request) {
-        Brand brand = brandRepository.findByEmail(request.getEmail())
+        Brand brand = brandRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
         if (!brand.getPassword().equals(request.getPassword())) { // Hash checking in production
@@ -43,8 +46,8 @@ public class AuthService {
         String accessToken = null;
         String refreshToken = null;
         try {
-            accessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getEmail());
-            refreshToken = jwtUtil.generateRefreshToken(brand.getEmail());
+            accessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getUsername());
+            refreshToken = jwtUtil.generateRefreshToken(brand.getUsername());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +69,7 @@ public class AuthService {
                 () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token")
         );
         // Generate a new access token
-        String newAccessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getEmail());
+        String newAccessToken = jwtUtil.generateToken(brand.getId(), "BRAND", brand.getUsername());
 
         // Calculate the expiration time (example: 3600 seconds = 1 hour)
         String expiresIn = "3600";  // Adjust this based on your token expiration strategy
