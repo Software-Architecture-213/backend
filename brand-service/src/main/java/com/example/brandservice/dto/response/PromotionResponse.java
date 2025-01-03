@@ -20,6 +20,7 @@ public class PromotionResponse {
     String name;
     String brandId;
     String imageUrl;
+    String description;
     Date startDate;
     Date endDate;
     double budget;
@@ -28,4 +29,5 @@ public class PromotionResponse {
     List<Voucher> vouchers;
     Date createAt;
     Date updateAt;
+    List<String> games;
 }
