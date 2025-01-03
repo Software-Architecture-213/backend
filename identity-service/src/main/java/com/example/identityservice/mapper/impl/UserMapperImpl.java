@@ -1,8 +1,8 @@
 package com.example.identityservice.mapper.impl;
 
+import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.enums.Role;
@@ -24,6 +24,7 @@ public class UserMapperImpl implements UserMapper {
                     .photoUrl(userRecord.getPhotoUrl())
                     .role(Role.valueOf(role))
                     .isDisabled(userRecord.isDisabled())
+                    .lastSignIn(new Date(userRecord.getUserMetadata().getLastSignInTimestamp()))
                     .build();
     }
 

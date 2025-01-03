@@ -1,6 +1,6 @@
 
 const brandVerifyHandler = (req, res, next) => {
-    if (req.tokenData == null || req.tokenData.role != "BRAND") {
+    if (req.tokenData == null || req.tokenData.role !== "BRAND") {
       return res.status(401).json({ error: 'Permission denied' });
     }  
     next()

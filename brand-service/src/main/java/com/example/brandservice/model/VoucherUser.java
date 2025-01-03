@@ -24,6 +24,8 @@ public class VoucherUser {
     Voucher voucher;
 
     String qrCode;
+
+    @Enumerated(EnumType.STRING)
     VoucherUserStatus status;
 
     Date redeemedAt;

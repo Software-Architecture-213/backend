@@ -153,4 +153,8 @@ public class FirebaseUserClient {
         }
 
     }
+
+    public UserInfoResponse disableUser(String email, boolean disable) {
+        return updateByEmail(email, UserUpdateRequest.builder().disabled(disable).build());
+    }
 }
