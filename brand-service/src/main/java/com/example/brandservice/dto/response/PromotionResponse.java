@@ -20,6 +20,7 @@ public class PromotionResponse {
     String name;
     String brandId;
     String imageUrl;
+    String description;
     Date startDate;
     Date endDate;
     double budget;

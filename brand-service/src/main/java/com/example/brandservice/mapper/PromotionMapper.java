@@ -17,5 +17,6 @@ public interface PromotionMapper {
 
     // Mapping fields from Promotion to PromotionResponse
     @Mapping(target = "brandId", source = "brand.id")
+//    @Mapping(target = "description", source = "description")
     PromotionResponse promotionToPromotionResponse(Promotion promotion);
 }

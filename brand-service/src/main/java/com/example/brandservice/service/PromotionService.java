@@ -57,20 +57,15 @@ public class PromotionService {
                 () -> new RuntimeException("Promotion not found")
         );
 
-        // Get the brand by ID
-        Brand brand = brandRepository.findById(promotionRequest.getBrandId()).orElseThrow(
-                () -> new RuntimeException("Brand not found")
-        );
-
         // Update the promotion details
         promotion.setName(promotionRequest.getName());
         promotion.setDescription(promotionRequest.getDescription());
-        promotion.setImageUrl(promotionRequest.getImageUrl());
         promotion.setStartDate(promotionRequest.getStartDate());
         promotion.setEndDate(promotionRequest.getEndDate());
-        promotion.setBrand(brand);
+        if (promotionRequest.getBudget() > promotion.getBudget()){
+            promotion.setRemainingBudget(promotionRequest.getBudget() - promotion.getBudget() + promotion.getRemainingBudget());
+        }
         promotion.setBudget(promotionRequest.getBudget());
-        promotion.setRemainingBudget(promotionRequest.getBudget());
         promotion.setStatus(promotionRequest.getStatus());
         promotion.setUpdateAt(LocalDateTime.now());
         // Save the updated promotion entity
