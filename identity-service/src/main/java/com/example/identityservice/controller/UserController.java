@@ -8,8 +8,6 @@ import com.example.identityservice.dto.response.user.UsersInfoResponse;
 import com.example.identityservice.enums.Role;
 import com.example.identityservice.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -51,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserInfo(userId, null));
     }
 
-    @PutMapping("")
+    @PutMapping("/me")
     public ResponseEntity<UserInfoResponse> updateUserByEmail(Authentication authentication,
             @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         String userId = (String) authentication.getPrincipal();
@@ -65,7 +63,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.enableUser(request));
     }
 
-    @PostMapping("/upload-image")
+    @PostMapping("/me/upload-image")
     public ResponseEntity<UserInfoResponse> updatePhoto(Authentication authentication,
             @RequestParam("file") MultipartFile file) {
         String userId = (String) authentication.getPrincipal();
