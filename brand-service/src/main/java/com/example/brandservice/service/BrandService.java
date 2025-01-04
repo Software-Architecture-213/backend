@@ -67,7 +67,6 @@ public class BrandService {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
         brand.setDisplayName(brandRequest.getDisplayName());
-        brand.setImageUrl(brandRequest.getImageUrl());
         brand.setField(brandRequest.getField());
         brand.setGps(brandRequest.getGps());
         brand.setStatus(brandRequest.getStatus());

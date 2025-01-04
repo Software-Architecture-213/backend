@@ -65,7 +65,7 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");
         }
 
-        Brand brand = brandRepository.findById(subject).orElseThrow(
+        Brand brand = brandRepository.findByUsername(subject).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token")
         );
         // Generate a new access token
