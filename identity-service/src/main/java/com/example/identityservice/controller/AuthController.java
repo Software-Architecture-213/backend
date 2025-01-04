@@ -14,7 +14,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,8 +77,7 @@ public class AuthController {
 
     @PublicEndpoint
     @PostMapping("/jwt-introspect")
-    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestBody Map<String, String> body) {
-        String token = body.get("token");
+    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestParam String token) {
         if (token == null || token.isEmpty()) {
             return ResponseEntity.badRequest().body(ValidatedTokenResponse.builder()
             .isValidated(false)

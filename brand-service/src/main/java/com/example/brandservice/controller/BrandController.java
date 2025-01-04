@@ -2,12 +2,12 @@ package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.BrandRequest;
+import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,8 +60,8 @@ public class BrandController {
     // Get all brands
     @PublicEndpoint
     @GetMapping
-    public ResponseEntity<List<BrandResponse>> getAllBrands() {
-        List<BrandResponse> brandResponses = brandService.getAllBrands();
+    public ResponseEntity<List<BrandResponse>> getBrands(@ModelAttribute  GetBrandsRequest request) {
+        List<BrandResponse> brandResponses = brandService.getAllBrands(request);
         return new ResponseEntity<>(brandResponses, HttpStatus.OK);
     }
 }

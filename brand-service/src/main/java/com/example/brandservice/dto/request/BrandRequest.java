@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class BrandRequest {
     String displayName;
     String imageUrl;
-    String username;
+    String username; // email
     String password;
     String field;
     Brand.GPS gps;
