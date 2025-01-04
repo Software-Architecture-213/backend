@@ -6,6 +6,7 @@ import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/promotions")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PromotionController {
 
     private final PromotionService promotionService;
@@ -42,13 +43,6 @@ public class PromotionController {
         return new ResponseEntity<>(updatedPromotion, HttpStatus.OK);
     }
 
-//    // Get a promotion by its ID
-//    @GetMapping("/{promotionId}")
-//    public ResponseEntity<PromotionResponse> getPromotionById(@PathVariable String promotionId) {
-//        PromotionResponse promotionResponse = promotionService.getPromotionById(promotionId);
-//        return new ResponseEntity<>(promotionResponse, HttpStatus.OK);
-//    }
-
     // Get all promotions for a specific brand
     @GetMapping("/brand")
     public ResponseEntity<List<PromotionResponse>> getPromotionsByBrandId(@RequestParam("brandId") String brandId) {
@@ -57,21 +51,10 @@ public class PromotionController {
     }
 
     @PostMapping("/upload-image/{promotionId}")
-    public ResponseEntity<PromotionResponse> updatePhoto(@PathVariable String promotionId,
-                                                     @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<PromotionResponse> updatePhoto(
+            @PathVariable String promotionId,
+            @RequestParam("file") MultipartFile file) {
         return ResponseEntity.status(HttpStatus.OK).body(promotionService.uploadPhoto(promotionId, file));
-    }
-
-
-    @PublicEndpoint
-    @GetMapping
-    public ResponseEntity<List<PromotionResponse>> getAllPromotions() {
-        try {
-            List<PromotionResponse> listPromotion = promotionService.getAllPromotions();
-            return new ResponseEntity<>(listPromotion, HttpStatus.OK);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @PublicEndpoint
@@ -89,4 +72,16 @@ public class PromotionController {
         List<PromotionResponse> promotions = promotionService.getPromotionsByBrandId(brandResponse.getId());
         return new ResponseEntity<>(promotions, HttpStatus.OK);
     }
+
+    @PublicEndpoint
+    @GetMapping
+    public ResponseEntity<List<PromotionResponse>> getAllPromotions() {
+        try {
+            List<PromotionResponse> listPromotion = promotionService.getAllPromotions();
+            return new ResponseEntity<>(listPromotion, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
