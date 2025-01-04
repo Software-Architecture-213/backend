@@ -26,6 +26,7 @@ public class BrandController {
     }
 
     // Create a new brand
+    @PublicEndpoint
     @PostMapping
     public ResponseEntity<BrandResponse> createBrand(@RequestBody BrandRequest brandRequest) {
         BrandResponse createdBrand = brandService.createBrand(brandRequest);
