@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class BrandRequest {
     String username;
     String displayName;
+    String password;
     String field;
     Brand.GPS gps;
     Brand.BrandStatus status;

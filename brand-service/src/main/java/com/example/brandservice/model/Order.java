@@ -3,6 +3,8 @@ package com.example.brandservice.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "orders")
 @Data
@@ -16,6 +18,12 @@ public class Order {
 
     @Column(name = "brand_id", nullable = false)
     private String brandId;
+
+    LocalDateTime createAt;
+
+    String currency;
+
+    double amount;
 
 }
 
