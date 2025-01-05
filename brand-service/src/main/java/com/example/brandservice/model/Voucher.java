@@ -28,7 +28,7 @@ public class Voucher {
     Double value;
     String description;
 
-    @Column(name = "expired_at")
+    @Column(name = "expiredAt")
     LocalDateTime expiredAt;
 
    @Enumerated(EnumType.STRING)
@@ -36,15 +36,15 @@ public class Voucher {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
+    @JoinColumn(name = "promotionId", referencedColumnName = "id")
     Promotion promotion;
 
     Integer maxCounts;
     Integer createCounts;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     LocalDateTime createAt;
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     LocalDateTime updateAt;
 
     public enum VoucherType {

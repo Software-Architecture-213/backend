@@ -16,7 +16,7 @@ public class Order {
     @Column(name = "order_id")
     private String orderId;
 
-    @Column(name = "brand_id", nullable = false)
+    @Column(name = "brandId", nullable = false)
     private String brandId;
 
     LocalDateTime createAt;

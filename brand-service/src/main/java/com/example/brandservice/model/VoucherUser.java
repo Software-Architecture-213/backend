@@ -20,7 +20,7 @@ public class VoucherUser {
     UID userId;
 
     @ManyToOne
-    @JoinColumn(name = "voucher_id", referencedColumnName = "id")
+    @JoinColumn(name = "voucherId", referencedColumnName = "id")
     Voucher voucher;
 
     String qrCode;
@@ -30,9 +30,9 @@ public class VoucherUser {
 
     Date redeemedAt;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     LocalDateTime createAt;
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     LocalDateTime updateAt;
 
     public enum VoucherUserStatus{
