@@ -27,9 +27,9 @@ public class Brand {
    @Enumerated(EnumType.STRING)
     BrandStatus status;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     LocalDateTime createAt;
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     LocalDateTime updateAt;
 
     @Embeddable
