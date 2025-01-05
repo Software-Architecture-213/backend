@@ -26,7 +26,7 @@ public class Promotion {
     Date endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    @JoinColumn(name = "brandId", referencedColumnName = "id")
     Brand brand;
 
     Double budget;
@@ -43,9 +43,9 @@ public class Promotion {
     @Column(columnDefinition = "TEXT")
     List<String> games;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     LocalDateTime createAt;
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     LocalDateTime updateAt;
 
     public enum PromotionStatus {
