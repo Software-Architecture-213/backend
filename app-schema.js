@@ -21,6 +21,26 @@ GameSchema({
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật trò chơi
 });
 
+QuizQuestionSchema({
+	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Question ID
+	gameId: { type: mongoose.Schema.Types.ObjectId, ref: "Game", required: true }, // Reference to the game
+	question: { type: String, required: true }, // The question text
+	answers: [
+		{
+			text: { type: String, required: true }, // Answer text
+			isCorrect: { type: Boolean, required: true }, // Is this answer correct?
+		},
+	], // List of possible answers
+	difficulty: {
+		type: String,
+		enum: ["easy", "medium", "hard"],
+		default: "medium",
+	}, // Difficulty level of the question
+	points: { type: Number, default: 10 }, // Points awarded for a correct answer
+	createdAt: { type: Date, default: Date.now }, // Creation timestamp
+	updatedAt: { type: Date, default: Date.now }, // Update timestamp
+});
+
 // Vật Phẩm
 ItemSchema({
 	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Item ID
