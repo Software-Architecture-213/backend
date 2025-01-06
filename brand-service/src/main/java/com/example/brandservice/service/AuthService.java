@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -32,6 +31,7 @@ public class AuthService {
         }
         Brand brand = brandMapper.brandRequestToBrand(request);
         brand.setCreateAt(LocalDateTime.now());
+        brand.setStatus(Brand.BrandStatus.INACTIVE);
         brandRepository.save(brand);
     }
 
@@ -41,6 +41,9 @@ public class AuthService {
 
         if (!brand.getPassword().equals(request.getPassword())) { // Hash checking in production
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
+        if (brand.getStatus() == Brand.BrandStatus.INACTIVE) {
+            throw new ResponseStatusException(HttpStatus.LOCKED, "Your brand has been deactivated");
         }
 
         String accessToken = null;
