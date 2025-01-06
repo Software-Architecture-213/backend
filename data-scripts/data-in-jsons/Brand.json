@@ -1,62 +1,62 @@
 [
-  {
-    "_id": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
-    "displayName": "Katinat",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289312/brand/katinat.jpg",
-    "username": "katinat_official",
-    "password": "hashed_password_1",
-    "field": "Café & Bakery",
-    "gps": {
-      "latitude": 21.0285,
-      "longitude": 105.8542
-    },
-    "status": "active",
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
-    "displayName": "PhucLong",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289416/brand/phuclong.png",
-    "username": "phuclong_vietnam",
-    "password": "hashed_password_2",
-    "field": "Café & Beverages",
-    "gps": {
-      "latitude": 10.762622,
-      "longitude": 106.660172
-    },
-    "status": "active",
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "dcb5d84b-b235-4d5d-8049-38349e9a9029",
-    "displayName": "Highland Coffee",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735261239/brand/highland.png",
-    "username": "highland_official",
-    "password": "hashed_password_3",
-    "field": "Café & Beverages",
-    "gps": {
-      "latitude": 21.0285,
-      "longitude": 105.8542
-    },
-    "status": "active",
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "aa9c7317-77bc-4f79-821f-b2f7e5a2e3c4",
-    "displayName": "Pizza Company",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289466/brand/pizzacompany.jpg",
-    "username": "pizza_company_vn",
-    "password": "hashed_password_4",
-    "field": "Pizza & Fast Food",
-    "gps": {
-      "latitude": 10.756,
-      "longitude": 106.6952
-    },
-    "status": "active",
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  }
+	{
+		"_id": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
+		"displayName": "Katinat",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289312/brand/katinat.jpg",
+		"username": "katinat_official",
+		"password": "hashed_password_1",
+		"field": "Café & Bakery",
+		"gps": {
+			"latitude": 21.0285,
+			"longitude": 105.8542
+		},
+		"status": "active",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
+		"displayName": "PhucLong",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289416/brand/phuclong.png",
+		"username": "phuclong_vietnam",
+		"password": "hashed_password_2",
+		"field": "Café & Beverages",
+		"gps": {
+			"latitude": 10.762622,
+			"longitude": 106.660172
+		},
+		"status": "active",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "dcb5d84b-b235-4d5d-8049-38349e9a9029",
+		"displayName": "Highland Coffee",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735261239/brand/highland.png",
+		"username": "highland_official",
+		"password": "hashed_password_3",
+		"field": "Café & Beverages",
+		"gps": {
+			"latitude": 21.0285,
+			"longitude": 105.8542
+		},
+		"status": "active",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "aa9c7317-77bc-4f79-821f-b2f7e5a2e3c4",
+		"displayName": "Pizza Company",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735289466/brand/pizzacompany.jpg",
+		"username": "pizza_company_vn",
+		"password": "hashed_password_4",
+		"field": "Pizza & Fast Food",
+		"gps": {
+			"latitude": 10.756,
+			"longitude": 106.6952
+		},
+		"status": "active",
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
 ]
