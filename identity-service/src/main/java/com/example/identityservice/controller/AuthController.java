@@ -77,7 +77,8 @@ public class AuthController {
 
     @PublicEndpoint
     @PostMapping("/jwt-introspect")
-    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestParam String token) {
+    public ResponseEntity<ValidatedTokenResponse> validateToken(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
         if (token == null || token.isEmpty()) {
             return ResponseEntity.badRequest().body(ValidatedTokenResponse.builder()
             .isValidated(false)

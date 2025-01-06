@@ -1,6 +1,7 @@
 package com.example.brandservice.service;
 
 import com.example.brandservice.dto.request.BrandRequest;
+import com.example.brandservice.dto.request.ChangeBrandStatusRequest;
 import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.exception.AppException;
@@ -21,12 +22,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class BrandService {
-
+    private final MailService mailService;
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
     private final CloudinaryService cloudinaryService;
@@ -34,6 +34,7 @@ public class BrandService {
     @Transactional
     public BrandResponse createBrand(BrandRequest brandRequest) {
         Brand brand = brandMapper.brandRequestToBrand(brandRequest);
+        brand.setStatus(Brand.BrandStatus.INACTIVE); // Wait for admin to activate
         brand.setCreateAt(LocalDateTime.now());
         Brand savedBrand = brandRepository.save(brand);
         return brandMapper.brandToBrandResponse(savedBrand);
@@ -69,9 +70,26 @@ public class BrandService {
         brand.setDisplayName(brandRequest.getDisplayName());
         brand.setField(brandRequest.getField());
         brand.setGps(brandRequest.getGps());
-        brand.setStatus(brandRequest.getStatus());
+//        brand.setStatus(brandRequest.getStatus()); // Not allow brand to update status itself
         brand.setUpdateAt(LocalDateTime.now());
         Brand updatedBrand = brandRepository.save(brand);
+        return brandMapper.brandToBrandResponse(updatedBrand);
+    }
+
+    public BrandResponse changeBrandStatus(ChangeBrandStatusRequest request) {
+        Brand brand = brandRepository.findByUsername(request.getEmail())
+                .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_EXISTED));
+        brand.setStatus(request.getStatus());
+        brand.setUpdateAt(LocalDateTime.now());
+        Brand updatedBrand = brandRepository.save(brand);
+        String subject = request.getStatus() == Brand.BrandStatus.ACTIVE ? "Your brand has been activated!" : "Your brand has been deactivated!";
+        String message = request.getMessage();
+        if (request.getMessage() == null || message.isBlank()) {
+            message = request.getStatus() == Brand.BrandStatus.ACTIVE
+                    ? "Dear " + request.getEmail() + ", we are pleased to inform you that your brand has been successfully activated. We look forward to having you use our app. If you have any questions or need assistance, feel free to reach out to our support team."
+                    : "Dear " + request.getEmail() + ", we would like to inform you that your brand has been deactivated due to a violation of our policies. If you believe this action was taken in error, please contact our support team for further assistance. We value your experience and hope to resolve any misunderstandings.";
+        }
+        mailService.sendMail(request.getEmail(), subject, message);
         return brandMapper.brandToBrandResponse(updatedBrand);
     }
 

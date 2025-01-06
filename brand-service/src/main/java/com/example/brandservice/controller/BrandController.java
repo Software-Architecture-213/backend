@@ -2,12 +2,14 @@ package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.BrandRequest;
+import com.example.brandservice.dto.request.ChangeBrandStatusRequest;
 import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,5 +66,13 @@ public class BrandController {
     public ResponseEntity<List<BrandResponse>> getBrands(@ModelAttribute  GetBrandsRequest request) {
         List<BrandResponse> brandResponses = brandService.getAllBrands(request);
         return new ResponseEntity<>(brandResponses, HttpStatus.OK);
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/{email}/status")
+    public ResponseEntity<BrandResponse> changeStatus(@PathVariable String email, @RequestBody ChangeBrandStatusRequest request) {
+        request.setEmail(email);
+        return ResponseEntity.status(HttpStatus.OK).body(brandService.changeBrandStatus(request));
     }
 }
