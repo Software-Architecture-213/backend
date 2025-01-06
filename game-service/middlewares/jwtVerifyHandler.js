@@ -6,7 +6,7 @@ const jwtVerifyHandler = async (req, res, next) => {
         // Get the Authorization header
         const accessToken = extractBearerToken(req)
         if (accessToken == null || accessToken === "") {
-            return res.status(401).json({ error: 'Authorization token missing or invalid' });
+            return res.status(401).json({ error: 'Authorization token missing or emty' });
         }
         const tokenData = await IdentityClient.verifyToken(accessToken);
         /* 
