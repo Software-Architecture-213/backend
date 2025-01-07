@@ -49,9 +49,6 @@ class GameService {
 		}
 		return game;
 	}
-
-	// Statistics
-	async getGameStatistics(gameId) {}
 }
 
 module.exports = new GameService();

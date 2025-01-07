@@ -4,6 +4,7 @@ const UserGame = require("../models/UserGame");
 const Item = require("../models/Item");
 const ItemUser = require("../models/ItemUser");
 const ItemTransaction = require("../models/ItemTransaction");
+const QuizQuestion = require("../models/QuizQuestion");
 
 // read data from json file
 const fs = require("fs");
@@ -115,14 +116,29 @@ const itemTransactions = convertStringToDate(
 	)
 );
 
+const quizQuestions = JSON.parse(
+	fs.readFileSync(
+		path.join(
+			__dirname,
+			"..",
+			"..",
+			"data-scripts",
+			"data-in-jsons",
+			"QuizQuestion.json"
+		),
+		"utf-8"
+	)
+);
+
 const insertData = async () => {
 	try {
-		await Game.insertMany(games);
-		await Promotion.insertMany(promotions);
-		await UserGame.insertMany(userGames);
-		await Item.insertMany(items);
-		await ItemUser.insertMany(itemUsers);
-		await ItemTransaction.insertMany(itemTransactions);
+		// await Game.insertMany(games);
+		// await Promotion.insertMany(promotions);
+		// await UserGame.insertMany(userGames);
+		// await Item.insertMany(items);
+		// await ItemUser.insertMany(itemUsers);
+		// await ItemTransaction.insertMany(itemTransactions);
+		await QuizQuestion.insertMany(quizQuestions);
 
 		console.log("Data inserted successfully");
 	} catch (error) {

@@ -1,66 +1,46 @@
 const PromotionService = require("../services/promotionService");
+const {
+	convertTimeQueryParamToFilter,
+} = require("../utils/convertQueryParamToFilter");
 
 const getAllPromotions = async (req, res) => {
-	try {
-		const promotions = await PromotionService.getPromotions();
-		res.json(promotions);
-	} catch (error) {
-		next(error);
-	}
+	const filter = convertTimeQueryParamToFilter(req.query);
+	const promotions = await PromotionService.getPromotions(filter);
+	res.ok(promotions);
 };
 
 const createPromotion = async (req, res) => {
-	try {
-		const promotion = req.body;
-		const newPromotion = await PromotionService.createPromotion(promotion);
-		res.created(newPromotion);
-	} catch (error) {
-		next(error);
-	}
+	const promotion = req.body;
+	const newPromotion = await PromotionService.createPromotion(promotion);
+	res.created(newPromotion);
 };
 
 const getPromotionById = async (req, res) => {
-	try {
-		const promotionId = req.params.id;
-		const promotion = await PromotionService.getPromotionById(promotionId);
-		res.json(promotion);
-	} catch (error) {
-		next(error);
-	}
+	const promotionId = req.params.id;
+	const promotion = await PromotionService.getPromotionById(promotionId);
+	res.ok(promotion);
 };
 
 const getPromotionsByBrandId = async (req, res) => {
-	try {
-		const brandId = req.params.id;
-		const promotions = await PromotionService.getPromotionsByBrandId(brandId);
-		res.json(promotions);
-	} catch (error) {
-		next(error);
-	}
+	const brandId = req.params.id;
+	const promotions = await PromotionService.getPromotionsByBrandId(brandId);
+	res.ok(promotions);
 };
 
 const updatePromotion = async (req, res) => {
-	try {
-		const promotionId = req.params.id;
-		const promotion = req.body;
-		const updatedPromotion = await PromotionService.updatePromotion(
-			promotionId,
-			promotion
-		);
-		res.json(updatedPromotion);
-	} catch (error) {
-		next(error);
-	}
+	const promotionId = req.params.id;
+	const promotion = req.body;
+	const updatedPromotion = await PromotionService.updatePromotion(
+		promotionId,
+		promotion
+	);
+	res.ok(updatedPromotion);
 };
 
 const deletePromotion = async (req, res) => {
-	try {
-		const promotionId = req.params.id;
-		const promotion = await PromotionService.deletePromotion(promotionId);
-		res.json(promotion);
-	} catch (error) {
-		next(error);
-	}
+	const promotionId = req.params.id;
+	const promotion = await PromotionService.deletePromotion(promotionId);
+	res.ok(promotion);
 };
 
 module.exports = {
