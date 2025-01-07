@@ -7,10 +7,10 @@
     "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290576/promotion/katinat_holiday.jpg",
     "startDate": "2024-12-25T00:00:00Z",
     "endDate": "2025-01-05T23:59:59Z",
-    "status": "active",
+    "status": "ACTIVE",
     "games": [
-      "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
-      "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48"
+      "SHAKE",
+      "QUIZ"
     ],
     "vouchers": [
       "1f8e0044-5305-4782-a6a0-d3f98a3d106d",
@@ -27,10 +27,10 @@
     "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290633/promotion/phuclong_new_year.jpg",
     "startDate": "2024-12-28T00:00:00Z",
     "endDate": "2025-01-10T23:59:59Z",
-    "status": "active",
+    "status": "ACTIVE",
     "games": [
-      "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-      "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5"
+      "SHAKE",
+      "QUIZ"
     ],
     "vouchers": [
       "df345b84-d61e-4c4d-b8d3-f9ea24f0f455",
@@ -47,7 +47,7 @@
     "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290522/promotion/highland_xmas.png",
     "startDate": "2024-12-20T00:00:00Z",
     "endDate": "2024-12-30T23:59:59Z",
-    "status": "active",
+    "status": "ACTIVE",
     "games": [],
     "vouchers": [],
     "createdAt": "2024-12-24T10:00:00Z",
@@ -61,7 +61,7 @@
     "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290683/promotion/pizzacompany_family.jpg",
     "startDate": "2024-12-25T00:00:00Z",
     "endDate": "2025-01-15T23:59:59Z",
-    "status": "active",
+    "status": "ACTIVE",
     "games": [],
     "vouchers": [],
     "createdAt": "2024-12-24T10:00:00Z",
