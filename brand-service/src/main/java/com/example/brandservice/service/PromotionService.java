@@ -5,8 +5,10 @@ import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.exception.AppException;
 import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.PromotionMapper;
+import com.example.brandservice.model.FavouritePromotions;
 import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Brand;
+import com.example.brandservice.repository.FavouritePromotionsRepository;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.BrandRepository;
 import com.example.brandservice.repository.VoucherRepository;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +32,7 @@ public class PromotionService {
     private final BrandRepository brandRepository;
     private final PromotionMapper promotionMapper;
     private final CloudinaryService cloudinaryService;
-
+    private final FavouritePromotionsRepository favouritePromotionsRepository;
 
     // Create a new promotion
     public PromotionResponse createPromotion(PromotionRequest promotionRequest) {
@@ -121,4 +124,30 @@ public class PromotionService {
                 .map(promotionMapper::promotionToPromotionResponse)
                 .toList();
     }
+
+    public FavouritePromotions addToFavourites(String promotionId, String userId) {
+        FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(UUID.fromString(userId))
+                .orElseGet(() -> {
+                    FavouritePromotions newFavourite = new FavouritePromotions();
+                    newFavourite.setUserId(UUID.fromString(userId));
+                    return newFavourite;
+                });
+
+        // Lấy danh sách promotions
+        List<Promotion> promotions = favouritePromotions.getPromotions();
+
+        // Kiểm tra nếu promotionId đã tồn tại, nếu không thì thêm vào
+        boolean exists = promotions.stream()
+                .anyMatch(promotion -> promotion.getId().equals(promotionId));
+
+        if (!exists) {
+            Promotion promotion = promotionRepository.findById(promotionId)
+                    .orElseThrow(() -> new RuntimeException("Promotion not found"));
+            promotions.add(promotion);
+        }
+
+        // Lưu lại FavouritePromotions
+        return favouritePromotionsRepository.save(favouritePromotions);
+    }
+
 }
