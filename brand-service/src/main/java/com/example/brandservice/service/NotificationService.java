@@ -1,12 +1,12 @@
 package com.example.brandservice.service;
 
-import com.example.brandservice.handler.NotificationWebSocketHandler;
+import com.example.brandservice.model.FavouritePromotions;
 import com.example.brandservice.model.Notification;
 import com.example.brandservice.model.Promotion;
+import com.example.brandservice.repository.FavouritePromotionsRepository;
 import com.example.brandservice.repository.NotificationRepository;
-import com.example.brandservice.repository.PromotionRepository;
+import com.example.brandservice.utility.DateUtility;
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,31 +17,48 @@ import java.util.UUID;
 @AllArgsConstructor
 public class NotificationService {
 
-    private final NotificationWebSocketHandler webSocketHandler;
-    private final PromotionRepository promotionRepository;
     private final NotificationRepository notificationRepository;
+    private final FavouritePromotionsRepository favouritePromotionsRepository;
 
-    @Scheduled(cron = "0 0 9 * * *") // Check daily at 9 AM
-    public void notifyUsers() {
-        List<Promotion> promotions = promotionRepository.findPromotionsStartingSoon(2, 3);
+    public Notification notifyUsers(UUID userId) {
+        // Lấy FavouritePromotions của userId cụ thể
+        FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(userId)
+                .orElse(null);
 
-        for (Promotion promotion : promotions) {
-            Notification notification = new Notification();
-            notification.setId(UUID.randomUUID().toString());
-            notification.setMessage(String.format("Promotion '%s' starts on %s",
-                    promotion.getName(),
-                    promotion.getStartDate()));
-            notification.setType("PROMOTION");
-            notification.setIsread(false);
-            notification.setCreatedAt(LocalDateTime.now());
-            notification.setUpdatedAt(LocalDateTime.now());
+        if (favouritePromotions != null) {
+            // Lấy danh sách các promotion yêu thích của user
+            List<Promotion> promotions = favouritePromotions.getPromotions();
 
-            // Save notification in the database
-            notificationRepository.save(notification);
+            // Kiểm tra các promotion có sắp diễn ra không (2-3 ngày tới)
+            List<Promotion> upcomingPromotions = promotions.stream()
+                    .filter(promotion -> {
+                        LocalDateTime startDate = DateUtility.convertDateToLocalDateTime(promotion.getStartDate());
+                        LocalDateTime now = LocalDateTime.now();
+                        return !startDate.isBefore(now) && startDate.isBefore(now.plusDays(3));
+                    })
+                    .toList();
 
-            // Send notification to WebSocket if the user is connected
-            webSocketHandler.sendNotification(notification);
+            // Tạo và gửi thông báo cho mỗi promotion sắp diễn ra
+            for (Promotion promotion : upcomingPromotions) {
+                Notification notification = new Notification();
+                notification.setId(UUID.randomUUID().toString());
+                notification.setUserid(userId);
+                notification.setMessage(String.format("Promotion '%s' starts on %s",
+                        promotion.getName(),
+                        promotion.getStartDate()));
+                notification.setType("PROMOTION");
+                notification.setIsread(false);
+                notification.setCreatedAt(LocalDateTime.now());
+                notification.setUpdatedAt(LocalDateTime.now());
+
+                // Lưu notification vào DB
+                return notificationRepository.save(notification);
+
+//                // Gửi thông báo qua WebSocket nếu user đang kết nối
+//                webSocketHandler.sendNotification(notification);
+            }
         }
+        return  null;
     }
 }
 
