@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class IdentityClient {
@@ -19,9 +22,13 @@ public class IdentityClient {
     public ValidatedTokenResponse introspectToken(String token) {
         String url = UriComponentsBuilder.fromUriString(IDENTITY_URL)
                 .path("/identity/auth/jwt-introspect")
-                .queryParam("token", token)
                 .toUriString();
 
-        return restTemplate.getForObject(url, ValidatedTokenResponse.class);
+        // Create the request body
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("token", token);
+
+        // Send the POST request with the request body
+        return restTemplate.postForObject(url, requestBody, ValidatedTokenResponse.class);
     }
 }

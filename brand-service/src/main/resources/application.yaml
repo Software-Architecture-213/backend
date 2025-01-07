@@ -23,6 +23,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp: # Correct the spelling here
+          auth: true
+          starttls:
+            enable: true  # Add a space after the colon
 cloudinary:
   url: cloudinary://${CLOUDINARY_KEY}:${CLOUDINARY_SECRET}@${CLOUDINARY_NAME}
 paypal-client-id: ${PAYPAL_CLIENT_ID}

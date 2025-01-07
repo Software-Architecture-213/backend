@@ -9,11 +9,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BrandRequest {
-    String displayName;
-    String imageUrl;
     String username;
+    String displayName;
     String password;
     String field;
     Brand.GPS gps;
-    Brand.BrandStatus status;
 }

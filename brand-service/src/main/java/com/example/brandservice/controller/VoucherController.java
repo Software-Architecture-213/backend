@@ -2,10 +2,9 @@ package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.VoucherRequest;
-import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.service.VoucherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vouchers")
+@AllArgsConstructor
 public class VoucherController {
 
     private final VoucherService voucherService;
-
-    @Autowired
-    public VoucherController(VoucherService voucherService) {
-        this.voucherService = voucherService;
-    }
 
     // Create a new voucher
     @PostMapping

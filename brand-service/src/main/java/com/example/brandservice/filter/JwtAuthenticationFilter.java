@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
-    private static final String USER_ID_CLAIM = "user_id";
+    private static final String userId_CLAIM = "userId";
 
     @Override
     @SneakyThrows
@@ -95,6 +95,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         throw new AppException(ErrorCode.TOKEN_VERIFICATION_FAILURE);
                     }
                 }
+            } else {
+                throw new AppException(ErrorCode.TOKEN_VERIFICATION_FAILURE);
             }
         }
 

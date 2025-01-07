@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -23,4 +24,12 @@ public class BrandResponse {
     Brand.BrandStatus status;
     Date createAt;
     Date updateAt;
+
+    public String getCreateAt() {
+        if (createAt == null || createAt.toString().contains("1970")) {
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(createAt);
+    }
 }

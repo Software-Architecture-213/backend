@@ -12,6 +12,7 @@ public enum ErrorCode {
 
     USER_EXISTED(409, "User existed", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(404, "User not existed", HttpStatus.NOT_FOUND),
+    BRAND_NOT_EXISTED(404, "Brand not existed", HttpStatus.NOT_FOUND),
     USERNAME_INVALID(400,"Username is invalid", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(400,"Password is invalid", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(401,"Unauthenticated", HttpStatus.UNAUTHORIZED),
