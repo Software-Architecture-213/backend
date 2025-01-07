@@ -19,9 +19,17 @@ class GameService {
 		return game;
 	}
 
-	async getGamesByBrandId(brandId) {
-		const games = await Game.find({ brandId });
+	async getGamesByBrandId(brandId, filter) {
+		const games = await Game.find({ brandId, ...filter });
 		return games;
+	}
+
+	async getGameCountByBrandId(brandId, filter) {
+		const count = await Game.countDocuments({
+			brandId,
+			...filter,
+		});
+		return count;
 	}
 
 	async updateGame(gameId, game) {
@@ -41,6 +49,9 @@ class GameService {
 		}
 		return game;
 	}
+
+	// Statistics
+	async getGameStatistics(gameId) {}
 }
 
 module.exports = new GameService();

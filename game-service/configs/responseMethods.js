@@ -30,4 +30,6 @@ module.exports = (req, res, next) => {
 	res.error = (error) => {
 		res.status(500).json({ error });
 	};
+
+	next();
 };

@@ -1,70 +1,70 @@
 [
-  {
-    "_id": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
-    "brandId": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
-    "promotionName": "Katinat Holiday Special",
-    "description": "Enjoy a 20% discount on all items at Katinat this holiday season! Valid for dine-in and takeout.",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290576/promotion/katinat_holiday.jpg",
-    "startDate": "2024-12-25T00:00:00Z",
-    "endDate": "2025-01-05T23:59:59Z",
-    "status": "active",
-    "games": [
-      "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
-      "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48"
-    ],
-    "vouchers": [
-      "1f8e0044-5305-4782-a6a0-d3f98a3d106d",
-      "aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd"
-    ],
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
-    "brandId": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
-    "promotionName": "PhucLong New Year Gift Set",
-    "description": "Celebrate the New Year with PhucLong! Get a free gift set when you spend over 500,000 VND.",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290633/promotion/phuclong_new_year.jpg",
-    "startDate": "2024-12-28T00:00:00Z",
-    "endDate": "2025-01-10T23:59:59Z",
-    "status": "active",
-    "games": [
-      "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-      "b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5"
-    ],
-    "vouchers": [
-      "df345b84-d61e-4c4d-b8d3-f9ea24f0f455",
-      "e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d"
-    ],
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "3dbb654a-b3d4-46fc-b375-71083b90a12d",
-    "brandId": "dcb5d84b-b235-4d5d-8049-38349e9a9029",
-    "promotionName": "Highland Coffee Christmas Combo",
-    "description": "Get a free Christmas-themed mug with any purchase of a large coffee at Highland Coffee this Christmas!",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290522/promotion/highland_xmas.png",
-    "startDate": "2024-12-20T00:00:00Z",
-    "endDate": "2024-12-30T23:59:59Z",
-    "status": "active",
-    "games": [],
-    "vouchers": [],
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  },
-  {
-    "_id": "a24f2c0d-56ad-4dfe-b5c7-dc8a67994c60",
-    "brandId": "aa9c7317-77bc-4f79-821f-b2f7e5a2e3c4",
-    "promotionName": "Pizza Company Family Deal",
-    "description": "Enjoy a large pizza and 2 sides for just 299,000 VND at Pizza Company. Perfect for family dinners!",
-    "imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290683/promotion/pizzacompany_family.jpg",
-    "startDate": "2024-12-25T00:00:00Z",
-    "endDate": "2025-01-15T23:59:59Z",
-    "status": "active",
-    "games": [],
-    "vouchers": [],
-    "createdAt": "2024-12-24T10:00:00Z",
-    "updatedAt": "2024-12-24T10:00:00Z"
-  }
+	{
+		"_id": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
+		"brandId": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
+		"name": "Katinat Holiday Special",
+		"description": "Enjoy a 20% discount on all items at Katinat this holiday season! Valid for dine-in and takeout.",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290576/promotion/katinat_holiday.jpg",
+		"startDate": "2024-12-25T00:00:00Z",
+		"endDate": "2025-01-05T23:59:59Z",
+		"status": "active",
+		"games": [
+			"f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
+			"1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48"
+		],
+		"vouchers": [
+			"1f8e0044-5305-4782-a6a0-d3f98a3d106d",
+			"aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd"
+		],
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
+		"brandId": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
+		"name": "PhucLong New Year Gift Set",
+		"description": "Celebrate the New Year with PhucLong! Get a free gift set when you spend over 500,000 VND.",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290633/promotion/phuclong_new_year.jpg",
+		"startDate": "2024-12-28T00:00:00Z",
+		"endDate": "2025-01-10T23:59:59Z",
+		"status": "active",
+		"games": [
+			"3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+			"b7685e4c-746e-4c52-bb9e-7a9f1e6ad0d5"
+		],
+		"vouchers": [
+			"df345b84-d61e-4c4d-b8d3-f9ea24f0f455",
+			"e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d"
+		],
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "3dbb654a-b3d4-46fc-b375-71083b90a12d",
+		"brandId": "dcb5d84b-b235-4d5d-8049-38349e9a9029",
+		"name": "Highland Coffee Christmas Combo",
+		"description": "Get a free Christmas-themed mug with any purchase of a large coffee at Highland Coffee this Christmas!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290522/promotion/highland_xmas.png",
+		"startDate": "2024-12-20T00:00:00Z",
+		"endDate": "2024-12-30T23:59:59Z",
+		"status": "active",
+		"games": [],
+		"vouchers": [],
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	},
+	{
+		"_id": "a24f2c0d-56ad-4dfe-b5c7-dc8a67994c60",
+		"brandId": "aa9c7317-77bc-4f79-821f-b2f7e5a2e3c4",
+		"name": "Pizza Company Family Deal",
+		"description": "Enjoy a large pizza and 2 sides for just 299,000 VND at Pizza Company. Perfect for family dinners!",
+		"imageUrl": "https://res.cloudinary.com/dlirzjnje/image/upload/v1735290683/promotion/pizzacompany_family.jpg",
+		"startDate": "2024-12-25T00:00:00Z",
+		"endDate": "2025-01-15T23:59:59Z",
+		"status": "active",
+		"games": [],
+		"vouchers": [],
+		"createdAt": "2024-12-24T10:00:00Z",
+		"updatedAt": "2024-12-24T10:00:00Z"
+	}
 ]

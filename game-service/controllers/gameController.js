@@ -1,63 +1,43 @@
 const GameService = require("../services/gameService");
+const {
+	convertTimeQueryParamToFilter,
+} = require("../utils/convertQueryParamToFilter");
 
 const getAllGames = async (req, res) => {
-	try {
-		const games = await GameService.getGames();
-		res.json(games);
-	} catch (error) {
-		next(error);
-	}
+	const filter = convertTimeQueryParamToFilter(req.query);
+	const games = await GameService.getGames(filter);
+	res.ok(games);
 };
 
 const createGame = async (req, res) => {
-	try {
-		const game = req.body;
-		const newGame = await GameService.createGame(game);
-		res.created(newGame);
-	} catch (error) {
-		next(error);
-	}
+	const game = req.body;
+	const newGame = await GameService.createGame(game);
+	res.created(newGame);
 };
 
 const getGameById = async (req, res) => {
-	try {
-		const gameId = req.params.id;
-		const game = await GameService.getGameById(gameId);
-		res.json(game);
-	} catch (error) {
-		next(error);
-	}
+	const gameId = req.params.id;
+	const game = await GameService.getGameById(gameId);
+	res.ok(game);
 };
 
 const getGamesByBrandId = async (req, res) => {
-	try {
-		const brandId = req.params.id;
-		const games = await GameService.getGamesByBrandId(brandId);
-		res.json(games);
-	} catch (error) {
-		next(error);
-	}
+	const brandId = req.params.id;
+	const games = await GameService.getGamesByBrandId(brandId);
+	res.ok(games);
 };
 
 const updateGame = async (req, res) => {
-	try {
-		const gameId = req.params.id;
-		const game = req.body;
-		const updatedGame = await GameService.updateGame(gameId, game);
-		res.json(updatedGame);
-	} catch (error) {
-		next(error);
-	}
+	const gameId = req.params.id;
+	const game = req.body;
+	const updatedGame = await GameService.updateGame(gameId, game);
+	res.ok(updatedGame);
 };
 
 const deleteGame = async (req, res) => {
-	try {
-		const gameId = req.params.id;
-		const game = await GameService.deleteGame(gameId);
-		res.json(game);
-	} catch (error) {
-		next(error);
-	}
+	const gameId = req.params.id;
+	const game = await GameService.deleteGame(gameId);
+	res.ok(game);
 };
 
 module.exports = {
