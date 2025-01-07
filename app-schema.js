@@ -17,6 +17,11 @@ GameSchema({
 		default: "medium",
 	}, // Mức độ khó của trò chơi
 	promotionId: { type: mongoose.Schema.Types.ObjectId, ref: "Promotion" }, // Liên kết với Promotion
+	brandId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Brand",
+		required: true,
+	}, // Liên kết với Brand
 	createdAt: { type: Date, default: Date.now }, // Ngày tạo trò chơi
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật trò chơi
 });

@@ -20,6 +20,7 @@ const GameSchema = new mongoose.Schema(
 			default: "medium",
 		}, // Mức độ khó của trò chơi
 		promotionId: { type: String, ref: "Promotion" }, // Liên kết với Promotion
+		brandId: { type: String },
 	},
 	{
 		timestamps: true,

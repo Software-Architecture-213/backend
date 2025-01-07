@@ -1,5 +1,4 @@
 [
-	// Items for Katinat Quiz Challenge (Quiz Game)
 	{
 		"_id": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5",
 		"name": "Katinat Loyalty Card",
@@ -12,8 +11,6 @@
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
-
-	// Items for Katinat Shake Challenge (Shake Game)
 	{
 		"_id": "a18fe575-68b1-4535-9d6c-853fa4eaf401",
 		"name": "Katinat Coffee Mug",
@@ -50,8 +47,6 @@
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
-
-	// Items for PhucLong Knowledge Quiz (Quiz Game)
 	{
 		"_id": "d97f9b63-81b3-45c5-a5f8-92f8b12b88d1",
 		"name": "PhucLong Loyalty Card",
@@ -64,8 +59,6 @@
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
-
-	// Items for PhucLong Shake Surprise (Shake Game)
 	{
 		"_id": "2f9c3bfa-b9f9-488e-8ff3-604f0fbe7c87",
 		"name": "PhucLong Thermal Flask",

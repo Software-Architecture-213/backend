@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const IDENTITY_SERVICE_URL =  process.env.IDENTITY_SERVICE_URL
+const IDENTITY_SERVICE_URL = process.env.IDENTITY_SERVICE_URL;
 
 class IdentityClient {
   static async verifyToken(accessToken) {
