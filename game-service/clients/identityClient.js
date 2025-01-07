@@ -5,7 +5,7 @@ const IDENTITY_SERVICE_URL =  process.env.IDENTITY_SERVICE_URL
 class IdentityClient {
     static async verifyToken(accessToken) {
         try {
-            const response = await axios.get(`${IDENTITY_SERVICE_URL}/identity/auth/jwt-introspect?token=${accessToken}`)
+            const response = await axios.post(`${IDENTITY_SERVICE_URL}/identity/auth/jwt-introspect`, {token : accessToken})
             const data = await response.data
             return data
 
