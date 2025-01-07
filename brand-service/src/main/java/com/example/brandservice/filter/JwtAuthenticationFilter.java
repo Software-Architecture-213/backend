@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -55,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Check if the Authorization header is present and starts with Bearer
             if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
                 final var token = authorizationHeader.replace(BEARER_PREFIX, "");
-
+                System.out.println(token);
                 boolean isAuthenticated = false;
                 try {
                     // Step 1: Try introspecting the token with IdentityService

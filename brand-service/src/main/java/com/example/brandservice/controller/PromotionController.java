@@ -64,8 +64,7 @@ public class PromotionController {
         return new ResponseEntity<>(promotion, HttpStatus.OK);
     }
 
-    @PublicEndpoint
-    @GetMapping("/my-promotions")
+    @GetMapping("/me/get")
     public ResponseEntity<List<PromotionResponse>> getPromotions(Authentication authentication) {
         String brandId = (String) authentication.getPrincipal();
         BrandResponse brandResponse = brandService.getBrandById(brandId);
