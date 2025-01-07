@@ -14,5 +14,4 @@ public class BrandRequest {
     String password;
     String field;
     Brand.GPS gps;
-    Brand.BrandStatus status;
 }

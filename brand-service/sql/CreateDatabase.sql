@@ -1,78 +1,156 @@
-
-
--- 1. Brand Table
-CREATE TABLE Brand (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    displayName VARCHAR(255) NOT NULL UNIQUE,
-    imageUrl TEXT,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    field VARCHAR(255) NOT NULL,
-    gpsLatitude DOUBLE PRECISION NOT NULL,
-    gpsLongitude DOUBLE PRECISION NOT NULL,
-    status VARCHAR(10) DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+create table branches
+(
+    id      varchar(255) not null
+        primary key,
+    address varchar(255),
+    lat     double precision,
+    lng     double precision,
+    is_main boolean      not null,
+    name    varchar(255)
 );
 
--- 2. Notification Table
-CREATE TABLE Notification (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    userId UUID NOT NULL,
-    message TEXT NOT NULL,
-    type VARCHAR(10) NOT NULL CHECK (type IN ('promotion', 'game', 'system')),
-    isRead BOOLEAN DEFAULT FALSE,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+alter table branches
+    owner to postgres;
+
+create table brands
+(
+    id           varchar(255) not null
+        primary key,
+    created_at   timestamp(6),
+    display_name varchar(255),
+    field        varchar(255),
+    latitude     double precision,
+    longitude    double precision,
+    image_url    varchar(255),
+    password     varchar(255),
+    status       varchar(255)
+        constraint brands_status_check
+            check ((status)::text = ANY ((ARRAY ['ACTIVE'::character varying, 'INACTIVE'::character varying])::text[])),
+    updated_at   timestamp(6),
+    username     varchar(255)
 );
 
--- 3. Voucher Table
-CREATE TABLE Voucher (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    code VARCHAR(255) NOT NULL UNIQUE,
-    type VARCHAR(10) NOT NULL CHECK (type IN ('online', 'offline')),
-    imageUrl TEXT,
-    valueType VARCHAR(10) NOT NULL CHECK (valueType IN ('fixed', 'percentage', 'item', 'free')),
-    value NUMERIC(10, 2) NOT NULL,
-    description TEXT,
-    expiredAt TIMESTAMP NOT NULL,
-    status VARCHAR(10) DEFAULT 'active' CHECK (status IN ('active', 'expired')),
-    promotionId UUID NOT NULL,
-    maxCounts INTEGER DEFAULT 1,
-    createdCounts INTEGER DEFAULT 0,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+alter table brands
+    owner to postgres;
+
+create table orders
+(
+    id        varchar(255)     not null
+        primary key,
+    amount    double precision not null,
+    brand_id  varchar(255)     not null,
+    create_at timestamp(6),
+    currency  varchar(255),
+    order_id  varchar(255)
 );
 
--- 4. VoucherUser Table
-CREATE TABLE VoucherUser (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    userId UUID NOT NULL,
-    email VARCHAR(255),
-    voucherId UUID NOT NULL,
-    qrCode VARCHAR(255),
-    status VARCHAR(10) DEFAULT 'active' CHECK (status IN ('active', 'redeemed', 'expired')),
-    redeemedAt TIMESTAMP,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (voucherId) REFERENCES Voucher (id)
+alter table orders
+    owner to postgres;
+
+create table promotions
+(
+    id               varchar(255) not null
+        primary key,
+    budget           double precision,
+    created_at       timestamp(6),
+    description      varchar(255),
+    end_date         timestamp(6),
+    games            text,
+    image_url        varchar(255),
+    name             varchar(255),
+    remaining_budget double precision,
+    start_date       timestamp(6),
+    status           varchar(255)
+        constraint promotions_status_check
+            check ((status)::text = ANY
+        ((ARRAY ['ACTIVE'::character varying, 'INACTIVE'::character varying, 'EXPIRED'::character varying, 'PAID'::character varying])::text[])),
+    updated_at       timestamp(6),
+    brand_id         varchar(255)
+        constraint fk6s8a5igo269jqjvlsl2shl005
+            references brands
 );
 
--- 5. ConversionRule Table
-CREATE TABLE ConversionRule (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    voucherId UUID NOT NULL,
-    gameId UUID,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (voucherId) REFERENCES Voucher (id)
+alter table promotions
+    owner to postgres;
+
+create table vouchers
+(
+    id            varchar(255) not null
+        primary key,
+    code          varchar(255),
+    created_at    timestamp(6),
+    create_counts integer,
+    description   varchar(255),
+    expired_at    timestamp(6),
+    image_url     varchar(255),
+    max_counts    integer,
+    status        varchar(255)
+        constraint vouchers_status_check
+            check ((status)::text = ANY
+        ((ARRAY ['ACTIVE'::character varying, 'EXPIRED'::character varying, 'INACTIVE'::character varying])::text[])),
+    type          varchar(255)
+        constraint vouchers_type_check
+            check ((type)::text = ANY ((ARRAY ['ONLINE'::character varying, 'OFFLINE'::character varying])::text[])),
+    updated_at    timestamp(6),
+    value         double precision,
+    value_type    varchar(255)
+        constraint vouchers_value_type_check
+            check ((value_type)::text = ANY
+                   ((ARRAY ['FIXED'::character varying, 'PERCENTAGE'::character varying, 'ITEM'::character varying, 'FREE'::character varying])::text[])),
+    promotion_id  varchar(255)
+        constraint fk21n4v3cou386fc2ggisy2pskt
+            references promotions
 );
 
--- 6. ConversionRuleItem Table
-CREATE TABLE ConversionRuleItem (
-  conversionRuleId UUID NOT NULL,
-  itemId UUID NOT NULL,
-  quantity INTEGER NOT NULL,
+alter table vouchers
+    owner to postgres;
 
-  PRIMARY KEY (conversionRuleId, itemId)
-)
+create table voucher_user
+(
+    id          varchar(255) not null
+        primary key,
+    created_at  timestamp(6),
+    qr_code     varchar(255),
+    redeemed_at timestamp(6),
+    status      varchar(255)
+        constraint voucher_user_status_check
+            check ((status)::text = ANY
+        ((ARRAY ['ACTIVE'::character varying, 'REDEEMED'::character varying, 'EXPIRED'::character varying])::text[])),
+    updated_at  timestamp(6),
+    user_id     bytea,
+    voucher_id  varchar(255)
+        constraint fk1jr8kf44d8ukrnhrn497meo52
+            references vouchers
+);
+
+alter table voucher_user
+    owner to postgres;
+
+-- CREATE TABLE Notification (
+--     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+--     userId UUID NOT NULL,
+--     message TEXT NOT NULL,
+--     type VARCHAR(10) NOT NULL CHECK (type IN ('PROMOTION', 'GAME', 'SYSTEM')),
+--     isRead BOOLEAN DEFAULT FALSE,
+--     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+--
+--
+-- CREATE TABLE ConversionRule (
+--     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+--     voucherId UUID NOT NULL,
+--     gameId UUID,
+--     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (voucherId) REFERENCES Voucher (id)
+-- );
+--
+-- CREATE TABLE ConversionRuleItem (
+--   conversionRuleId UUID NOT NULL,
+--   itemId UUID NOT NULL,
+--   quantity INTEGER NOT NULL,
+--
+--   PRIMARY KEY (conversionRuleId, itemId)
+-- )
+

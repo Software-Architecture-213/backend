@@ -95,6 +95,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         throw new AppException(ErrorCode.TOKEN_VERIFICATION_FAILURE);
                     }
                 }
+            } else {
+                throw new AppException(ErrorCode.TOKEN_VERIFICATION_FAILURE);
             }
         }
 
