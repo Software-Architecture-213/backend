@@ -5,7 +5,10 @@ import com.example.brandservice.dto.request.BrandRequest;
 import com.example.brandservice.dto.request.ChangeBrandStatusRequest;
 import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
+import com.example.brandservice.model.FavouritePromotions;
 import com.example.brandservice.service.BrandService;
+import com.example.brandservice.service.PromotionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +21,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/collection")
+@AllArgsConstructor
 public class BrandController {
 
     private final BrandService brandService;
+    private final PromotionService promotionService;
 
-    @Autowired
-    public BrandController(BrandService brandService) {
-        this.brandService = brandService;
-    }
 
     // Create a new brand
     @PublicEndpoint
@@ -74,5 +75,12 @@ public class BrandController {
     public ResponseEntity<BrandResponse> changeStatus(@PathVariable String email, @RequestBody ChangeBrandStatusRequest request) {
         request.setEmail(email);
         return ResponseEntity.status(HttpStatus.OK).body(brandService.changeBrandStatus(request));
+    }
+
+    @PostMapping("/favourite/{promotionId}")
+    public ResponseEntity<FavouritePromotions> favourite(@PathVariable String promotionId , Authentication authentication) {
+        String userId = (String) authentication.getPrincipal();
+        FavouritePromotions response = promotionService.addToFavourites(promotionId, userId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
