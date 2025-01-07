@@ -1,21 +1,28 @@
 const express = require("express");
-const GameService = require("../services/gameService");
-const adminVerifyHandler = require("../middlewares/adminVerifyHandler")
+const GameController = require("../controllers/gameController");
+const adminVerifyHandler = require("../middlewares/adminVerifyHandler");
 
 const router = express.Router();
 
-router.get("/collection", async (req, res, next) => {
-    try {
-      const games = await GameService.getGames();
-      res.json(games);
-    } catch (error) {
-      next(error);
-    }
-});
+// router.get("/collection", async (req, res, next) => {
+// 	try {
+// 		const games = await GameService.getGames();
+// 		res.json(games);
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
-router.post("", adminVerifyHandler, async (req,res,next) => {
-  // CRUD games
-  res.json({message : "Game adjusted"})
-})
+// router.post("", adminVerifyHandler, async (req, res, next) => {
+// 	// CRUD games
+// 	res.json({ message: "Game adjusted" });
+// });
 
-module.exports = router
+router.get("/", GameController.getAllGames);
+router.post("/", GameController.createGame);
+router.get("/:id", GameController.getGameById);
+router.get("/brands/:id", GameController.getGamesByBrandId);
+router.put("/:id", GameController.updateGame);
+router.delete("/:id", GameController.deleteGame);
+
+module.exports = router;
