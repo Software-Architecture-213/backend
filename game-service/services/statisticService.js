@@ -25,19 +25,42 @@ class StatisticService {
 	}
 
 	async getGamesStatisticByPromotion(promotionId, filter) {
+		// Used to get total number of users who played each game in the promotion
+		// The response is an array of objects { _id: gameId, name, playCount }
 		const statistic = await Game.aggregate([
+			// Match games by promotionId
 			{
-				$match: {
-					promotionId,
+				$match: { promotionId },
+			},
+			// Lookup user games associated with the game
+			{
+				$lookup: {
+					from: "usergames", // Collection name for user-game relations
+					localField: "_id", // Field in the Game collection
+					foreignField: "gameId", // Field in the UserGame collection
+					as: "userGames", // Output array field
+					pipeline: [
+						{
+							$match: filter,
+						},
+					],
 				},
 			},
+			// Group by gameId and calculate play count
 			{
 				$group: {
-					_id: "$gameId",
-					count: { $sum: 1 },
+					_id: "$_id",
+					name: { $first: "$name" },
+					playCount: { $sum: { $size: "$userGames" } }, // Calculate play count
 				},
 			},
+			// Sort by play count in descending order
+			{
+				$sort: { playCount: -1 },
+			},
 		]);
+
+		return statistic;
 	}
 }
 

@@ -7,12 +7,11 @@ const StatisticController = {
 	async getGeneralBrandStatistic(req, res, next) {
 		const brandId = req.params.id;
 		const filter = convertTimeQueryParamToFilter(req.query);
-		console.log({ filter });
 		const statistic = await statisticService.getGeneralBrandStatistic(
 			brandId,
 			filter
 		);
-		res.json(statistic);
+		res.ok(statistic);
 	},
 
 	async getGamesStatisticByPromotion(req, res, next) {
@@ -22,7 +21,7 @@ const StatisticController = {
 			promotionId,
 			filter
 		);
-		res.json(statistic);
+		res.ok(statistic);
 	},
 };
 
