@@ -1,9 +1,9 @@
 [
 	{
 		"_id": "efbd6b8e-c07a-4428-8cbb-5fd3a06207da",
-		"senderId": "62f7e567-50b7-49be-8f9a-e43120ad7f24", // Khanh Le (User 1)
-		"receiverId": "d219c0e1-63da-4162-876a-f9090e2f6a59", // Nguyen Minh Tu (User 2)
-		"itemId": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5", // Item: Katinat Quiz Token
+		"senderId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"receiverId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"itemId": "ed1a908d-d193-4be4-9b07-dc8e1a5a7ac5",
 		"expiredAt": "2024-12-30T10:00:00Z",
 		"status": "pending",
 		"createdAt": "2024-12-24T12:30:00Z",
@@ -11,9 +11,9 @@
 	},
 	{
 		"_id": "0d3a1f88-0c0f-49e7-b1b3-d9cde0fa09f6",
-		"senderId": "d219c0e1-63da-4162-876a-f9090e2f6a59", // Nguyen Minh Tu (User 2)
-		"receiverId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829", // Nguyen Thi Lan (User 4)
-		"itemId": "fb3d2fbe-34a1-463d-8536-93f17e2b48fa", // Item: Katinat Shake Surprise Coupon
+		"senderId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"receiverId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"itemId": "fb3d2fbe-34a1-463d-8536-93f17e2b48fa",
 		"expiredAt": "2024-12-31T10:00:00Z",
 		"status": "pending",
 		"createdAt": "2024-12-24T13:00:00Z",
@@ -21,9 +21,9 @@
 	},
 	{
 		"_id": "44b5b3d1-9b91-4407-9b0a-c5995fe38a4d",
-		"senderId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e", // Truong Thi Bao (User 3)
-		"receiverId": "62f7e567-50b7-49be-8f9a-e43120ad7f24", // Khanh Le (User 1)
-		"itemId": "2d6db9c1-e264-438b-b0b7-f03a9b5f024d", // Item: PhucLong Knowledge Token
+		"senderId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e",
+		"receiverId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"itemId": "2d6db9c1-e264-438b-b0b7-f03a9b5f024d",
 		"expiredAt": "2025-01-05T10:00:00Z",
 		"status": "accepted",
 		"createdAt": "2024-12-24T14:00:00Z",
@@ -31,9 +31,9 @@
 	},
 	{
 		"_id": "fba1fd21-830f-4b91-8e6f-bdb07b44c3e0",
-		"senderId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829", // Nguyen Thi Lan (User 4)
-		"receiverId": "d219c0e1-63da-4162-876a-f9090e2f6a59", // Nguyen Minh Tu (User 2)
-		"itemId": "b06b564a-4a7b-4972-bf90-29b0c07b26b4", // Item: PhucLong Shake Surprise Coupon
+		"senderId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"receiverId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"itemId": "b06b564a-4a7b-4972-bf90-29b0c07b26b4",
 		"expiredAt": "2024-12-30T12:00:00Z",
 		"status": "rejected",
 		"createdAt": "2024-12-24T14:30:00Z",
@@ -41,9 +41,9 @@
 	},
 	{
 		"_id": "eadaed74-76a3-41f2-b0e1-c0ed1ca0cc7a",
-		"senderId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e", // Truong Thi Bao (User 3)
-		"receiverId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829", // Nguyen Thi Lan (User 4)
-		"itemId": "79e5731d-93db-46d2-9f7b-9d9ec99d6a69", // Item: Katinat Quiz Token
+		"senderId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e",
+		"receiverId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"itemId": "79e5731d-93db-46d2-9f7b-9d9ec99d6a69",
 		"expiredAt": "2024-12-29T10:00:00Z",
 		"status": "accepted",
 		"createdAt": "2024-12-24T15:00:00Z",

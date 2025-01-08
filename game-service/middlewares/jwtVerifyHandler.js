@@ -1,5 +1,5 @@
-const IdentityClient = require('../clients/identityClient');
-const {extractBearerToken} = require('../utils/httpRequest')
+const IdentityClient = require("../clients/identityClient");
+const { extractBearerToken } = require("../utils/httpRequest");
 
 const jwtVerifyHandler = async (req, res, next) => {
     try {
@@ -17,16 +17,16 @@ const jwtVerifyHandler = async (req, res, next) => {
             validated: true,
         }
         */
-        if (tokenData == null || tokenData.isValidated == false) {
-            res.status(401).json({ error : "Invalid or expired token"})
-        }
-        req.tokenData = tokenData;
+		if (tokenData == null || tokenData.isValidated == false) {
+			res.status(401).json({ error: "Invalid or expired token" });
+		}
+		req.tokenData = tokenData;
 
-        next();
-    } catch (error) {
-        console.error('JWT Verification Error:', error.message);
-        res.status(401).json({ error: 'Invalid or expired token' });
-    }
+		next();
+	} catch (error) {
+		console.error("JWT Verification Error:", error.message);
+		res.status(401).json({ error: "Invalid or expired token" });
+	}
 };
 
 module.exports = jwtVerifyHandler;
