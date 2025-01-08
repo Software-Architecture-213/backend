@@ -125,7 +125,7 @@ public class PromotionService {
     }
     @Transactional
     public FavouritePromotions addToFavourites(String promotionId, String userId) {
-        FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(UUID.fromString(userId))
+        FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(ParseUUID.normalizeUID(userId))
                 .orElseGet(() -> {
                     FavouritePromotions newFavourite = new FavouritePromotions();
                     newFavourite.setUserId(ParseUUID.normalizeUID(userId));
