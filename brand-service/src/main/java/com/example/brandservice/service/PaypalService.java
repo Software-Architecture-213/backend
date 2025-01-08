@@ -40,7 +40,7 @@ public class PaypalService {
         String currency = captureOrder.getPurchaseUnits().getFirst().getPayments().getCaptures().getFirst().getAmount().getCurrencyCode();
         order.setAmount(Double.parseDouble(amount));
         order.setCurrency(currency);
-
+        orderRepository.save(order);
         return captureOrder;
     }
 

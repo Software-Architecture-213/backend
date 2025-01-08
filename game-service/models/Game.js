@@ -7,7 +7,7 @@ const GameSchema = new mongoose.Schema(
 		name: { type: String, required: true }, // Tên trò chơi
 		type: {
 			type: String,
-			enum: ["quiz", "shake"],
+			enum: ["QUIZ", "SHAKE"],
 			required: true,
 		}, // Loại trò chơi
 		imageUrl: { type: String }, // Hình ảnh đại diện trò chơi
@@ -20,6 +20,7 @@ const GameSchema = new mongoose.Schema(
 			default: "medium",
 		}, // Mức độ khó của trò chơi
 		promotionId: { type: String, ref: "Promotion" }, // Liên kết với Promotion
+		brandId: { type: String },
 	},
 	{
 		timestamps: true,

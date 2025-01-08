@@ -126,16 +126,24 @@ create table voucher_user
 alter table voucher_user
     owner to postgres;
 
--- CREATE TABLE Notification (
---     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
---     userId UUID NOT NULL,
---     message TEXT NOT NULL,
---     type VARCHAR(10) NOT NULL CHECK (type IN ('PROMOTION', 'GAME', 'SYSTEM')),
---     isRead BOOLEAN DEFAULT FALSE,
---     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
---
+create table notification (
+    id  varchar(255) not null
+      primary key ,
+    userId UUID NOT NULL,
+    message TEXT NOT NULL,
+    type VARCHAR(10) NOT NULL CHECK (type IN ('PROMOTION', 'SYSTEM')),
+    isRead BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+create table favourite_promotion{
+    id varchar(255) not null
+        primary key,
+    userId UUID NOT NULL,
+
+}
+
 --
 -- CREATE TABLE ConversionRule (
 --     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

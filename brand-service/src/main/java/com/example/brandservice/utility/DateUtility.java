@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class DateUtility {
 
-    public Date convert(@NonNull final LocalDate localDate) {
+    public static Date convert(@NonNull final LocalDate localDate) {
         return Date.from(localDate.atStartOfDay(ZoneOffset.UTC).toInstant());
     }
     public static LocalDateTime convertDateToLocalDateTime(Date date) {

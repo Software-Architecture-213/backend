@@ -1,7 +1,7 @@
 [
 	{
-		"userId": "62f7e567-50b7-49be-8f9a-e43120ad7f24", // Khanh Le (User 1)
-		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67", // Katinat Quiz Challenge
+		"userId": "62f7e567-50b7-49be-8f9a-e43120ad7f24",
+		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"score": 100,
 		"remainingTurns": 8,
 		"earnedTurns": 2,
@@ -9,8 +9,8 @@
 		"updatedAt": "2024-12-24T10:30:00Z"
 	},
 	{
-		"userId": "d219c0e1-63da-4162-876a-f9090e2f6a59", // Nguyen Minh Tu (User 2)
-		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48", // Katinat Shake Challenge
+		"userId": "d219c0e1-63da-4162-876a-f9090e2f6a59",
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
 		"score": 50,
 		"remainingTurns": 3,
 		"earnedTurns": 0,
@@ -18,8 +18,8 @@
 		"updatedAt": "2024-12-24T11:00:00Z"
 	},
 	{
-		"userId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e", // Truong Thi Bao (User 3)
-		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758", // PhucLong Knowledge Quiz
+		"userId": "3c41bc11-7fae-4bb9-97a5-48c35b87cf7e",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"score": 80,
 		"remainingTurns": 9,
 		"earnedTurns": 1,
@@ -27,8 +27,8 @@
 		"updatedAt": "2024-12-24T11:30:00Z"
 	},
 	{
-		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829", // Nguyen Thi Lan (User 4)
-		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67", // Katinat Quiz Challenge
+		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"score": 110,
 		"remainingTurns": 6,
 		"earnedTurns": 3,
@@ -36,8 +36,8 @@
 		"updatedAt": "2024-12-24T12:00:00Z"
 	},
 	{
-		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829", // Nguyen Thi Lan (User 4)
-		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48", // Katinat Shake Challenge
+		"userId": "9a41b8fc-75e9-4888-87a7-d3d01f78f829",
+		"gameId": "1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48",
 		"score": 60,
 		"remainingTurns": 2,
 		"earnedTurns": 1,
