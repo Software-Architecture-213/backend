@@ -69,6 +69,7 @@ public class ApiEndpointSecurityInspector {
 
         return unsecuredApiPaths.stream().anyMatch(apiPath -> {
             boolean match = new AntPathMatcher().match("/brands" + apiPath, request.getRequestURI());
+            logger.info(match ? "Matched" : "Not matched: " + apiPath);
             if (match) {
                 logger.info("Match found for path: {}", apiPath);
             }
