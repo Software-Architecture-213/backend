@@ -77,10 +77,4 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.OK).body(brandService.changeBrandStatus(request));
     }
 
-    @PostMapping("/favourite/{promotionId}")
-    public ResponseEntity<FavouritePromotions> favourite(@PathVariable String promotionId , Authentication authentication) {
-        String userId = (String) authentication.getPrincipal();
-        FavouritePromotions response = promotionService.addToFavourites(promotionId, userId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 }
