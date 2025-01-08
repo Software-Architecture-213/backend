@@ -60,6 +60,7 @@ public class ApiEndpointSecurityInspector {
                 }
             }
         });
+        publicGetEndpoints.add("/ws");
     }
 
     public boolean isUnsecureRequest(@NonNull final HttpServletRequest request) {
