@@ -54,6 +54,13 @@ class StatisticService {
 					playCount: { $sum: { $size: "$userGames" } }, // Calculate play count
 				},
 			},
+			{
+				$project: {
+					id: "$_id",
+					name: "$name",
+					playCount: "$playCount",
+				},
+			},
 			// Sort by play count in descending order
 			{
 				$sort: { playCount: -1 },
@@ -61,6 +68,118 @@ class StatisticService {
 		]);
 
 		return statistic;
+	}
+
+	async getGamesStatistic(filter) {
+		// Used to get total number of users who played each game
+		// The response is an array of objects { _id: gameId, name, playCount }
+		const statistic = await Game.aggregate([
+			// Lookup user games associated with the game
+			{
+				$lookup: {
+					from: "usergames", // Collection name for user-game relations
+					localField: "_id", // Field in the Game collection
+					foreignField: "gameId", // Field in the UserGame collection
+					as: "userGames", // Output array field
+					pipeline: [
+						{
+							$match: filter,
+						},
+					],
+				},
+			},
+			// Group by gameId and calculate play count
+			{
+				$group: {
+					_id: "$_id",
+					name: { $first: "$name" },
+					playCount: { $sum: { $size: "$userGames" } }, // Calculate play count
+				},
+			},
+			{
+				$project: {
+					id: "$_id",
+					name: "$name",
+					playCount: "$playCount",
+				},
+			},
+			// Sort by play count in descending order
+			{
+				$sort: { playCount: -1 },
+			},
+		]);
+
+		return statistic;
+	}
+
+	async getUsersStatisticByPromotion(promotionId, filter) {
+		// Used to get total number of users who played join each day in the promotion
+		// The response is an array of objects { date, userCount }
+		// The result must have all days in the promotion period
+		const statistic = await Game.aggregate([
+			// Match games by promotionId
+			{
+				$match: { promotionId },
+			},
+			// Lookup user games associated with the game
+			{
+				$lookup: {
+					from: "usergames", // Collection name for user-game relations
+					localField: "_id", // Field in the Game collection
+					foreignField: "gameId", // Field in the UserGame collection
+					as: "userGames", // Output array field
+					pipeline: [
+						{
+							$match: filter,
+						},
+					],
+				},
+			},
+			// Unwind userGames array
+			{
+				$unwind: "$userGames",
+			},
+			// Group by date and calculate user count
+			{
+				$group: {
+					_id: {
+						$dateToString: { format: "%Y-%m-%d", date: "$userGames.createdAt" },
+					},
+					userCount: { $sum: 1 },
+				},
+			},
+			{
+				$project: {
+					date: "$_id",
+					userCount: "$userCount",
+				},
+			},
+			// Sort by date in ascending order
+			{
+				$sort: { _id: 1 },
+			},
+		]);
+
+		// Fill in missing dates with 0 user count
+		const startDate = new Date(filter.createdAt.$gte);
+		const endDate = new Date(filter.createdAt.$lte);
+		const dateDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+		const dateArray = Array.from({ length: dateDiff + 1 }, (_, i) => {
+			const date = new Date(startDate);
+			date.setDate(date.getDate() + i);
+			return date;
+		});
+
+		const result = dateArray.map((date) => {
+			const dateString = date.toISOString().split("T")[0];
+			const found = statistic.find((item) => item.id === dateString);
+			return {
+				id: dateString,
+				userCount: found ? found.userCount : 0,
+			};
+		});
+
+		return result;
 	}
 }
 

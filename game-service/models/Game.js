@@ -27,4 +27,8 @@ const GameSchema = new mongoose.Schema(
 	}
 );
 
+GameSchema.set("toJSON", {
+	virtuals: true,
+});
+
 module.exports = mongoose.model("Game", GameSchema);

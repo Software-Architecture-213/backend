@@ -23,4 +23,8 @@ const PromotionSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+PromotionSchema.set("toJSON", {
+	virtuals: true,
+});
+
 module.exports = mongoose.model("Promotion", PromotionSchema);

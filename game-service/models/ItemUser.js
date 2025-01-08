@@ -14,4 +14,8 @@ const ItemUserSchema = new mongoose.Schema(
 	}
 );
 
+ItemUserSchema.set("toJSON", {
+	virtuals: true,
+});
+
 module.exports = mongoose.model("ItemUser", ItemUserSchema);
