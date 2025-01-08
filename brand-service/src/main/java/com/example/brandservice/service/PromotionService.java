@@ -1,5 +1,6 @@
 package com.example.brandservice.service;
 
+import com.example.brandservice.client.GameClient;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.exception.AppException;
@@ -27,7 +28,7 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class PromotionService {
-
+    private final GameClient gameClient;
     private final PromotionRepository promotionRepository;
     private final BrandRepository brandRepository;
     private final PromotionMapper promotionMapper;
@@ -48,7 +49,7 @@ public class PromotionService {
         promotion.setRemainingBudget(promotion.getBudget());
         // Save the promotion entity
         Promotion savedPromotion = promotionRepository.save(promotion);
-
+        gameClient.createPromotions(savedPromotion);
         // Return the saved promotion as a response DTO
         return promotionMapper.promotionToPromotionResponse(savedPromotion);
     }

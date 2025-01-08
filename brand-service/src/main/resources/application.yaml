@@ -4,7 +4,7 @@ server:
   port: 8082
 service:
   identity-url: ${IDENTITY_SERVICE_URL}
-
+  game-url: ${GAME_SERVICE_URL}
 jwt:
   secret: ${PRIVATE}
 
