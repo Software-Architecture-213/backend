@@ -64,71 +64,69 @@
 		"difficulty": "medium",
 		"points": 20
 	},
-	[
-		{
-			"_id": "6a6b6c6d-6e6f-6g6h-6i6j-6k6l6m6n6o6p",
-			"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-			"question": "What year was PhucLong established?",
-			"answers": [
-				{ "text": "1968", "isCorrect": true },
-				{ "text": "1975", "isCorrect": false },
-				{ "text": "1980", "isCorrect": false },
-				{ "text": "1990", "isCorrect": false }
-			],
-			"difficulty": "easy",
-			"points": 10
-		},
-		{
-			"_id": "7a7b7c7d-7e7f-7g7h-7i7j-7k7l7m7n7o7p",
-			"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-			"question": "Which PhucLong drink is most popular?",
-			"answers": [
-				{ "text": "Milk Tea", "isCorrect": true },
-				{ "text": "Cold Brew", "isCorrect": false },
-				{ "text": "Green Tea Latte", "isCorrect": false },
-				{ "text": "Hot Americano", "isCorrect": false }
-			],
-			"difficulty": "medium",
-			"points": 15
-		},
-		{
-			"_id": "8a8b8c8d-8e8f-8g8h-8i8j-8k8l8m8n8o8p",
-			"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-			"question": "What is the base ingredient of PhucLong's signature iced teas?",
-			"answers": [
-				{ "text": "Fresh Tea Leaves", "isCorrect": true },
-				{ "text": "Powdered Tea", "isCorrect": false },
-				{ "text": "Tea Bags", "isCorrect": false },
-				{ "text": "Tea Concentrate", "isCorrect": false }
-			],
-			"difficulty": "medium",
-			"points": 15
-		},
-		{
-			"_id": "9a9b9c9d-9e9f-9g9h-9i9j-9k9l9m9n9o9p",
-			"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-			"question": "What is the key flavor in PhucLong's jasmine tea?",
-			"answers": [
-				{ "text": "Jasmine Flowers", "isCorrect": true },
-				{ "text": "Chamomile", "isCorrect": false },
-				{ "text": "Mint", "isCorrect": false },
-				{ "text": "Rose", "isCorrect": false }
-			],
-			"difficulty": "easy",
-			"points": 10
-		},
-		{
-			"_id": "10a10b10c-10e10f-10g10h-10i10j-10k10l10m10n10o10p",
-			"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
-			"question": "How is PhucLong's iced coffee brewed?",
-			"answers": [
-				{ "text": "Slow Drip", "isCorrect": true },
-				{ "text": "Espresso Machine", "isCorrect": false },
-				{ "text": "Cold Brew", "isCorrect": false },
-				{ "text": "French Press", "isCorrect": false }
-			],
-			"difficulty": "medium",
-			"points": 20
-		}
-	]
+	{
+		"_id": "6a6b6c6d-6e6f-6g6h-6i6j-6k6l6m6n6o6p",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"question": "What year was PhucLong established?",
+		"answers": [
+			{ "text": "1968", "isCorrect": true },
+			{ "text": "1975", "isCorrect": false },
+			{ "text": "1980", "isCorrect": false },
+			{ "text": "1990", "isCorrect": false }
+		],
+		"difficulty": "easy",
+		"points": 10
+	},
+	{
+		"_id": "7a7b7c7d-7e7f-7g7h-7i7j-7k7l7m7n7o7p",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"question": "Which PhucLong drink is most popular?",
+		"answers": [
+			{ "text": "Milk Tea", "isCorrect": true },
+			{ "text": "Cold Brew", "isCorrect": false },
+			{ "text": "Green Tea Latte", "isCorrect": false },
+			{ "text": "Hot Americano", "isCorrect": false }
+		],
+		"difficulty": "medium",
+		"points": 15
+	},
+	{
+		"_id": "8a8b8c8d-8e8f-8g8h-8i8j-8k8l8m8n8o8p",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"question": "What is the base ingredient of PhucLong's signature iced teas?",
+		"answers": [
+			{ "text": "Fresh Tea Leaves", "isCorrect": true },
+			{ "text": "Powdered Tea", "isCorrect": false },
+			{ "text": "Tea Bags", "isCorrect": false },
+			{ "text": "Tea Concentrate", "isCorrect": false }
+		],
+		"difficulty": "medium",
+		"points": 15
+	},
+	{
+		"_id": "9a9b9c9d-9e9f-9g9h-9i9j-9k9l9m9n9o9p",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"question": "What is the key flavor in PhucLong's jasmine tea?",
+		"answers": [
+			{ "text": "Jasmine Flowers", "isCorrect": true },
+			{ "text": "Chamomile", "isCorrect": false },
+			{ "text": "Mint", "isCorrect": false },
+			{ "text": "Rose", "isCorrect": false }
+		],
+		"difficulty": "easy",
+		"points": 10
+	},
+	{
+		"_id": "10a10b10c-10e10f-10g10h-10i10j-10k10l10m10n10o10p",
+		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
+		"question": "How is PhucLong's iced coffee brewed?",
+		"answers": [
+			{ "text": "Slow Drip", "isCorrect": true },
+			{ "text": "Espresso Machine", "isCorrect": false },
+			{ "text": "Cold Brew", "isCorrect": false },
+			{ "text": "French Press", "isCorrect": false }
+		],
+		"difficulty": "medium",
+		"points": 20
+	}
 ]

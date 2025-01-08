@@ -9,6 +9,7 @@
 		"allowItemExchange": true,
 		"difficulty": "medium",
 		"promotionId": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
+		"brandId": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
@@ -22,6 +23,7 @@
 		"allowItemExchange": false,
 		"difficulty": "easy",
 		"promotionId": "f8d74c87-1d9d-4f8f-9099-4443471e8124",
+		"brandId": "b2bba07a-2cfc-44b5-9836-d1567c527a6f",
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
@@ -35,6 +37,7 @@
 		"allowItemExchange": true,
 		"difficulty": "medium",
 		"promotionId": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
+		"brandId": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	},
@@ -48,6 +51,7 @@
 		"allowItemExchange": false,
 		"difficulty": "easy",
 		"promotionId": "9d7e5678-3de1-4bfc-8c60-cd16e1799b24",
+		"brandId": "1fa17445-8b76-4fdd-821d-fcb06266d8a2",
 		"createdAt": "2024-12-24T10:00:00Z",
 		"updatedAt": "2024-12-24T10:00:00Z"
 	}
