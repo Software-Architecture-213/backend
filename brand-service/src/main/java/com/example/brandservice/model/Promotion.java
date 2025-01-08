@@ -1,6 +1,7 @@
 package com.example.brandservice.model;
 
 import com.example.brandservice.converter.GameListConverter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -25,6 +26,7 @@ public class Promotion {
     Date startDate;
     Date endDate;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brandId", referencedColumnName = "id")
     Brand brand;

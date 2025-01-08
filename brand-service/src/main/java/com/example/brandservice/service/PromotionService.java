@@ -14,16 +14,14 @@ import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.BrandRepository;
 import com.example.brandservice.repository.VoucherRepository;
 import com.example.brandservice.utility.CloudinaryUtil;
+import com.example.brandservice.utility.ParseUUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -125,12 +123,12 @@ public class PromotionService {
                 .map(promotionMapper::promotionToPromotionResponse)
                 .toList();
     }
-
+    @Transactional
     public FavouritePromotions addToFavourites(String promotionId, String userId) {
         FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(UUID.fromString(userId))
                 .orElseGet(() -> {
                     FavouritePromotions newFavourite = new FavouritePromotions();
-                    newFavourite.setUserId(UUID.fromString(userId));
+                    newFavourite.setUserId(ParseUUID.normalizeUID(userId));
                     return newFavourite;
                 });
 
@@ -138,6 +136,9 @@ public class PromotionService {
         List<Promotion> promotions = favouritePromotions.getPromotions();
 
         // Kiểm tra nếu promotionId đã tồn tại, nếu không thì thêm vào
+        if (promotions == null) {
+            promotions = new ArrayList<>();
+        }
         boolean exists = promotions.stream()
                 .anyMatch(promotion -> promotion.getId().equals(promotionId));
 
@@ -146,6 +147,7 @@ public class PromotionService {
                     .orElseThrow(() -> new RuntimeException("Promotion not found"));
             promotions.add(promotion);
         }
+        favouritePromotions.setPromotions(promotions);
 
         // Lưu lại FavouritePromotions
         return favouritePromotionsRepository.save(favouritePromotions);
