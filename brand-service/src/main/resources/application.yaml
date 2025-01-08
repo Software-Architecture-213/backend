@@ -4,6 +4,7 @@ server:
   port: 8082
 service:
   identity-url: ${IDENTITY_SERVICE_URL}
+  game-url: ${GAME_SERVICE_URL}
 
 jwt:
   secret: ${PRIVATE}
@@ -14,7 +15,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL}
-    username:  ${DB_USERNAME}
+    username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
@@ -33,7 +34,7 @@ spring:
         smtp: # Correct the spelling here
           auth: true
           starttls:
-            enable: true  # Add a space after the colon
+            enable: true # Add a space after the colon
 cloudinary:
   url: cloudinary://${CLOUDINARY_KEY}:${CLOUDINARY_SECRET}@${CLOUDINARY_NAME}
 paypal-client-id: ${PAYPAL_CLIENT_ID}
