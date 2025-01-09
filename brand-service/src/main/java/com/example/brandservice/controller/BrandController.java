@@ -48,7 +48,6 @@ public class BrandController {
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{brandId}")
     public ResponseEntity<BrandResponse> updateBrandByAdmin(
-            Authentication authentication,
             @PathVariable String brandId,
             @RequestBody @Valid BrandRequest brandRequest) {
         BrandResponse updatedBrand = brandService.updateBrand(brandId, brandRequest);
