@@ -6,6 +6,7 @@ import com.example.brandservice.model.Promotion;
 import com.example.brandservice.repository.FavouritePromotionsRepository;
 import com.example.brandservice.repository.NotificationRepository;
 import com.example.brandservice.utility.DateUtility;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final FavouritePromotionsRepository favouritePromotionsRepository;
 
+    @Transactional
     public Notification notifyUsers(UUID userId) {
         // Lấy FavouritePromotions của userId cụ thể
         FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(userId)
@@ -34,7 +36,8 @@ public class NotificationService {
                     .filter(promotion -> {
                         LocalDateTime startDate = DateUtility.convertDateToLocalDateTime(promotion.getStartDate());
                         LocalDateTime now = LocalDateTime.now();
-                        return !startDate.isBefore(now) && startDate.isBefore(now.plusDays(3));
+//                        return !startDate.isBefore(now) && startDate.isBefore(now.plusDays(0));
+                        return !startDate.isBefore(now);
                     })
                     .toList();
 

@@ -20,7 +20,6 @@ public class FavouritePromotions {
     String id;
     UUID userId;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     private List<Promotion> promotions;
 }
