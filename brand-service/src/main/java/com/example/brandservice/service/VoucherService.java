@@ -1,14 +1,17 @@
 package com.example.brandservice.service;
 
 import com.example.brandservice.dto.request.VoucherRequest;
+import com.example.brandservice.dto.request.VoucherUserRequest;
 import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.exception.AppException;
 import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.VoucherMapper;
 import com.example.brandservice.model.Promotion;
 import com.example.brandservice.model.Voucher;
+import com.example.brandservice.model.VoucherUser;
 import com.example.brandservice.repository.PromotionRepository;
 import com.example.brandservice.repository.VoucherRepository;
+import com.example.brandservice.repository.VoucherUserRepository;
 import com.example.brandservice.utility.CloudinaryUtil;
 import com.example.brandservice.utility.DateUtility;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,6 +32,8 @@ public class VoucherService {
     private final VoucherMapper voucherMapper;
     private final PromotionRepository promotionRepository;
     private final CloudinaryService cloudinaryService;
+    private final VoucherUserRepository voucherUserRepository;
+
     public VoucherResponse createVoucher(VoucherRequest voucherRequest) {
         // Fetch the promotion associated with the voucher
         Promotion promotion = promotionRepository.findById(voucherRequest.getPromotionId())
@@ -113,5 +119,30 @@ public class VoucherService {
         }
         voucher.setImageUrl(newPhotoUrl);
         return voucherMapper.toVoucherResponse(voucherRepository.save(voucher));
+    }
+
+    public List<VoucherUser> getVoucherUser(String userId) {
+        return voucherUserRepository.findByUserId(userId);
+    }
+
+    public VoucherUser createVoucherUser(String userId, VoucherUserRequest request) {
+        Voucher voucher = voucherRepository.findById(request.getVoucherId()).orElseThrow(
+                () -> new RuntimeException("Voucher not found")
+        );
+        if (Objects.equals(voucher.getCreateCounts(), voucher.getMaxCounts())){
+            throw new RuntimeException("No more vouchers");
+        }
+        VoucherUser voucherUser = new VoucherUser();
+        voucherUser.setUserId(userId);
+        voucherUser.setVoucher(voucher);
+        voucherUser.setStatus(request.getStatus());
+        voucherUser.setCreateAt(LocalDateTime.now());
+        voucherUser.setQrCode(request.getQrCode());
+
+        VoucherUser savedVoucherUser =  voucherUserRepository.save(voucherUser);
+        voucher.setCreateCounts(voucher.getCreateCounts() + 1);
+        voucherRepository.save(voucher);
+
+        return savedVoucherUser;
     }
 }

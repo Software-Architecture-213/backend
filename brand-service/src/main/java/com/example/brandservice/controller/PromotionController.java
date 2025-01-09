@@ -1,9 +1,11 @@
 package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
+import com.example.brandservice.dto.request.ConversionRuleRequest;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.dto.response.PromotionResponse;
+import com.example.brandservice.model.ConversionRule;
 import com.example.brandservice.model.FavouritePromotions;
 import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
@@ -91,4 +93,15 @@ public class PromotionController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PostMapping("/promotion/conversions-rule")
+    public ResponseEntity<ConversionRule> createPromotionConversionRule(@RequestBody ConversionRuleRequest conversionRuleRequest) {
+        ConversionRule response = promotionService.createConversionRule(conversionRuleRequest);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/promotion/conversions-rule")
+    public ResponseEntity<ConversionRule> getPromotionConversionRuleById(@RequestParam("promotionId") String promotionId) {
+        ConversionRule response = promotionService.getConversionRuleByPromotionId(promotionId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
