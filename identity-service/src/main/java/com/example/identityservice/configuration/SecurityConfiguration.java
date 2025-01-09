@@ -60,7 +60,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final var corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("https://recomme-five.vercel.app", "http://localhost:3000", "http://localhost:3003", "http://localhost:5173"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3003", "http://localhost:5173"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Origin", "Content-Type", "Accept"));
         corsConfiguration.setExposedHeaders(List.of("Authorization"));
