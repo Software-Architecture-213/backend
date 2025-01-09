@@ -4,10 +4,14 @@ import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.response.auth.UserInfoResponse;
 import com.example.identityservice.dto.response.user.UsersInfoResponse;
 import com.example.identityservice.enums.Gender;
+import com.example.identityservice.exception.AccountAlreadyExistsException;
+import com.example.identityservice.exception.AppException;
+import com.example.identityservice.exception.ErrorCode;
 import com.example.identityservice.mapper.UserMapper;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.SetOptions;
 import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -17,9 +21,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -108,18 +110,44 @@ public class FirebaseUserClient {
             }
 
             if (userUpdateRequest.getGender() != null) {
-                userDocRef.update("gender", userUpdateRequest.getGender().name());
+                if (documentSnapshot.exists() && documentSnapshot.contains("gender")) {
+                    userDocRef.update("gender", userUpdateRequest.getGender().name());
+                } else {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("gender", userUpdateRequest.getGender().name());
+                    userDocRef.set(data, SetOptions.merge());
+                }
+                gender = userUpdateRequest.getGender().name();
             }
             if (userUpdateRequest.getDateOfBirth() != null) {
-                userDocRef.update("dateOfBirth", userUpdateRequest.getDateOfBirth());
+                if (documentSnapshot.exists() && documentSnapshot.contains("dateOfBirth")) {
+                    userDocRef.update("dateOfBirth", userUpdateRequest.getDateOfBirth());
+                } else {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("dateOfBirth", userUpdateRequest.getDateOfBirth());
+                    userDocRef.set(data, SetOptions.merge());
+                }
+                dateOfBirth = userUpdateRequest.getDateOfBirth();
             }
             UserInfoResponse res = UserMapper.INSTANCE.fromRecordToResponse(userRecord);
             res.setDateOfBirth(dateOfBirth);
             res.setGender(Gender.valueOf(gender));
             return res;
-        } catch (FirebaseAuthException | InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Error updating user information: " + e.getMessage(), e);
-        } 
+        } catch (final FirebaseAuthException | InterruptedException | ExecutionException exception) {
+            if (exception.getMessage().contains("EMAIL_EXISTS")) {
+                throw new AccountAlreadyExistsException("Account with provided email already exists");
+            }
+            if (exception.getMessage().contains("PHONE_NUMBER_EXISTS")) {
+                throw new AccountAlreadyExistsException("Account with provided phone number already exists");
+            }
+            if (exception.getMessage().contains("INVALID_PHONE_NUMBER : TOO_SHORT")) {
+                throw new AppException(ErrorCode.PHONE_TOO_SHORT);
+            }
+            if (exception.getMessage().contains("INVALID_PHONE_NUMBER : TOO_LONG")) {
+                throw new AppException(ErrorCode.PHONE_TOO_LONG);
+            }
+            throw new RuntimeException("Error creating user: " + exception.getMessage(), exception);
+        }
     }
 
     public UsersInfoResponse getUsers(String pageToken, int maxResults) {

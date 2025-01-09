@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", UserGameController.getAllUserGames);
 router.post("/", UserGameController.createUserGame);
 router.get("/:id", UserGameController.getUserGameById);
-router.put("/:id", UserGameController.updateUserGame);
+router.put("/:id", adminVerifyHandler, UserGameController.updateUserGame);
 router.delete("/:id", UserGameController.deleteUserGame);
 
 module.exports = router;
