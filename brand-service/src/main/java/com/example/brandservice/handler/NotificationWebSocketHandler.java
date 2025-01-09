@@ -33,7 +33,7 @@ public class NotificationWebSocketHandler extends TextWebSocketHandler {
             sessions.put(userId, session);
             System.out.println("User connected: " + userId);
 
-
+            sendWelcomeMessage(userId);
             // Gửi thông báo qua NotificationService
             Notification notification = notificationService.notifyUsers(UUID.fromString(userId));
             if (notification != null) {
@@ -48,6 +48,18 @@ public class NotificationWebSocketHandler extends TextWebSocketHandler {
         if (userId != null) {
             sessions.remove(userId);
             System.out.println("User disconnected: " + userId);
+        }
+    }
+
+    private void sendWelcomeMessage(String userId) {
+        WebSocketSession session = sessions.get(userId);
+        if (session != null && session.isOpen()) {
+            try {
+                String welcomeMessage = "Welcome " + userId + ", you are now connected!";
+                session.sendMessage(new TextMessage(welcomeMessage));
+            } catch (IOException e) {
+                System.err.println("Failed to send welcome message: " + e.getMessage());
+            }
         }
     }
 

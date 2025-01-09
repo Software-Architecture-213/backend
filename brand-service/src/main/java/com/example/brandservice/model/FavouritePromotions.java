@@ -1,5 +1,7 @@
 package com.example.brandservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -18,6 +20,7 @@ public class FavouritePromotions {
     String id;
     UUID userId;
 
-    @OneToMany
-    List<Promotion> promotions;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Promotion> promotions;
 }
