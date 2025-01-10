@@ -4,6 +4,7 @@ const userGameService = require("./userGameService");
 
 const Game = require("../models/Game");
 const UserGame = require("../models/UserGame");
+const Promotion = require("../models/Promotion");
 
 class StatisticService {
 	async getGeneralBrandStatistic(brandId, filter) {
@@ -180,6 +181,54 @@ class StatisticService {
 		});
 
 		return result;
+	}
+
+	async getBrandBudgetStatistics(brandId) {
+		try {
+			brandId = "b2bba07a-2cfc-44b5-9836-d1567c527a6f";
+			const results = await Promotion.aggregate([
+				{
+					$match: { brandId: brandId }, // Filter by brandId
+				},
+				{
+					$group: {
+						_id: null,
+						totalBudget: { $sum: "$budget" }, // Sum of all budgets
+						remainingBudget: { $sum: "$remainingBudget" }, // Sum of all remaining budgets
+						promotions: {
+							$push: {
+								id: "$_id",
+								name: "$name",
+								budget: "$budget",
+								remainingBudget: "$remainingBudget",
+								spentBudget: { $subtract: ["$budget", "$remainingBudget"] },
+							},
+						},
+					},
+				},
+				{
+					$project: {
+						_id: 0, // Exclude the group _id
+						totalBudget: 1,
+						remainingBudget: 1,
+						promotions: 1,
+					},
+				},
+			]);
+
+			const testResult = await Promotion.aggregate([
+				{
+					$match: { brandId }, // Filter by brandId
+				},
+			]);
+			// console.log(await Promotion.find({}));
+			// console.log(typeof brandId);
+			console.log(results);
+			return results.length > 0 ? results[0] : null;
+		} catch (error) {
+			console.error("Error fetching brand statistics:", error);
+			throw error;
+		}
 	}
 }
 

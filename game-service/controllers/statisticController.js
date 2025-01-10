@@ -39,10 +39,17 @@ const StatisticController = {
 	async getUsersStatisticByPromotion(req, res, next) {
 		const promotionId = req.params.id;
 		const filter = convertTimeQueryParamToFilter(req.query);
+		console.log(promotionId, filter);
 		const statistic = await statisticService.getUsersStatisticByPromotion(
 			promotionId,
 			filter
 		);
+		res.ok(statistic);
+	},
+
+	async getBrandBudgetStatistics(req, res, next) {
+		const brandId = req.params.id;
+		const statistic = await statisticService.getBrandBudgetStatistics(brandId);
 		res.ok(statistic);
 	},
 };

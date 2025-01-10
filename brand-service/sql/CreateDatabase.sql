@@ -148,7 +148,7 @@ create table favourite_promotion{
 -- CREATE TABLE ConversionRule (
 --     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
 --     voucherId UUID NOT NULL,
---     gameId UUID,
+--     promotionId UUID,
 --     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --     FOREIGN KEY (voucherId) REFERENCES Voucher (id)
