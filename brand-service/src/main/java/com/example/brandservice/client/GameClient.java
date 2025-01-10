@@ -45,4 +45,16 @@ public class GameClient {
 
         var response = restTemplate.postForObject(url, promotionMap, Object.class);
     }
+
+    public Object getGameById(String gameId){
+        String url = UriComponentsBuilder.fromUriString(GAME_URL)
+                .path("/games/{id}")
+                .buildAndExpand(gameId)
+                .toUriString();
+        try {
+            return restTemplate.getForObject(url, Object.class); // Lấy dữ liệu dưới dạng Object
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch game details: " + e.getMessage(), e);
+        }
+    }
 }

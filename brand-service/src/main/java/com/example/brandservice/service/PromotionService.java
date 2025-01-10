@@ -51,6 +51,23 @@ public class PromotionService {
         return promotionMapper.promotionToPromotionResponse(savedPromotion);
     }
 
+    private List<Object> fetchGamesByIds(List<String> gameIds) {
+        List<Object> gameList = new ArrayList<>();
+
+        for (String gameId : gameIds) {
+            try {
+                // Gọi GameClient để lấy game detail
+                Object game = gameClient.getGameById(gameId);
+                gameList.add(game); // Thêm game vào danh sách
+            } catch (Exception e) {
+                // Xử lý lỗi nếu không lấy được game
+                System.err.println("Failed to fetch game with ID: " + gameId + ". Error: " + e.getMessage());
+            }
+        }
+
+        return gameList;
+    }
+
     // Update an existing promotion
     public PromotionResponse updatePromotion(String promotionId, PromotionRequest promotionRequest) {
         // Find the promotion by ID
@@ -96,32 +113,54 @@ public class PromotionService {
 
     // Fetch a promotion by ID
     public PromotionResponse getPromotionById(String promotionId) {
-        // Find the promotion by ID
-        Promotion promotion = promotionRepository.findById(promotionId).orElseThrow(
-                () -> new RuntimeException("Promotion not found")
-        );
-        return promotionMapper.promotionToPromotionResponse(promotion);
+        // Tìm promotion theo ID
+        Promotion promotion = promotionRepository.findById(promotionId)
+                .orElseThrow(() -> new RuntimeException("Promotion not found"));
+
+        // Lấy danh sách game IDs từ promotion
+        List<String> gameIds = promotion.getGames(); // Đảm bảo trường này tồn tại
+        List<Object> gameList = fetchGamesByIds(gameIds);
+
+        // Map Promotion sang PromotionResponse
+        PromotionResponse response = promotionMapper.promotionToPromotionResponse(promotion);
+
+        // Gán danh sách games vào response
+        response.setGames(gameList);
+
+        return response;
     }
+
 
     // Fetch all promotions for a specific brand
     public List<PromotionResponse> getPromotionsByBrandId(String brandId) {
-        List<Promotion> promotions;
-         if (brandId != null && !brandId.isBlank()) {
-            promotions = promotionRepository.findByBrandId(brandId);
-        // Manually map List<Promotion> to List<PromotionResponse>
-            return promotions.stream()
-                .map(promotionMapper::promotionToPromotionResponse)
+        List<Promotion> promotions = promotionRepository.findByBrandId(brandId);
+
+        // Map từng Promotion thành PromotionResponse và gán games vào
+        return promotions.stream()
+                .map(promotion -> {
+                    PromotionResponse response = promotionMapper.promotionToPromotionResponse(promotion);
+                    List<Object> gameList = fetchGamesByIds(promotion.getGames());
+                    response.setGames(gameList);
+                    return response;
+                })
                 .toList();
-         }
-         return null;
     }
 
     public List<PromotionResponse> getAllPromotions() {
         List<Promotion> promotions = promotionRepository.findAll();
+
+        // Map từng Promotion thành PromotionResponse và gán games vào
         return promotions.stream()
-                .map(promotionMapper::promotionToPromotionResponse)
+                .map(promotion -> {
+                    PromotionResponse response = promotionMapper.promotionToPromotionResponse(promotion);
+                    List<Object> gameList = fetchGamesByIds(promotion.getGames());
+                    response.setGames(gameList);
+                    return response;
+                })
                 .toList();
     }
+
+
 
     @Transactional
     public FavouritePromotions addToFavourites(String promotionId, String userId) {
