@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -29,20 +28,10 @@ public class UserInfoResponse {
     private boolean isDisabled;
     private Date lastSignIn;
 
-    /* Override to format date */
-    public String getDateOfBirth() {
-        if (dateOfBirth == null) {
-            return "";
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(dateOfBirth);
-    }
-
-    public String getLastSignIn() {
+    public Date getLastSignIn() {
         if (lastSignIn == null || lastSignIn.toString().contains("1970")) {
-            return "";
+            return null;
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(lastSignIn);
+        return  this.lastSignIn;
     }
 }

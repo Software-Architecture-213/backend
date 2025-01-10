@@ -50,10 +50,15 @@ public class UserController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<UserInfoResponse> updateUserByEmail(Authentication authentication,
+    public ResponseEntity<UserInfoResponse> updateMe(Authentication authentication,
             @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserInfoResponse> updateUserById(@PathVariable String id, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(id, userUpdateRequest));
     }
     
     @PreAuthorize("hasRole('ADMIN')")

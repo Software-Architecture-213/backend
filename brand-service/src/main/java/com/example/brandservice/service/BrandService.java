@@ -67,9 +67,15 @@ public class BrandService {
     public BrandResponse updateBrand(String id, BrandRequest brandRequest) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
-        brand.setDisplayName(brandRequest.getDisplayName());
-        brand.setField(brandRequest.getField());
-        brand.setGps(brandRequest.getGps());
+        if (brandRequest.getDisplayName() != null && !brandRequest.getDisplayName().isBlank()) {
+            brand.setDisplayName(brandRequest.getDisplayName());
+        }
+        if (brandRequest.getField() != null && !brandRequest.getField().isBlank()) {
+            brand.setField(brandRequest.getField());
+        }
+        if (brandRequest.getGps() != null) {
+            brand.setGps(brandRequest.getGps());
+        }
 //        brand.setStatus(brandRequest.getStatus()); // Not allow brand to update status itself
         brand.setUpdateAt(LocalDateTime.now());
         Brand updatedBrand = brandRepository.save(brand);
