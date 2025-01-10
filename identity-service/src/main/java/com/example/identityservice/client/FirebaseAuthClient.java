@@ -162,7 +162,7 @@ public class FirebaseAuthClient {
             FirebaseToken decodeToken = firebaseAuth.verifyIdToken(token);
             return ValidatedTokenResponse.builder()
                     .userId(decodeToken.getClaims().get("user_id").toString())
-//                    .role(decodeToken.getClaims().get("role").toString())
+                    .role(decodeToken.getClaims().get("role").toString())
                     .isValidated(true)
                     .message("Token validation successful.")
                     .build();

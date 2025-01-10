@@ -2,6 +2,7 @@ package com.example.brandservice.handler;
 
 import com.example.brandservice.model.Notification;
 import com.example.brandservice.service.NotificationService;
+import com.example.brandservice.utility.ParseUUID;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,10 +35,11 @@ public class NotificationWebSocketHandler extends TextWebSocketHandler {
             System.out.println("User connected: " + userId);
 
             sendWelcomeMessage(userId);
+
             // Gửi thông báo qua NotificationService
-            Notification notification = notificationService.notifyUsers(UUID.fromString(userId));
+            Notification notification = notificationService.notifyUsers(ParseUUID.normalizeUID(userId));
             if (notification != null) {
-                sendNotification(notification);
+                sendNotification(notification, userId);
             }
         }
     }
@@ -63,8 +65,8 @@ public class NotificationWebSocketHandler extends TextWebSocketHandler {
         }
     }
 
-    public void sendNotification(Notification notification) {
-        WebSocketSession session = sessions.get(notification.getUserid().toString());
+    public void sendNotification(Notification notification, String userId) {
+        WebSocketSession session = sessions.get(userId);
         if (session != null && session.isOpen()) {
             try {
                 String message = notification.getMessage();

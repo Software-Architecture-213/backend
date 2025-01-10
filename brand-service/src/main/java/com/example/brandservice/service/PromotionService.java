@@ -1,18 +1,15 @@
 package com.example.brandservice.service;
 
 import com.example.brandservice.client.GameClient;
+import com.example.brandservice.dto.request.ConversionRuleRequest;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.exception.AppException;
 import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.PromotionMapper;
-import com.example.brandservice.model.FavouritePromotions;
-import com.example.brandservice.model.Promotion;
-import com.example.brandservice.model.Brand;
-import com.example.brandservice.repository.FavouritePromotionsRepository;
-import com.example.brandservice.repository.PromotionRepository;
-import com.example.brandservice.repository.BrandRepository;
-import com.example.brandservice.repository.VoucherRepository;
+import com.example.brandservice.model.*;
+import com.example.brandservice.model.composite.ConversionRuleItemKey;
+import com.example.brandservice.repository.*;
 import com.example.brandservice.utility.CloudinaryUtil;
 import com.example.brandservice.utility.ParseUUID;
 import lombok.AllArgsConstructor;
@@ -32,7 +29,9 @@ public class PromotionService {
     private final PromotionMapper promotionMapper;
     private final CloudinaryService cloudinaryService;
     private final FavouritePromotionsRepository favouritePromotionsRepository;
-
+    private final ConversionRuleRepository conversionRuleRepository;
+    private final VoucherRepository voucherRepository;
+    private final ConversionRuleItemRepository conversionRuleItemRepository;
     // Create a new promotion
     public PromotionResponse createPromotion(PromotionRequest promotionRequest) {
         // Get the brand by ID
@@ -123,6 +122,7 @@ public class PromotionService {
                 .map(promotionMapper::promotionToPromotionResponse)
                 .toList();
     }
+
     @Transactional
     public FavouritePromotions addToFavourites(String promotionId, String userId) {
         FavouritePromotions favouritePromotions = favouritePromotionsRepository.findByUserId(ParseUUID.normalizeUID(userId))
@@ -153,4 +153,43 @@ public class PromotionService {
         return favouritePromotionsRepository.save(favouritePromotions);
     }
 
+    public List<ConversionRule> getAllConversionRules() {
+        return conversionRuleRepository.findAll();
+    }
+
+    public ConversionRule createConversionRule(ConversionRuleRequest request) {
+        // Create and save the ConversionRule
+        Voucher voucher = voucherRepository.findById(request.getVoucherId())
+                .orElseThrow(() -> new RuntimeException("Voucher not found"));
+
+        Promotion promotion = promotionRepository.findById(request.getPromotionId())
+                .orElseThrow(() -> new RuntimeException("Promotion not found"));
+
+        ConversionRule conversionRule = new ConversionRule();
+        conversionRule.setVoucher(voucher);
+        conversionRule.setPromotion(promotion);
+        conversionRule.setCreateAt(LocalDateTime.now());
+        ConversionRule savedRule = conversionRuleRepository.save(conversionRule);
+
+        // Create and save ConversionRuleItems
+        List<ConversionRuleItem> items = new ArrayList<>();
+        for (ConversionRuleRequest.ConversionRuleItemRequest itemRequest : request.getItems()) {
+            ConversionRuleItem item = new ConversionRuleItem();
+            item.setId(new ConversionRuleItemKey(savedRule.getId(), itemRequest.getItemId()));
+            item.setQuantity(itemRequest.getQuantity());
+            items.add(item);
+        }
+
+        conversionRuleItemRepository.saveAll(items);
+        savedRule.setItems(items);
+        conversionRuleRepository.save(savedRule);
+        return savedRule;
+    }
+
+    public ConversionRule getConversionRuleByPromotionId(String promotionId) {
+
+        return conversionRuleRepository.findConversionRuleByPromotionId(promotionId).orElseThrow(
+                () -> new RuntimeException("ConversionRule not found")
+        );
+    }
 }

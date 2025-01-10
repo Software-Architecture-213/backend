@@ -1,5 +1,6 @@
 package com.example.brandservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,6 +14,8 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+
+    String brandId;
     String name;
     String address;
     GPS gps;
