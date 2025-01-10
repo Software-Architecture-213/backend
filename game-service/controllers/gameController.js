@@ -44,6 +44,7 @@ const getGamesByPromotionID = async (req, res) => {
 	const games = await GameService.getGamesByPromotionId(promotionId);
 	res.ok(games);
 };
+
 module.exports = {
 	getAllGames,
 	createGame,

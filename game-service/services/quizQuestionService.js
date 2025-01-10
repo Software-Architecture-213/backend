@@ -40,6 +40,10 @@ class QuizQuestionService {
 		}
 		return quizQuestion;
 	}
+	async getQuizQuestionsBygameId(gameId) {
+		const quizQuestions = await QuizQuestion.find({ gameId: gameId });
+		return quizQuestions;
+	}
 }
 
 module.exports = new QuizQuestionService();

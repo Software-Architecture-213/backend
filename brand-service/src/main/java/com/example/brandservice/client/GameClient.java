@@ -40,15 +40,16 @@ public class GameClient {
         promotionMap.put("brandId", promotion.getBrand() != null ? promotion.getBrand().getId() : null);
         promotionMap.put("budget", promotion.getBudget());
         promotionMap.put("remainingBudget", promotion.getRemainingBudget());
-        promotionMap.put("status", promotion.getStatus() != null ? promotion.getStatus().toString().toLowerCase() : null);
+        promotionMap.put("status",
+                promotion.getStatus() != null ? promotion.getStatus().toString().toLowerCase() : null);
         promotionMap.put("createdAt", Date.from(promotion.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
 
         var response = restTemplate.postForObject(url, promotionMap, Object.class);
     }
 
-    public Object getGameById(String gameId){
+    public Object getGameById(String gameId) {
         String url = UriComponentsBuilder.fromUriString(GAME_URL)
-                .path("/games/{id}")
+                .path("/{id}")
                 .buildAndExpand(gameId)
                 .toUriString();
         try {

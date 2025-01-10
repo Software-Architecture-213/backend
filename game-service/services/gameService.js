@@ -49,8 +49,8 @@ class GameService {
 		}
 		return game;
 	}
-	async getGamesByPromotionId(promotionId) {
-		const games = await Game.find({ promotionId });
+	async getGamesByPromotionId(promotionId, filter) {
+		const games = await Game.find({ promotionId, ...filter });
 		return games;
 	}
 }
