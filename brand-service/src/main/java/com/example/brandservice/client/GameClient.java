@@ -48,11 +48,23 @@ public class GameClient {
 
     public Object getGameById(String gameId){
         String url = UriComponentsBuilder.fromUriString(GAME_URL)
-                .path("/games/{id}")
+                .path("/{id}")
                 .buildAndExpand(gameId)
                 .toUriString();
         try {
-            return restTemplate.getForObject(url, Object.class); // Lấy dữ liệu dưới dạng Object
+            return restTemplate.getForObject(url, Object.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch game details: " + e.getMessage(), e);
+        }
+    }
+
+    public Object getGameByPromotionId(String promotionId){
+        String url = UriComponentsBuilder.fromUriString(GAME_URL)
+                .path("/promotions/{id}")
+                .buildAndExpand(promotionId)
+                .toUriString();
+        try {
+            return restTemplate.getForObject(url, Object.class);
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch game details: " + e.getMessage(), e);
         }
