@@ -17,4 +17,8 @@ const ItemTransactionSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+ItemTransactionSchema.set("toJSON", {
+	virtuals: true,
+});
+
 module.exports = mongoose.model("ItemTransaction", ItemTransactionSchema);

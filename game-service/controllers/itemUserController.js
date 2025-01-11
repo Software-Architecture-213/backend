@@ -37,10 +37,17 @@ const deleteItemUser = async (req, res) => {
 	res.ok(itemUser);
 };
 
+const getItemUserByUserId = async (req, res) => {
+	const userId = req.params.id;
+	const itemUser = await ItemUserService.getItemUserByUserId(userId);
+	res.ok(itemUser);
+};
+
 module.exports = {
 	getAllItemUsers,
 	createItemUser,
 	getItemUserById,
 	updateItemUser,
 	deleteItemUser,
+	getItemUserByUserId,
 };

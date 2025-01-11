@@ -159,7 +159,7 @@ ConversionRuleSchema({
 		},
 	], // List of required items with their quantities
 	voucherId: { type: mongoose.Schema.Types.ObjectId, ref: "VoucherSchema" }, // Voucher to be rewarded
-	gameId: { type: mongoose.Schema.Types.ObjectId, ref: "GameSchema" },
+	promotionId: { type: mongoose.Schema.Types.ObjectId, ref: "PromotionSchema" },
 	createdAt: { type: Date, default: Date.now }, // Ngày tạo rule
 	updatedAt: { type: Date, default: Date.now }, // Ngày cập nhật rule
 });

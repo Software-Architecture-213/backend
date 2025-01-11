@@ -73,7 +73,8 @@ public class VoucherController {
 
     // Update an existing voucher
     @PutMapping("/{id}")
-    public ResponseEntity<VoucherResponse> updateVoucher(@PathVariable String id, @RequestBody VoucherRequest voucherRequest) {
+    public ResponseEntity<VoucherResponse> updateVoucher(@PathVariable String id,
+            @RequestBody VoucherRequest voucherRequest) {
         try {
             // Update a voucher using the service layer
             VoucherResponse voucherResponse = voucherService.updateVoucher(id, voucherRequest);

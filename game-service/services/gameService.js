@@ -49,6 +49,10 @@ class GameService {
 		}
 		return game;
 	}
+	async getGamesByPromotionId(promotionId, filter) {
+		const games = await Game.find({ promotionId, ...filter });
+		return games;
+	}
 }
 
 module.exports = new GameService();

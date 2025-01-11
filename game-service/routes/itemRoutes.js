@@ -9,5 +9,7 @@ router.post("/", ItemController.createItem);
 router.get("/:id", ItemController.getItemById);
 router.put("/:id", ItemController.updateItem);
 router.delete("/:id", ItemController.deleteItem);
+router.get("/game/:gameId", ItemController.getItemsByGameId);
+router.get("/game/:gameId/random", ItemController.getRandomItemByGameId);
 
 module.exports = router;

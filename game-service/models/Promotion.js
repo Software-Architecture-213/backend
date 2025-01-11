@@ -11,7 +11,12 @@ const PromotionSchema = new mongoose.Schema(
 		endDate: { type: Date, required: true }, // Thời gian kết thúc
 		brandId: { type: String, required: true }, // Thương hiệu liên kết
 		budget: { type: Number, default: 0 }, // Ngân sách dành cho khuyến mãi
-		remainingBudget: { type: Number }, // Ngân sách còn lại
+		remainingBudget: {
+			type: Number,
+			default: () => {
+				return this.budget;
+			},
+		}, // Ngân sách còn lại
 		status: {
 			type: String,
 			enum: ["active", "inactive", "completed"],
@@ -22,5 +27,9 @@ const PromotionSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+PromotionSchema.set("toJSON", {
+	virtuals: true,
+});
 
 module.exports = mongoose.model("Promotion", PromotionSchema);

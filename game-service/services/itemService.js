@@ -36,6 +36,19 @@ class ItemService {
 		}
 		return item;
 	}
+
+	async getItemsByGameId(gameId) {
+		return await Item.find({ gameId: gameId });
+	}
+
+	async getRandomItemByGameId(gameId) {
+		const items = await Item.find({ gameId: gameId });
+		if (items.length === 0) {
+			throw new CustomError("No items found for this game", 404);
+		}
+		const randomIndex = Math.floor(Math.random() * items.length);
+		return items[randomIndex];
+	}
 }
 
 module.exports = new ItemService();
