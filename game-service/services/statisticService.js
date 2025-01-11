@@ -173,7 +173,7 @@ class StatisticService {
 
 		const result = dateArray.map((date) => {
 			const dateString = date.toISOString().split("T")[0];
-			const found = statistic.find((item) => item.id === dateString);
+			const found = statistic.find((item) => item._id === dateString);
 			return {
 				id: dateString,
 				userCount: found ? found.userCount : 0,
@@ -185,7 +185,6 @@ class StatisticService {
 
 	async getBrandBudgetStatistics(brandId) {
 		try {
-			brandId = "b2bba07a-2cfc-44b5-9836-d1567c527a6f";
 			const results = await Promotion.aggregate([
 				{
 					$match: { brandId: brandId }, // Filter by brandId
@@ -216,14 +215,12 @@ class StatisticService {
 				},
 			]);
 
+			console.log(brandId);
 			const testResult = await Promotion.aggregate([
 				{
 					$match: { brandId }, // Filter by brandId
 				},
 			]);
-			// console.log(await Promotion.find({}));
-			// console.log(typeof brandId);
-			console.log(results);
 			return results.length > 0 ? results[0] : null;
 		} catch (error) {
 			console.error("Error fetching brand statistics:", error);

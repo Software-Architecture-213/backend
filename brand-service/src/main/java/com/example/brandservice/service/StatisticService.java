@@ -26,10 +26,6 @@ public class StatisticService {
   private final BrandRepository brandRepository;
 
   public AdminBrandStatisticResponse getAdminBrandStatistic(String startDate, String endDate) {
-    // convert startDate and endDate to Date in sql
-    Date start = Date.valueOf(startDate);
-    Date end = Date.valueOf(endDate);
-
     List<Object[]> rawResults = brandRepository.getBrandCreationCount(startDate, endDate);
     List<AdminStatisticResponse.AdminBrandStatisticObject> results = rawResults.stream()
         .map(row -> new AdminStatisticResponse.AdminBrandStatisticObject(
