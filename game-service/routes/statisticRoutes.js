@@ -9,4 +9,12 @@ router.get(
 	StatisticController.getGamesStatisticByPromotion
 );
 
+// router.get("/admin/brands", StatisticController.getGeneralBrandStatisticForAdmin);
+router.get("/admin/games", StatisticController.getGamesStatistic);
+router.get(
+	"/admin/promotions/:id/users",
+	StatisticController.getUsersStatisticByPromotion
+);
+router.get("/brands/:id/budget", StatisticController.getBrandBudgetStatistics);
+
 module.exports = router;

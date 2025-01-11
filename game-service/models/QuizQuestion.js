@@ -26,4 +26,8 @@ const QuizQuestionSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+QuizQuestionSchema.set("toJSON", {
+	virtuals: true,
+});
+
 module.exports = mongoose.model("QuizQuestion", QuizQuestionSchema);
