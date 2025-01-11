@@ -29,17 +29,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // all origins are allowed
-app.use(
-	cors({
-		credentials: true,
-		origin: true,
-	})
-);
+// app.use(
+// 	cors({
+// 		credentials: true,
+// 		origin: true,
+// 	})
+// );
+const corsOptions = {
+	origin: process.env.FRONTEND_URL, // Replace with your frontend's URL
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+	preflightContinue: true,
+	credentials: true,
+};
+console.log(corsOptions)
+
+app.use(cors(corsOptions));
+// app.options('*',cors(corsOptions));
 // app.use(jwtVerifyHandler);
 app.use(responseMethods);
 
 // Routes
-app.use("/games", gameRoutes);
+app.use("", gameRoutes);
 app.use("/promotions", promotionRoutes);
 app.use("/statistics", statisticRoutes);
 app.use("/items", itemRoutes);
@@ -48,7 +59,7 @@ app.use("/itemUsers", itemUserRoutes);
 app.use("/quizQuestions", quizQuestionRoutes);
 app.use("/userGames", userGameRoutes);
 
-app.use("/", (req, res) => {
+app.use("/health", (req, res) => {
 	res.json({ message: "Welcome to Game Service" });
 });
 

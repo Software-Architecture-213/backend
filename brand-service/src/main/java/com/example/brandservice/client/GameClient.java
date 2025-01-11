@@ -1,5 +1,13 @@
 package com.example.brandservice.client;
 
+import com.example.brandservice.dto.response.ValidatedTokenResponse;
+import com.example.brandservice.dto.response.AdminStatisticResponse.AdminGameStatisticResponse;
+import com.example.brandservice.dto.response.AdminStatisticResponse.AdminUserStatisticByPromotionResponse;
+import com.example.brandservice.dto.response.BrandStatisticResponse.BrandBudgetStatisticResponse;
+import com.example.brandservice.model.Promotion;
+import com.example.brandservice.utility.DateUtility;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,70 +17,101 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.brandservice.dto.response.AdminStatisticResponse.AdminGameStatisticResponse;
-import com.example.brandservice.dto.response.AdminStatisticResponse.AdminUserStatisticByPromotionResponse;
-import com.example.brandservice.dto.response.BrandStatisticResponse.BrandBudgetStatisticResponse;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class GameClient {
-  @Value("${service.game-url}")
-  private String GAME_URL;
+    @Value("${service.game-url}")
+    private String GAME_URL;
 
-  private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-  public AdminGameStatisticResponse getAdminGameStatistic(String token) {
-    String url = UriComponentsBuilder.fromUriString(GAME_URL)
-        .path("/statistics/admin/games")
-        .toUriString();
+    // Methods from Minh-statistic branch
+    public AdminGameStatisticResponse getAdminGameStatistic(String token) {
+        String url = UriComponentsBuilder.fromUriString(GAME_URL)
+            .path("/statistics/admin/games")
+            .toUriString();
 
-    // Put the token in the header if exists
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Authorization", token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
 
-    HttpEntity<String> entity = new HttpEntity<>("body", headers);
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-    // Send the GET request with the token in the header
-    ResponseEntity<AdminGameStatisticResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
-        AdminGameStatisticResponse.class);
+        ResponseEntity<AdminGameStatisticResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+            AdminGameStatisticResponse.class);
 
-    return response.getBody();
-  }
+        return response.getBody();
+    }
 
-  public AdminUserStatisticByPromotionResponse getAdminUserStatisticByPromotion(String token, String promotionId,
-      String startDate, String endDate) {
-    String url = GAME_URL + "/statistics/admin/promotions/" + promotionId + "/users?type=interval&startDate="
-        + startDate
-        + "&endDate=" + endDate;
+    public AdminUserStatisticByPromotionResponse getAdminUserStatisticByPromotion(String token, String promotionId,
+            String startDate, String endDate) {
+        String url = GAME_URL + "/statistics/admin/promotions/" + promotionId + "/users?type=interval&startDate="
+            + startDate
+            + "&endDate=" + endDate;
 
-    // Put the token in the header if exists
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Authorization", token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
 
-    HttpEntity<String> entity = new HttpEntity<>("body", headers);
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-    // Send the GET request with the token in the header
-    ResponseEntity<AdminUserStatisticByPromotionResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
-        AdminUserStatisticByPromotionResponse.class);
+        ResponseEntity<AdminUserStatisticByPromotionResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+            AdminUserStatisticByPromotionResponse.class);
 
-    return response.getBody();
-  }
+        return response.getBody();
+    }
 
-  public BrandBudgetStatisticResponse getBrandBudgetStatisticResponse(String token, String brandId) {
-    String url = GAME_URL + "/statistics/brands/" + brandId + "/budget";
+    public BrandBudgetStatisticResponse getBrandBudgetStatisticResponse(String token, String brandId) {
+        String url = GAME_URL + "/statistics/brands/" + brandId + "/budget";
 
-    // Put the token in the header if exists
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Authorization", token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
 
-    HttpEntity<String> entity = new HttpEntity<>("body", headers);
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-    // Send the GET request with the token in the header
-    ResponseEntity<BrandBudgetStatisticResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
-        BrandBudgetStatisticResponse.class);
+        ResponseEntity<BrandBudgetStatisticResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+            BrandBudgetStatisticResponse.class);
 
-    return response.getBody();
-  }
+        return response.getBody();
+    }
+
+    // Methods from master branch
+    public void createPromotions(Promotion promotion) {
+        String url = UriComponentsBuilder.fromUriString(GAME_URL)
+                .path("promotions/")
+                .toUriString();
+        Map<String, Object> promotionMap = new HashMap<>();
+
+        promotionMap.put("id", promotion.getId());
+        promotionMap.put("name", promotion.getName());
+        promotionMap.put("description", promotion.getDescription());
+        promotionMap.put("imageUrl", promotion.getImageUrl());
+        promotionMap.put("startDate", promotion.getStartDate());
+        promotionMap.put("endDate", promotion.getEndDate());
+        promotionMap.put("brandId", promotion.getBrand() != null ? promotion.getBrand().getId() : null);
+        promotionMap.put("budget", promotion.getBudget());
+        promotionMap.put("remainingBudget", promotion.getRemainingBudget());
+        promotionMap.put("status",
+                promotion.getStatus() != null ? promotion.getStatus().toString().toLowerCase() : null);
+        promotionMap.put("createdAt", Date.from(promotion.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
+
+        var response = restTemplate.postForObject(url, promotionMap, Object.class);
+    }
+
+    public Object getGameById(String gameId) {
+        String url = UriComponentsBuilder.fromUriString(GAME_URL)
+                .path("/{id}")
+                .buildAndExpand(gameId)
+                .toUriString();
+        try {
+            return restTemplate.getForObject(url, Object.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fetch game details: " + e.getMessage(), e);
+        }
+    }
 }

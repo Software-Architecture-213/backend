@@ -2,11 +2,14 @@ package com.example.brandservice.controller;
 
 import com.example.brandservice.configuration.PublicEndpoint;
 import com.example.brandservice.dto.request.VoucherRequest;
+import com.example.brandservice.dto.request.VoucherUserRequest;
 import com.example.brandservice.dto.response.VoucherResponse;
+import com.example.brandservice.model.VoucherUser;
 import com.example.brandservice.service.VoucherService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +36,17 @@ public class VoucherController {
     }
 
     @PublicEndpoint
+    @GetMapping("")
+    public ResponseEntity<List<VoucherResponse>> getAllVouchers() {
+        try {
+            List<VoucherResponse> voucherResponseList = voucherService.getAllVouchers();
+            return new ResponseEntity<>(voucherResponseList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PublicEndpoint
     @GetMapping("/promotion/{promotionId}")
     public ResponseEntity<List<VoucherResponse>> getVoucherByPromotionId(@PathVariable String promotionId) {
         try {
@@ -45,16 +59,6 @@ public class VoucherController {
         }
     }
 
-    @PublicEndpoint
-    @GetMapping("")
-    public ResponseEntity<List<VoucherResponse>> getAllVouchers() {
-        try {
-            List<VoucherResponse> voucherResponseList = voucherService.getAllVouchers();
-            return new ResponseEntity<>(voucherResponseList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @PublicEndpoint
     @GetMapping("/{voucherId}")
@@ -69,7 +73,8 @@ public class VoucherController {
 
     // Update an existing voucher
     @PutMapping("/{id}")
-    public ResponseEntity<VoucherResponse> updateVoucher(@PathVariable String id, @RequestBody VoucherRequest voucherRequest) {
+    public ResponseEntity<VoucherResponse> updateVoucher(@PathVariable String id,
+            @RequestBody VoucherRequest voucherRequest) {
         try {
             // Update a voucher using the service layer
             VoucherResponse voucherResponse = voucherService.updateVoucher(id, voucherRequest);
@@ -84,5 +89,25 @@ public class VoucherController {
     public ResponseEntity<VoucherResponse> updatePhoto(@PathVariable String voucherId,
                                                          @RequestParam("file") MultipartFile file) {
         return ResponseEntity.status(HttpStatus.OK).body(voucherService.uploadPhoto(voucherId, file));
+    }
+
+    @GetMapping("/voucher/me")
+    public ResponseEntity<List<VoucherUser>> getMyVoucher(Authentication authentication) {
+        try {
+            String userId = (String) authentication.getPrincipal();
+            return new ResponseEntity<>(voucherService.getVoucherUser(userId), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/voucher/me")
+    public ResponseEntity<VoucherUser> createVoucherUser(Authentication authentication, @RequestBody VoucherUserRequest request) {
+        try {
+            String userId = (String) authentication.getPrincipal();
+            return new ResponseEntity<>(voucherService.createVoucherUser(userId, request), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

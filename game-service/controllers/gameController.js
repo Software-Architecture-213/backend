@@ -39,6 +39,11 @@ const deleteGame = async (req, res) => {
 	const game = await GameService.deleteGame(gameId);
 	res.ok(game);
 };
+const getGamesByPromotionID = async (req, res) => {
+	const promotionId = req.params.id;
+	const games = await GameService.getGamesByPromotionId(promotionId);
+	res.ok(games);
+};
 
 module.exports = {
 	getAllGames,
@@ -47,4 +52,5 @@ module.exports = {
 	getGamesByBrandId,
 	updateGame,
 	deleteGame,
+	getGamesByPromotionID,
 };

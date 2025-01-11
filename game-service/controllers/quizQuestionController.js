@@ -42,6 +42,11 @@ const deleteQuizQuestion = async (req, res) => {
 	);
 	res.ok(quizQuestion);
 };
+const getQuizQuestionsBygameId = async (req, res) => {
+	const gameId = req.params.id;
+	const quizQuestions = await QuizQuestionService.getQuizQuestionsBygameId(gameId);
+	res.ok(quizQuestions);
+};
 
 module.exports = {
 	getAllQuizQuestions,
@@ -49,4 +54,5 @@ module.exports = {
 	getQuizQuestionById,
 	updateQuizQuestion,
 	deleteQuizQuestion,
+	getQuizQuestionsBygameId,
 };

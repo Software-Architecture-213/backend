@@ -5,11 +5,10 @@ import com.example.brandservice.dto.request.BrandRequest;
 import com.example.brandservice.dto.request.ChangeBrandStatusRequest;
 import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
-import com.example.brandservice.model.FavouritePromotions;
 import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,6 +45,15 @@ public class BrandController {
         return new ResponseEntity<>(updatedBrand, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/{brandId}")
+    public ResponseEntity<BrandResponse> updateBrandByAdmin(
+            @PathVariable String brandId,
+            @RequestBody @Valid BrandRequest brandRequest) {
+        BrandResponse updatedBrand = brandService.updateBrand(brandId, brandRequest);
+        return new ResponseEntity<>(updatedBrand, HttpStatus.OK);
+    }
+
     @PostMapping("/upload-image")
     public ResponseEntity<BrandResponse> updatePhoto(Authentication authentication,
                                                         @RequestParam("file") MultipartFile file) {
@@ -77,10 +85,4 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.OK).body(brandService.changeBrandStatus(request));
     }
 
-    @PostMapping("/favourite/{promotionId}")
-    public ResponseEntity<FavouritePromotions> favourite(@PathVariable String promotionId , Authentication authentication) {
-        String userId = (String) authentication.getPrincipal();
-        FavouritePromotions response = promotionService.addToFavourites(promotionId, userId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
 }

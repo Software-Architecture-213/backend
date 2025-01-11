@@ -147,5 +147,6 @@ const insertData = async () => {
 };
 
 insertData();
+module.exports = insertData;
 // Run this script by running the following command in the terminal:
 // node game-service/db/insertdata.js

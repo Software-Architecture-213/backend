@@ -1,5 +1,7 @@
 package com.example.brandservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -19,5 +21,5 @@ public class FavouritePromotions {
     UUID userId;
 
     @OneToMany
-    List<Promotion> promotions;
+    private List<Promotion> promotions;
 }
