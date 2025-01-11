@@ -37,8 +37,8 @@ app.use(cookieParser());
 // );
 const corsOptions = {
 	origin: process.env.FRONTEND_URL, // Replace with your frontend's URL
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+	methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+	allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 	preflightContinue: true,
 	credentials: true,
 };
