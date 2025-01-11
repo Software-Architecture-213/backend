@@ -34,10 +34,24 @@ const deleteItem = async (req, res) => {
 	res.ok(item);
 };
 
+const getItemsByGameId = async (req, res) => {
+	const gameId = req.params.gameId;
+	const items = await ItemService.getItemsByGameId(gameId);
+	res.ok(items);
+};
+
+const getRandomItemByGameId = async (req, res) => {
+	const gameId = req.params.gameId;
+	const randomItem = await ItemService.getRandomItemByGameId(gameId);
+	res.ok(randomItem);
+};
+
 module.exports = {
 	getAllItems,
 	createItem,
 	getItemById,
 	updateItem,
 	deleteItem,
+	getItemsByGameId,
+	getRandomItemByGameId,
 };

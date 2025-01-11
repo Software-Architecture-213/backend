@@ -36,7 +36,7 @@ public class NotificationService {
                     .filter(promotion -> {
                         LocalDateTime startDate = DateUtility.convertDateToLocalDateTime(promotion.getStartDate());
                         LocalDateTime now = LocalDateTime.now();
-//                        return !startDate.isBefore(now) && startDate.isBefore(now.plusDays(0));
+                        // return !startDate.isBefore(now) && startDate.isBefore(now.plusDays(0));
                         return !startDate.isBefore(now);
                     })
                     .toList();
@@ -57,11 +57,10 @@ public class NotificationService {
                 // Lưu notification vào DB
                 return notificationRepository.save(notification);
 
-//                // Gửi thông báo qua WebSocket nếu user đang kết nối
-//                webSocketHandler.sendNotification(notification);
+                // // Gửi thông báo qua WebSocket nếu user đang kết nối
+                // webSocketHandler.sendNotification(notification);
             }
         }
-        return  null;
+        return null;
     }
 }
-
