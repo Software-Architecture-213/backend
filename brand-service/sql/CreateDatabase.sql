@@ -137,12 +137,11 @@ create table notification (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create table favourite_promotion{
+create table favourite_promotion (
     id varchar(255) not null
         primary key,
     userId UUID NOT NULL,
-
-}
+)
 
 --
 -- CREATE TABLE ConversionRule (
