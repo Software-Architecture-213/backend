@@ -4,20 +4,6 @@ INSERT INTO brands (id, display_name, image_url, username, password, field, lati
 ('dcb5d84b-b235-4d5d-8049-38349e9a9029', 'Highland Coffee', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735261239/brand/highland.png', 'highland_official', 'hashed_password_3', 'Café & Beverages', 21.0285, 105.8542, 'ACTIVE', '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
 ('aa9c7317-77bc-4f79-821f-b2f7e5a2e3c4', 'Pizza Company', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735289466/brand/pizzacompany.jpg', 'pizza_company_vn', 'hashed_password_4', 'Pizza & Fast Food', 10.756, 106.6952, 'ACTIVE', '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z');
 
-INSERT INTO vouchers (id, code, type, image_url, value_type, value, description, expired_at, status, promotion_id, max_counts, create_counts, created_at, updated_at) VALUES
-('1f8e0044-5305-4782-a6a0-d3f98a3d106d', 'KATINAT2024', 'ONLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290873/voucher/katinat_20_off.png', 'PERCENTAGE', 20, 'Get 20% off on your entire order! Valid online for the holiday season at Katinat.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 1000, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
-('aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd', 'KATINATGIFT2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290953/voucher/katinat_50k.png', 'FIXED', 50000, 'Receive a 50,000 VND gift voucher for purchases over 300,000 VND at Katinat. Valid for in-store use.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 500, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
-('a7c6e3db-53c5-47bb-9d85-50c470dd024f', 'KATINATFREEDRINK2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290983/voucher/katinat_free_drink.jpg', 'ITEM', 0, 'Get a free drink with any purchase above 100,000 VND at Katinat stores. Valid for offline orders only.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 300, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
-('df345b84-d61e-4c4d-b8d3-f9ea24f0f455', 'PHUCLONG2024', 'ONLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735291017/voucher/phuclong_15_percent.jpg', 'PERCENTAGE', 15, 'Get 15% off your online order at PhucLong this New Year season!', '2025-01-10T23:59:59Z', 'ACTIVE', '9d7e5678-3de1-4bfc-8c60-cd16e1799b24', 800, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
-('e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d', 'PHUCLONGGIFT2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735291048/voucher/phuclong_gift.jpg', 'ITEM', 0, 'Free gift set with every purchase above 500,000 VND at PhucLong stores.', '2025-01-10T23:59:59Z', 'ACTIVE', '9d7e5678-3de1-4bfc-8c60-cd16e1799b24', 300, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z');
-
-INSERT INTO voucher_user (id, user_id, voucher_id, qr_code, status, redeemed_at, created_at, updated_at) VALUES
-('58c1e1ab-3e2f-4b69-b3f3-a62bcb4f764a', '62f7e567-50b7-49be-8f9a-e43120ad7f24', '1f8e0044-5305-4782-a6a0-d3f98a3d106d', 'qr-62f7e567-1f8e0044', 'ACTIVE', NULL, '2024-12-24T12:00:00Z', '2024-12-24T12:00:00Z'),
-('87453d2f-8f1a-4097-99ab-3136de59fa6d', 'd219c0e1-63da-4162-876a-f9090e2f6a59', 'aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd', 'qr-d219c0e1-aef28f85', 'ACTIVE', NULL, '2024-12-24T12:05:00Z', '2024-12-24T12:05:00Z'),
-('c198e4bf-9411-4ad8-bc49-2ecdfaeb4ef8', '3c41bc11-7fae-4bb9-97a5-48c35b87cf7e', 'a7c6e3db-53c5-47bb-9d85-50c470dd024f', 'qr-3c41bc11-a7c6e3db', 'ACTIVE', NULL, '2024-12-24T12:10:00Z', '2024-12-24T12:10:00Z'),
-('f74b69b1-09f8-48b8-b5e8-9f2c9f78ad7d', '9a41b8fc-75e9-4888-87a7-d3d01f78f829', 'df345b84-d61e-4c4d-b8d3-f9ea24f0f455', 'qr-9a41b8fc-df345b84', 'ACTIVE', NULL, '2024-12-24T12:15:00Z', '2024-12-24T12:15:00Z'),
-('e95f8ed3-6cf9-4a98-8f9f-d8c3c649fa7d', '3e9bc0e5-75da-4987-99bc-0f8a12345f7e', 'e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d', 'qr-3e9bc0e5-e8c2d7d9', 'ACTIVE', NULL, '2024-12-24T12:20:00Z', '2024-12-24T12:20:00Z');
-
 INSERT INTO promotions
 (
     id, 
@@ -85,3 +71,19 @@ VALUES
     '2024-12-24T10:00:00Z',
     '2024-12-24T10:00:00Z'
 );
+
+
+INSERT INTO vouchers (id, code, type, image_url, value_type, value, description, expired_at, status, promotion_id, max_counts, create_counts, created_at, updated_at) VALUES
+('1f8e0044-5305-4782-a6a0-d3f98a3d106d', 'KATINAT2024', 'ONLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290873/voucher/katinat_20_off.png', 'PERCENTAGE', 20, 'Get 20% off on your entire order! Valid online for the holiday season at Katinat.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 1000, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
+('aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd', 'KATINATGIFT2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290953/voucher/katinat_50k.png', 'FIXED', 50000, 'Receive a 50,000 VND gift voucher for purchases over 300,000 VND at Katinat. Valid for in-store use.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 500, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
+('a7c6e3db-53c5-47bb-9d85-50c470dd024f', 'KATINATFREEDRINK2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735290983/voucher/katinat_free_drink.jpg', 'ITEM', 0, 'Get a free drink with any purchase above 100,000 VND at Katinat stores. Valid for offline orders only.', '2025-01-05T23:59:59Z', 'ACTIVE', 'f8d74c87-1d9d-4f8f-9099-4443471e8124', 300, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
+('df345b84-d61e-4c4d-b8d3-f9ea24f0f455', 'PHUCLONG2024', 'ONLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735291017/voucher/phuclong_15_percent.jpg', 'PERCENTAGE', 15, 'Get 15% off your online order at PhucLong this New Year season!', '2025-01-10T23:59:59Z', 'ACTIVE', '9d7e5678-3de1-4bfc-8c60-cd16e1799b24', 800, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z'),
+('e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d', 'PHUCLONGGIFT2024', 'OFFLINE', 'https://res.cloudinary.com/dlirzjnje/image/upload/v1735291048/voucher/phuclong_gift.jpg', 'ITEM', 0, 'Free gift set with every purchase above 500,000 VND at PhucLong stores.', '2025-01-10T23:59:59Z', 'ACTIVE', '9d7e5678-3de1-4bfc-8c60-cd16e1799b24', 300, 0, '2024-12-24T10:00:00Z', '2024-12-24T10:00:00Z');
+
+INSERT INTO voucher_user (id, user_id, voucher_id, qr_code, status, redeemed_at, created_at, updated_at) VALUES
+('58c1e1ab-3e2f-4b69-b3f3-a62bcb4f764a', '62f7e567-50b7-49be-8f9a-e43120ad7f24', '1f8e0044-5305-4782-a6a0-d3f98a3d106d', 'qr-62f7e567-1f8e0044', 'ACTIVE', NULL, '2024-12-24T12:00:00Z', '2024-12-24T12:00:00Z'),
+('87453d2f-8f1a-4097-99ab-3136de59fa6d', 'd219c0e1-63da-4162-876a-f9090e2f6a59', 'aef28f85-8d2c-4503-a4e2-3ec1d6b5a3fd', 'qr-d219c0e1-aef28f85', 'ACTIVE', NULL, '2024-12-24T12:05:00Z', '2024-12-24T12:05:00Z'),
+('c198e4bf-9411-4ad8-bc49-2ecdfaeb4ef8', '3c41bc11-7fae-4bb9-97a5-48c35b87cf7e', 'a7c6e3db-53c5-47bb-9d85-50c470dd024f', 'qr-3c41bc11-a7c6e3db', 'ACTIVE', NULL, '2024-12-24T12:10:00Z', '2024-12-24T12:10:00Z'),
+('f74b69b1-09f8-48b8-b5e8-9f2c9f78ad7d', '9a41b8fc-75e9-4888-87a7-d3d01f78f829', 'df345b84-d61e-4c4d-b8d3-f9ea24f0f455', 'qr-9a41b8fc-df345b84', 'ACTIVE', NULL, '2024-12-24T12:15:00Z', '2024-12-24T12:15:00Z'),
+('e95f8ed3-6cf9-4a98-8f9f-d8c3c649fa7d', '3e9bc0e5-75da-4987-99bc-0f8a12345f7e', 'e8c2d7d9-35be-4bfb-9a6b-6045d3e3a56d', 'qr-3e9bc0e5-e8c2d7d9', 'ACTIVE', NULL, '2024-12-24T12:20:00Z', '2024-12-24T12:20:00Z');
+
