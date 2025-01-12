@@ -110,4 +110,14 @@ public class VoucherController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/voucher/me")
+    public ResponseEntity<VoucherUser> updateVoucherUser(Authentication authentication, @RequestBody VoucherUserRequest request) {
+        try {
+            String userId = (String) authentication.getPrincipal();
+            return new ResponseEntity<>(voucherService.updateVoucherUser(userId, request), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

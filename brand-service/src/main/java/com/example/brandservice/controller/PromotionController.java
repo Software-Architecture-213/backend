@@ -5,8 +5,10 @@ import com.example.brandservice.dto.request.ConversionRuleRequest;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.BrandResponse;
 import com.example.brandservice.dto.response.PromotionResponse;
+import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.model.ConversionRule;
 import com.example.brandservice.model.FavouritePromotions;
+import com.example.brandservice.model.Voucher;
 import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
 import lombok.AllArgsConstructor;
@@ -82,6 +84,16 @@ public class PromotionController {
         try {
             List<PromotionResponse> listPromotion = promotionService.getAllPromotions();
             return new ResponseEntity<>(listPromotion, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/{promotionId}/random/voucher")
+    public ResponseEntity<VoucherResponse> randomVoucher(@PathVariable String promotionId) {
+        try {
+            VoucherResponse response = promotionService.getRandomVoucherByPromotionId(promotionId);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

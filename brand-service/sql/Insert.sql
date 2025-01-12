@@ -1,32 +1,126 @@
-INSERT INTO branches (id, address, lat, lng, is_main, name) VALUES
-                                                                ('branch_1', '66-68 Le Loi, Ben Nghe, District 1, Ho Chi Minh City', 10.7626, 106.6959, true, 'Highlands Coffee Le Loi'),
-                                                                ('branch_2', '45 Tran Hung Dao, District 1, Ho Chi Minh City', 10.7621, 106.6947, false, 'Starbucks Saigon Center'),
-                                                                ('branch_3', '38 Le Duan, Ben Nghe, District 1, Ho Chi Minh City', 10.7769, 106.6969, false, 'The Coffee House Le Duan'),
-                                                                ('branch_4', '106 Nguyen Thi Minh Khai, District 3, Ho Chi Minh City', 10.7718, 106.6965, true, 'Tocotoco Coffee');
-INSERT INTO brands (id, created_at, display_name, field, latitude, longitude, image_url, password, status, updated_at, username) VALUES
-                                                                                                                                     ('highlands', '2025-01-01 10:00:00', 'Highlands Coffee', 'Coffee', 10.7626, 106.6959, 'https://upload.wikimedia.org/wikipedia/commons/e/e1/Highlands_Coffee_logo.png', 'highlands123', 'ACTIVE', '2025-01-01 12:00:00', 'highlands_user'),
-                                                                                                                                     ('starbucks', '2025-01-02 11:00:00', 'Starbucks', 'Coffee & Beverages', 10.7621, 106.6947, 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Starbucks_Logo_2011.svg', 'coffee123', 'ACTIVE', '2025-01-02 13:00:00', 'starbucks_vn'),
-                                                                                                                                     ('the_coffee_house', '2025-01-03 09:30:00', 'The Coffee House', 'Coffee', 10.7769, 106.6969, 'https://upload.wikimedia.org/wikipedia/commons/9/98/The_Coffee_House_logo.png', 'coffeehouse123', 'ACTIVE', '2025-01-03 10:00:00', 'the_coffee_house_user'),
-                                                                                                                                     ('tocotoco', '2025-01-04 08:00:00', 'Tocotoco', 'Tea & Drinks', 10.7718, 106.6965, 'https://upload.wikimedia.org/wikipedia/commons/0/0c/Tocotoco_logo.png', 'tocotoco123', 'ACTIVE', '2025-01-04 10:30:00', 'tocotoco_user');
-INSERT INTO orders (id, amount, brand_id, create_at, currency, order_id) VALUES
-                                                                             ('order_1', 45.00, 'highlands', '2025-01-01 10:15:00', 'VND', 'order123'),
-                                                                             ('order_2', 55.00, 'starbucks', '2025-01-02 11:45:00', 'VND', 'order124'),
-                                                                             ('order_3', 40.00, 'the_coffee_house', '2025-01-03 08:30:00', 'VND', 'order125'),
-                                                                             ('order_4', 60.00, 'tocotoco', '2025-01-04 09:00:00', 'VND', 'order126');
-INSERT INTO promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES
-                                                                        ('promo_1', 100000000, '2025-01-01 10:00:00.000000', '50% off on all beverages', '2025-01-15 23:59:59.000000', '["SHAKE", "QUIZ"]', 'https://example.com/promo1.jpg', 'Half-Price Drinks', 50000000, '2025-01-01 10:00:00.000000', 'ACTIVE', '2025-01-01 12:00:00.000000', 'highlands'),
-                                                                        ('promo_4', 150000000, '2025-01-04 10:00:00.000000', '15% off on all drinks', '2025-01-15 23:59:59.000000', '["SHAKE"]', 'https://example.com/promo4.jpg', 'Drink Discount', 75000000, '2025-01-04 10:00:00.000000', 'ACTIVE', '2025-01-04 11:00:00.000000', 'tocotoco'),
-                                                                        ('promo_2', 80000000, '2025-01-02 12:00:00.000000', 'Buy one get one free on iced drinks', '2025-01-10 23:59:59.000000', '["SHAKE"]', 'https://example.com/promo2.jpg', 'BOGO Iced Drinks', 40000000, '2025-01-02 12:00:00.000000', 'ACTIVE', '2025-01-02 14:00:00.000000', 'starbucks'),
-                                                                        ('promo_3', 120000000, '2025-01-03 09:00:00.000000', 'Free pastry with any large coffee', '2025-01-20 23:59:59.000000', '["QUIZ"]', 'https://example.com/promo3.jpg', 'Coffee & Pastry Combo', 60000000, '2025-01-03 09:00:00.000000', 'ACTIVE', '2025-01-03 11:00:00.000000', 'the_coffee_house');
+create table brands
+(
+    id           varchar(255) not null
+        primary key,
+    created_at   timestamp(6),
+    display_name varchar(255),
+    field        varchar(255),
+    latitude     double precision,
+    longitude    double precision,
+    image_url    varchar(255),
+    password     varchar(255),
+    status       varchar(255)
+        constraint brands_status_check
+            check ((status)::text = ANY ((ARRAY ['ACTIVE'::character varying, 'INACTIVE'::character varying])::text[])),
+    updated_at   timestamp(6),
+    username     varchar(255)
+);
 
-INSERT INTO vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES
-                                                                                                                                                                          ('voucher_1', 'HIGHLANDS50', '2025-01-01 10:00:00', 100, '50% off on any drink at Highlands Coffee', '2025-01-15 23:59:59', 'https://example.com/voucher1.jpg', 200, 'ACTIVE', 'ONLINE', '2025-01-01 12:00:00', 50.00, 'PERCENTAGE', 'promo_1'),
-                                                                                                                                                                          ('voucher_2', 'STARBUCKSBOGO', '2025-01-02 11:00:00', 50, 'Buy one get one free on iced drinks at Starbucks', '2025-01-10 23:59:59', 'https://example.com/voucher2.jpg', 100, 'ACTIVE', 'ONLINE', '2025-01-02 13:00:00', 1.00, 'ITEM', 'promo_2'),
-                                                                                                                                                                          ('voucher_3', 'COFFEEHOUSE25', '2025-01-03 09:00:00', 80, '25% off on any drink at The Coffee House', '2025-01-20 23:59:59', 'https://example.com/voucher3.jpg', 150, 'ACTIVE', 'OFFLINE', '2025-01-03 10:00:00', 25.00, 'PERCENTAGE', 'promo_3'),
-                                                                                                                                                                          ('voucher_4', 'TOCOTOCODISCOUNT', '2025-01-04 08:30:00', 200, 'Discount of 15% on all drinks at Tocotoco', '2025-01-15 23:59:59', 'https://example.com/voucher4.jpg', 300, 'ACTIVE', 'ONLINE', '2025-01-04 09:00:00', 15.00, 'PERCENTAGE', 'promo_4');
+alter table brands
+    owner to postgres;
 
-INSERT INTO voucher_user (id, created_at, qr_code, redeemed_at, status, updated_at, user_id, voucher_id) VALUES
-                                                                                                             ('voucher_user_1', '2025-01-01 10:15:00', 'https://example.com/qr1.png', '2025-01-01 10:30:00', 'REDEEMED', '2025-01-01 11:00:00', '\x1234567890abcdef', 'voucher_1'),
-                                                                                                             ('voucher_user_2', '2025-01-02 11:45:00', 'https://example.com/qr2.png', '2025-01-02 12:00:00', 'REDEEMED', '2025-01-02 12:30:00', '\xabcdef1234567890', 'voucher_2'),
-                                                                                                             ('voucher_user_3', '2025-01-03 08:35:00', 'https://example.com/qr3.png', '2025-01-03 08:45:00', 'REDEEMED', '2025-01-03 09:00:00', '\x9876543210fedcba', 'voucher_3'),
-                                                                                                             ('voucher_user_4', '2025-01-04 09:10:00', 'https://example.com/qr4.png', '2025-01-04 09:20:00', 'REDEEMED', '2025-01-04 09:30:00', '\x234567890abcdef1', 'voucher_4');
+INSERT INTO public.brands (id, created_at, display_name, field, latitude, longitude, image_url, password, status, updated_at, username) VALUES ('acac85c4-1625-4631-aa14-34e87dfc2f57', '2025-01-12 13:46:55.391217', 'Katinat', 'Drink', 1, 1, 'https://res.cloudinary.com/dlirzjnje/image/upload/w8zdqdilifvdyux09e2t?_a=DAGAACAVZAA0', '12345678', 'ACTIVE', '2025-01-12 13:47:52.731077', 'nguyen.thanhtri1221@gmail.com');
+INSERT INTO public.brands (id, created_at, display_name, field, latitude, longitude, image_url, password, status, updated_at, username) VALUES ('43f31df6-7a5c-4571-9a5b-671724a6eca1', '2025-01-12 17:27:22.542196', 'Highland Coffee', 'Drink', 1, 1, 'https://res.cloudinary.com/dlirzjnje/image/upload/nxzisyrh0pukpi31s8eg?_a=DAGAACAVZAA0', '123456', 'ACTIVE', '2025-01-12 17:27:40.854878', 'highland@gmail.com');
+INSERT INTO public.brands (id, created_at, display_name, field, latitude, longitude, image_url, password, status, updated_at, username) VALUES ('f8d14da3-470a-4207-8884-4d61856d6cc5', '2025-01-12 17:45:19.886772', 'Phê La', 'Drink', 1, 1, 'https://res.cloudinary.com/dlirzjnje/image/upload/svqhz1p7oamhoqcmbgbd?_a=DAGAACAVZAA0', '123456', 'ACTIVE', '2025-01-12 17:45:30.425145', 'phela@gmail.com');
+INSERT INTO public.brands (id, created_at, display_name, field, latitude, longitude, image_url, password, status, updated_at, username) VALUES ('c49a7de7-6e8d-4cd1-87f8-8ab8ad0d04fe', '2025-01-12 17:58:45.846221', 'The Coffee House', 'Drink', 1, 1, 'https://res.cloudinary.com/dlirzjnje/image/upload/dpfdbhvq1ft2wtzo7b63?_a=DAGAACAVZAA0', '123456', 'ACTIVE', '2025-01-12 17:59:03.958939', 'tch@gmail.com');
+
+
+create table promotions
+(
+    id               varchar(255) not null
+        primary key,
+    budget           double precision,
+    created_at       timestamp(6),
+    description      varchar(255),
+    end_date         timestamp(6),
+    games            text,
+    image_url        varchar(255),
+    name             varchar(255),
+    remaining_budget double precision,
+    start_date       timestamp(6),
+    status           varchar(255)
+        constraint promotions_status_check
+            check ((status)::text = ANY
+                   ((ARRAY ['ACTIVE'::character varying, 'INACTIVE'::character varying, 'EXPIRED'::character varying, 'PAID'::character varying])::text[])),
+    updated_at       timestamp(6),
+    brand_id         varchar(255)
+        constraint fk6s8a5igo269jqjvlsl2shl005
+            references brands
+);
+
+alter table promotions
+    owner to postgres;
+
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('91bf8e05-d983-4251-9bc3-ba4fbbb5bf0c', 2000, '2025-01-12 13:55:37.417076', 'Chào mừng năm mới cùng Katinat với các ưu đãi hấp dẫn trên khắp mọi nơi', '2025-02-15 07:00:00.000000', '["1c4bc86f-89e3-40c0-bd85-dcf07fa9fa48"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/cba8jdkwztbrvou6hnpt?_a=DAGAACAVZAA0', 'NEWYEAR2025', 2000, '2025-01-15 07:00:00.000000', 'ACTIVE', null, 'acac85c4-1625-4631-aa14-34e87dfc2f57');
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('97ab0b3e-f7a5-4a58-8a26-036aca5ee29c', 300, '2025-01-12 17:35:50.491128', e'KHOE SẮC THĂNG HƯƠNG - TRÀ SEN VÀNG (MỚI) ĐÃ CÓ MẶT:
+- TRÀ SEN VÀNG TRÂN CHÂU KHOAI MÔN
+-  TRÀ SEN VÀNG TRÂN CHÂU DỪA', '2025-01-31 07:00:00.000000', '["f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/spjzht4x56ebyyqhtulm?_a=DAGAACAVZAA0', 'KHOE SẮC THĂNG HƯƠNG', 300, '2025-01-16 07:00:00.000000', 'ACTIVE', null, '43f31df6-7a5c-4571-9a5b-671724a6eca1');
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('aaa617eb-761c-42eb-bfab-b746e155e79c', 300, '2025-01-12 17:39:01.043075', e'- Bạn có 30 Ngày kể từ khi nhận E-voucher để đổi thành Thẻ Highlands, sau thời gian này mã E-voucher của bạn sẽ hết hiệu lực đổi thẻ.
+
+- Thẻ Highlands có thể sử dụng để thanh toán như tiền mặt tại cửa hàng.', '2025-01-31 07:00:00.000000', '["3adad5b4-d9d5-42e6-b9fa-493b7bc2c758"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/p9ny82alzudna22flb1j?_a=DAGAACAVZAA0', 'CHÀO MỪNG NĂM MỚI CÙNG HIGHLAND', 300, '2025-01-18 07:00:00.000000', 'ACTIVE', null, '43f31df6-7a5c-4571-9a5b-671724a6eca1');
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('42c52191-c733-45f1-9803-7064200d2baa', 100, '2025-01-12 17:49:53.837409', e'31-12-2024
+Cảm ơn bạn vì cùng tạo một năm dễ chịu cùng Phê La!', '2025-01-31 07:00:00.000000', '["SHAKE"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/tvoir33ee206drz89zz8?_a=DAGAACAVZAA0', 'MÓN QUÀ TRI ÂN', 100, '2025-01-19 07:00:00.000000', 'ACTIVE', null, 'f8d14da3-470a-4207-8884-4d61856d6cc5');
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('909222cf-0414-458d-b8e9-820616c2d5b3', 150, '2025-01-12 17:52:13.812679', 'Nâng niu và kế thừa nét đẹp ấy, Phê La sáng tạo cùng trái Gấc tươi, Đậu Xanh thơm bùi, khéo léo hòa quyện cùng trà Ô Long Đặc Sản, kể chuyện Tết Chill qua “thức quà đỏ” Trân Châu Gấc.', '2025-01-31 07:00:00.000000', '["SHAKE","QUIZ"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/uslommahsaijugic6ezo?_a=DAGAACAVZAA0', 'Trân Châu Gấc – Chill Tết Rất Tươi', 150, '2025-01-20 07:00:00.000000', 'ACTIVE', null, 'f8d14da3-470a-4207-8884-4d61856d6cc5');
+INSERT INTO public.promotions (id, budget, created_at, description, end_date, games, image_url, name, remaining_budget, start_date, status, updated_at, brand_id) VALUES ('443a3aca-d687-4c19-bbbd-0c09ac9b40c0', 100, '2025-01-12 18:02:06.370141', 'Cuối tuần vui vẻ cùng The Coffee House', '2025-01-31 07:00:00.000000', '["QUIZ"]', 'https://res.cloudinary.com/dlirzjnje/image/upload/ibtxkwtfmca5jyqnua09?_a=DAGAACAVZAA0', 'TCHWEEKEND', 100, '2025-01-22 07:00:00.000000', 'ACTIVE', null, 'c49a7de7-6e8d-4cd1-87f8-8ab8ad0d04fe');
+
+
+create table vouchers
+(
+    id            varchar(255) not null
+        primary key,
+    code          varchar(255),
+    created_at    timestamp(6),
+    create_counts integer,
+    description   varchar(255),
+    expired_at    timestamp(6),
+    image_url     varchar(255),
+    max_counts    integer,
+    status        varchar(255)
+        constraint vouchers_status_check
+            check ((status)::text = ANY
+                   ((ARRAY ['ACTIVE'::character varying, 'EXPIRED'::character varying, 'INACTIVE'::character varying])::text[])),
+    type          varchar(255)
+        constraint vouchers_type_check
+            check ((type)::text = ANY ((ARRAY ['ONLINE'::character varying, 'OFFLINE'::character varying])::text[])),
+    updated_at    timestamp(6),
+    value         double precision,
+    value_type    varchar(255)
+        constraint vouchers_value_type_check
+            check ((value_type)::text = ANY
+                   ((ARRAY ['FIXED'::character varying, 'PERCENTAGE'::character varying, 'ITEM'::character varying, 'FREE'::character varying])::text[])),
+    promotion_id  varchar(255)
+        constraint fk21n4v3cou386fc2ggisy2pskt
+            references promotions
+);
+
+alter table vouchers
+    owner to postgres;
+
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('1ac4fe81-f750-4b4c-8413-09d197ad5c56', 'NEWYEAR2025_ONL', '2025-01-12 13:58:12.517791', 0, 'Giảm giá tới 20% cho các hóa đơn trên 100.000VND', '2025-01-15 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/cba8jdkwztbrvou6hnpt?_a=DAGAACAVZAA0', 10, 'ACTIVE', 'ONLINE', null, 18, 'PERCENTAGE', '91bf8e05-d983-4251-9bc3-ba4fbbb5bf0c');
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('266f22ff-e187-4830-875e-c947c0478dbb', 'KSTH', '2025-01-12 17:41:35.018290', 0, 'Giảm giá đến 20% khi mua Trà Sen Vàng mới tại các cửa hàng trực tuyến trên khắp cả nước', '2025-03-01 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/u1etnb4iczhlxc0re79z?_a=DAGAACAVZAA0', 300, 'ACTIVE', 'ONLINE', null, 20, 'PERCENTAGE', '97ab0b3e-f7a5-4a58-8a26-036aca5ee29c');
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('4a5a6ac6-e6a4-4729-921f-1a845ce0274f', 'HIGHLAND2025', '2025-01-12 17:43:12.531942', 0, 'Voucher 100k từ Highland trên khắp các cửa hàng', '2025-02-01 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/mn9wytwbhwotv34jlvdk?_a=DAGAACAVZAA0', 300, 'ACTIVE', 'OFFLINE', null, 100, 'FIXED', 'aaa617eb-761c-42eb-bfab-b746e155e79c');
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('e462d320-b49e-4606-ba7b-2f0d4eeaadb2', 'TRIAN2024', '2025-01-12 17:53:37.048435', 6, 'Ưu đãi 50% khi mua Hộp quà Tết Happy Chill Year 2025', '2025-02-01 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/yz5osw3uqvvsjlac6kre?_a=DAGAACAVZAA0', 150, 'ACTIVE', 'OFFLINE', null, 50, 'PERCENTAGE', '42c52191-c733-45f1-9803-7064200d2baa');
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('fb2cabc2-889d-4ac7-a7ae-43298ce4d550', 'TETCHILL', '2025-01-12 17:55:16.396465', -3, 'Miễn phí topping Trân châu Gấc tại Phê La', '2025-01-30 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/s9bfhepewulwlkbswcmp?_a=DAGAACAVZAA0', 150, 'ACTIVE', 'OFFLINE', null, 0, 'FREE', '909222cf-0414-458d-b8e9-820616c2d5b3');
+INSERT INTO public.vouchers (id, code, created_at, create_counts, description, expired_at, image_url, max_counts, status, type, updated_at, value, value_type, promotion_id) VALUES ('0c668329-88f0-4ae3-8b1f-45d5dfb5c381', 'WEEKEND', '2025-01-12 18:03:22.539176', 0, 'Freeship vào cuối tuần từ T7-CN tất cả mọi khung giờ', '2025-01-22 07:00:00.000000', 'https://res.cloudinary.com/dlirzjnje/image/upload/bks8epszqizp2knvi6v4?_a=DAGAACAVZAA0', 100, 'ACTIVE', 'ONLINE', null, 0, 'FREE', '443a3aca-d687-4c19-bbbd-0c09ac9b40c0');
+
+
+create table branches
+(
+    id       varchar(255) not null
+        primary key,
+    address  varchar(255),
+    brand_id varchar(255),
+    lat      double precision,
+    lng      double precision,
+    is_main  boolean      not null,
+    name     varchar(255)
+);
+
+alter table branches
+    owner to postgres;
+
+INSERT INTO public.branches (id, address, brand_id, lat, lng, is_main, name) VALUES ('8bb851f1-36f5-452b-bbc2-3091e25a0979', '31 Thao Dien, Quan 2', 'acac85c4-1625-4631-aa14-34e87dfc2f57', 10.80446, 106.73702, false, 'Katinat Thao Dien');
+INSERT INTO public.branches (id, address, brand_id, lat, lng, is_main, name) VALUES ('87744a46-8540-4424-a446-39fe27ffc2d0', '10B Ton Duc Thang, Quan 1', 'acac85c4-1625-4631-aa14-34e87dfc2f57', 10.77622, 106.7073, true, 'Katinat Ben Bach Dang');
+INSERT INTO public.branches (id, address, brand_id, lat, lng, is_main, name) VALUES ('ced8157b-ba2c-4b48-81c2-fe2c8e94a0b0', '89A Xuân Thủy, Quận 2', 'f8d14da3-470a-4207-8884-4d61856d6cc5', 10.80431, 106.73557, true, 'Phê La Thảo Điền');
+INSERT INTO public.branches (id, address, brand_id, lat, lng, is_main, name) VALUES ('0e9a7921-f945-472c-960f-70ce4282074d', '57 Xuân Thủy, Quận 2', '43f31df6-7a5c-4571-9a5b-671724a6eca1', 10.80398, 106.73274, false, 'Highland Thao Dien');
+INSERT INTO public.branches (id, address, brand_id, lat, lng, is_main, name) VALUES ('c566670d-afd3-469c-9af1-6c2d9de8ee8c', '57 Xuân Thủy, Quận 2', 'c49a7de7-6e8d-4cd1-87f8-8ab8ad0d04fe', 10.80398, 106.73274, false, 'The Coffee House Xuân Thủy');
