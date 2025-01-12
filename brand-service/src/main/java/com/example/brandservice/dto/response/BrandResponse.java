@@ -20,6 +20,7 @@ public class BrandResponse {
     String username;
     String field;
     Brand.GPS gps;
+    String headQuarter;
     Brand.BrandStatus status;
     Date createAt;
     Date updateAt;

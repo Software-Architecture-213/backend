@@ -106,7 +106,6 @@ public class GameClient {
     public Object getGameById(String gameId) {
         String url = UriComponentsBuilder.fromUriString(GAME_URL)
                 .path("/{id}")
-                .path("/{id}")
                 .buildAndExpand(gameId)
                 .toUriString();
         try {

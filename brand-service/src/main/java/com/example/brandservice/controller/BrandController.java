@@ -5,6 +5,8 @@ import com.example.brandservice.dto.request.BrandRequest;
 import com.example.brandservice.dto.request.ChangeBrandStatusRequest;
 import com.example.brandservice.dto.request.GetBrandsRequest;
 import com.example.brandservice.dto.response.BrandResponse;
+import com.example.brandservice.model.Branch;
+import com.example.brandservice.service.BranchService;
 import com.example.brandservice.service.BrandService;
 import com.example.brandservice.service.PromotionService;
 import jakarta.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/collection")
@@ -25,6 +28,7 @@ public class BrandController {
 
     private final BrandService brandService;
     private final PromotionService promotionService;
+    private final BranchService branchService;
 
 
     // Create a new brand
@@ -74,6 +78,13 @@ public class BrandController {
     @GetMapping
     public ResponseEntity<List<BrandResponse>> getBrands(@ModelAttribute  GetBrandsRequest request) {
         List<BrandResponse> brandResponses = brandService.getAllBrands(request);
+        List<String> brandIds = brandResponses.stream().map(BrandResponse::getId).toList();
+        final Map<String, Branch> brandIdAndBranch = branchService.getMainBranches(brandIds);
+        brandResponses.forEach(brandResponse -> {
+            if (brandIdAndBranch.containsKey(brandResponse.getId())) {
+                brandResponse.setHeadQuarter(brandIdAndBranch.get(brandResponse.getId()).getAddress());
+            }
+        });
         return new ResponseEntity<>(brandResponses, HttpStatus.OK);
     }
 

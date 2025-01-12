@@ -19,6 +19,7 @@ public class PromotionResponse {
     String id;
     String name;
     String brandId;
+    String brandName;
     String imageUrl;
     String description;
     Date startDate;
