@@ -5,8 +5,6 @@ import com.example.brandservice.dto.response.PromotionResponse;
 import com.example.brandservice.model.Promotion;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface PromotionMapper {
@@ -17,6 +15,7 @@ public interface PromotionMapper {
 
     // Mapping fields from Promotion to PromotionResponse
     @Mapping(target = "brandId", source = "brand.id")
+    @Mapping(target = "brandName", source = "brand.displayName")
 //    @Mapping(target = "description", source = "description")
     PromotionResponse promotionToPromotionResponse(Promotion promotion);
 }
