@@ -4,9 +4,11 @@ import com.example.brandservice.client.GameClient;
 import com.example.brandservice.dto.request.ConversionRuleRequest;
 import com.example.brandservice.dto.request.PromotionRequest;
 import com.example.brandservice.dto.response.PromotionResponse;
+import com.example.brandservice.dto.response.VoucherResponse;
 import com.example.brandservice.exception.AppException;
 import com.example.brandservice.exception.ErrorCode;
 import com.example.brandservice.mapper.PromotionMapper;
+import com.example.brandservice.mapper.VoucherMapper;
 import com.example.brandservice.model.*;
 import com.example.brandservice.model.composite.ConversionRuleItemKey;
 import com.example.brandservice.repository.*;
@@ -27,6 +29,7 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final BrandRepository brandRepository;
     private final PromotionMapper promotionMapper;
+    private final VoucherMapper voucherMapper;
     private final CloudinaryService cloudinaryService;
     private final FavouritePromotionsRepository favouritePromotionsRepository;
     private final ConversionRuleRepository conversionRuleRepository;
@@ -230,5 +233,24 @@ public class PromotionService {
         return conversionRuleRepository.findConversionRuleByPromotionId(promotionId).orElseThrow(
                 () -> new RuntimeException("ConversionRule not found")
         );
+    }
+
+    public VoucherResponse getRandomVoucherByPromotionId(String promotionId) {
+        Promotion promotion = promotionRepository.findById(promotionId)
+                .orElseThrow(() -> new RuntimeException("Promotion not found"));
+        List<Voucher> promotionVouchers = promotion.getVouchers();
+        Voucher randomVoucher = null;
+        if (promotionVouchers.isEmpty()) {
+            return null;
+        }
+        else if (promotionVouchers.size() == 1) {
+            randomVoucher = promotionVouchers.getFirst();
+        } else {
+            Random random = new Random();
+            int randomIndex = random.nextInt(promotionVouchers.size());
+            randomVoucher = promotionVouchers.get(randomIndex);
+        }
+
+        return voucherMapper.toVoucherResponse(randomVoucher);
     }
 }

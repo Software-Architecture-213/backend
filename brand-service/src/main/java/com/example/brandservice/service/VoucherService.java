@@ -145,4 +145,18 @@ public class VoucherService {
 
         return savedVoucherUser;
     }
+
+    public VoucherUser updateVoucherUser(String userId, VoucherUserRequest request) {
+        Voucher voucher = voucherRepository.findById(request.getVoucherId()).orElseThrow(
+                () -> new RuntimeException("Voucher not found")
+        );
+        VoucherUser voucherUser = voucherUserRepository.findByUserIdAndVoucher(userId, voucher).orElseThrow(
+                () -> new RuntimeException("Voucher User not found")
+        );
+        voucherUser.setStatus(request.getStatus());
+        voucherUser.setUpdateAt(LocalDateTime.now());
+        voucherUser.setRedeemedAt(LocalDateTime.now());
+
+        return voucherUserRepository.save(voucherUser);
+    }
 }
