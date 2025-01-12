@@ -14,7 +14,7 @@ class GameService {
 	async getGameById(gameId) {
 		const game = await Game.findById(gameId);
 		if (!game) {
-			throw new CustomError("Game not found", 404);
+			throw new CustomError(404, "Game not found");
 		}
 		return game;
 	}
@@ -37,7 +37,7 @@ class GameService {
 			new: true,
 		});
 		if (!updatedGame) {
-			throw new CustomError("Game not found", 404);
+			throw new CustomError(404, "Game not found");
 		}
 		return updatedGame;
 	}
@@ -45,7 +45,7 @@ class GameService {
 	async deleteGame(gameId) {
 		const game = await Game.findByIdAndDelete(gameId);
 		if (!game) {
-			throw new CustomError("Game not found", 404);
+			throw new CustomError(404, "Game not found");
 		}
 		return game;
 	}

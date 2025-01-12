@@ -14,7 +14,7 @@ class PromotionService {
 	async getPromotionById(promotionId) {
 		const promotion = await Promotion.findById(promotionId);
 		if (!promotion) {
-			throw new CustomError("Promotion not found", 404);
+			throw new CustomError(404, "Promotion not found");
 		}
 		return promotion;
 	}
@@ -38,7 +38,7 @@ class PromotionService {
 			}
 		);
 		if (!updatedPromotion) {
-			throw new CustomError("Promotion not found", 404);
+			throw new CustomError(404, "Promotion not found");
 		}
 		return updatedPromotion;
 	}
@@ -46,7 +46,7 @@ class PromotionService {
 	async deletePromotion(promotionId) {
 		const promotion = await Promotion.findByIdAndDelete(promotionId);
 		if (!promotion) {
-			throw new CustomError("Promotion not found", 404);
+			throw new CustomError(404, "Promotion not found");
 		}
 		return promotion;
 	}

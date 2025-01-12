@@ -37,20 +37,20 @@ app.use(cookieParser());
 // );
 const corsOptions = {
 	origin: process.env.FRONTEND_URL, // Replace with your frontend's URL
-	methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-	allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allowed HTTP methods
+	allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 	preflightContinue: true,
 	credentials: true,
 };
-console.log(corsOptions)
+console.log(corsOptions);
 
 app.use(cors(corsOptions));
 // app.options('*',cors(corsOptions));
-// app.use(jwtVerifyHandler);
+app.use(jwtVerifyHandler);
 app.use(responseMethods);
 
 // Routes
-app.use("", gameRoutes);
+app.use("/games", gameRoutes);
 app.use("/promotions", promotionRoutes);
 app.use("/statistics", statisticRoutes);
 app.use("/items", itemRoutes);

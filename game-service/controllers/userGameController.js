@@ -21,6 +21,17 @@ const getUserGameById = async (req, res) => {
 	res.ok(userGame);
 };
 
+const getUserGameByUserIdAndGameId = async (req, res) => {
+	const userId = req.params.userId;
+	const gameId = req.params.gameId;
+	console.log(userId, gameId);
+	const userGame = await UserGameService.getUserGameByUserIdAndGameId(
+		userId,
+		gameId
+	);
+	res.ok(userGame);
+};
+
 const updateUserGame = async (req, res) => {
 	const userGameId = req.params.id;
 	const userGame = req.body;
@@ -37,10 +48,25 @@ const deleteUserGame = async (req, res) => {
 	res.ok(userGame);
 };
 
+const decreaseUserGameTurn = async (req, res) => {
+	const userGameId = req.params.id;
+	const userGame = await UserGameService.decreaseUserGameTurn(userGameId);
+	res.ok(userGame);
+};
+
+const increaseUserGameTurn = async (req, res) => {
+	const userGameId = req.params.id;
+	const userGame = await UserGameService.increaseUserGameTurn(userGameId);
+	res.ok(userGame);
+};
+
 module.exports = {
 	getAllUserGames,
 	createUserGame,
 	getUserGameById,
 	updateUserGame,
 	deleteUserGame,
+	getUserGameByUserIdAndGameId,
+	decreaseUserGameTurn,
+	increaseUserGameTurn,
 };
