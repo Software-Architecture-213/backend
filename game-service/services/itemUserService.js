@@ -55,6 +55,26 @@ class ItemUserService {
 		});
 		return itemUserWithItems;
 	}
+
+	async getItemUserByUserIdAndPromotionId(userId, promotionId) {
+		const itemUsers = await ItemUser.find({ userId: userId, promotionId: promotionId });
+		const itemIds = itemUsers.map((itemUser) => itemUser.itemId);
+		const items = await Item.find({ _id: { $in: itemIds } });
+
+		const itemUserWithItems = itemUsers.map((itemUser) => {
+			const item = items.find((item) => item._id === itemUser.itemId);
+			return {
+				...itemUser.toObject(),
+				item: item,
+			};
+		});
+		return itemUserWithItems;
+	}
+
+	async deleteItemUsersByUserIdAndItemIds(userId, items) {
+		const result = await ItemUser.deleteMany({ userId: userId, itemId: { $in: items } });
+		return result;
+	}
 }
 
 module.exports = new ItemUserService();

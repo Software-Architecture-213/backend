@@ -43,6 +43,20 @@ const getItemUserByUserId = async (req, res) => {
 	res.ok(itemUser);
 };
 
+const getItemUserByUserIdAndPromotionId = async (req, res) => {
+	const userId = req.params.userId;
+	const promotionId = req.params.promotionId;
+	const itemUsers = await ItemUserService.getItemUserByUserIdAndPromotionId(userId, promotionId);
+	res.ok(itemUsers);
+};
+
+const deleteItemUsersByUserIdAndItemIds = async (req, res) => {
+	const userId = req.params.userId;
+	const items = req.body.items;
+	const result = await ItemUserService.deleteItemUsersByUserIdAndItemIds(userId, items);
+	res.ok(result);
+};
+
 module.exports = {
 	getAllItemUsers,
 	createItemUser,
@@ -50,4 +64,6 @@ module.exports = {
 	updateItemUser,
 	deleteItemUser,
 	getItemUserByUserId,
+	getItemUserByUserIdAndPromotionId,
+	deleteItemUsersByUserIdAndItemIds,
 };

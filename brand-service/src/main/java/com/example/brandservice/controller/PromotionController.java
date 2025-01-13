@@ -31,7 +31,8 @@ public class PromotionController {
 
     // Create a new promotion
     @PostMapping
-    public ResponseEntity<PromotionResponse> createPromotion(Authentication authentication, @RequestBody PromotionRequest promotionRequest) {
+    public ResponseEntity<PromotionResponse> createPromotion(Authentication authentication,
+            @RequestBody PromotionRequest promotionRequest) {
         String brandId = (String) authentication.getPrincipal();
         BrandResponse brandResponse = brandService.getBrandById(brandId);
         promotionRequest.setBrandId(brandResponse.getId());
@@ -88,6 +89,7 @@ public class PromotionController {
         }
     }
 
+    @PublicEndpoint
     @GetMapping("/{promotionId}/random/voucher")
     public ResponseEntity<VoucherResponse> randomVoucher(@PathVariable String promotionId) {
         try {
@@ -99,21 +101,27 @@ public class PromotionController {
     }
 
     @PostMapping("/favourite/{promotionId}")
-    public ResponseEntity<FavouritePromotions> favourite(@PathVariable String promotionId , Authentication authentication) {
+    public ResponseEntity<FavouritePromotions> favourite(@PathVariable String promotionId,
+            Authentication authentication) {
         String userId = (String) authentication.getPrincipal();
         FavouritePromotions response = promotionService.addToFavourites(promotionId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PublicEndpoint
     @PostMapping("/promotion/conversions-rule")
-    public ResponseEntity<ConversionRule> createPromotionConversionRule(@RequestBody ConversionRuleRequest conversionRuleRequest) {
+    public ResponseEntity<ConversionRule> createPromotionConversionRule(
+            @RequestBody ConversionRuleRequest conversionRuleRequest) {
         ConversionRule response = promotionService.createConversionRule(conversionRuleRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PublicEndpoint
     @GetMapping("/promotion/conversions-rule")
-    public ResponseEntity<ConversionRule> getPromotionConversionRuleById(@RequestParam("promotionId") String promotionId) {
+    public ResponseEntity<ConversionRule> getPromotionConversionRuleById(
+            @RequestParam("promotionId") String promotionId) {
         ConversionRule response = promotionService.getConversionRuleByPromotionId(promotionId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

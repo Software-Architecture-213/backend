@@ -46,7 +46,7 @@ console.log(corsOptions);
 
 app.use(cors(corsOptions));
 // app.options('*',cors(corsOptions));
-app.use(jwtVerifyHandler);
+//app.use(jwtVerifyHandler);
 app.use(responseMethods);
 
 // Routes

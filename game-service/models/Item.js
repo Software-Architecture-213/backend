@@ -7,6 +7,7 @@ const ItemSchema = new mongoose.Schema(
 		name: { type: String, required: true }, // Tên vật phẩm
 		description: { type: String }, // Mô tả vật phẩm
 		imageUrl: { type: String }, // Hình ảnh vật phẩm
+		promotionId: { type: String, ref: "Promotion" },
 		rarity: {
 			type: String,
 			enum: ["common", "uncommon", "rare", "epic", "legendary"],

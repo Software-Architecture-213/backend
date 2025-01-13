@@ -46,10 +46,17 @@ const deleteItemTransaction = async (req, res) => {
 	res.ok(itemTransaction);
 };
 
+const getItemTransactionByUserId = async (req, res) => {
+	const userId = req.params.userId;
+	const itemTransactions = await ItemTransactionService.getItemTransactionByUserId(userId);
+	res.ok(itemTransactions);
+};
+
 module.exports = {
 	getAllItemTransactions,
 	createItemTransaction,
 	getItemTransactionById,
 	updateItemTransaction,
 	deleteItemTransaction,
+	getItemTransactionByUserId,
 };

@@ -1,5 +1,6 @@
 const ItemTransaction = require("../models/ItemTransaction");
 const CustomError = require("../exceptions/CustomError");
+const Item = require("../models/Item");
 
 class ItemTransactionService {
 	async createItemTransaction(itemTransaction) {
@@ -41,6 +42,23 @@ class ItemTransactionService {
 			throw new CustomError(404, "ItemTransaction not found");
 		}
 		return itemTransaction;
+	}
+
+	async getItemTransactionByUserId(userId) {
+		const itemTransactions = await ItemTransaction.find({
+			$or: [{ senderId: userId }, { receiverId: userId }],
+		});
+
+		const itemIds = itemTransactions.map(transaction => transaction.itemId);
+		const items = await Item.find({ _id: { $in: itemIds } });
+
+		return itemTransactions.map(transaction => {
+			const item = items.find(i => i._id === transaction.itemId);
+			return {
+				...transaction.toObject(),
+				item: item || null,
+			};
+		});
 	}
 }
 
