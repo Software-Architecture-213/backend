@@ -14,7 +14,7 @@ class ItemService {
 	async getItemById(itemId) {
 		const item = await Item.findById(itemId);
 		if (!item) {
-			throw new CustomError("Item not found", 404);
+			throw new CustomError(404, "Item not found");
 		}
 		return item;
 	}
@@ -24,7 +24,7 @@ class ItemService {
 			new: true,
 		});
 		if (!updatedItem) {
-			throw new CustomError("Item not found", 404);
+			throw new CustomError(404, "Item not found");
 		}
 		return updatedItem;
 	}
@@ -32,7 +32,7 @@ class ItemService {
 	async deleteItem(itemId) {
 		const item = await Item.findByIdAndDelete(itemId);
 		if (!item) {
-			throw new CustomError("Item not found", 404);
+			throw new CustomError(404, "Item not found");
 		}
 		return item;
 	}
@@ -44,7 +44,7 @@ class ItemService {
 	async getRandomItemByGameId(gameId) {
 		const items = await Item.find({ gameId: gameId });
 		if (items.length === 0) {
-			throw new CustomError("No items found for this game", 404);
+			throw new CustomError(404, "No items found");
 		}
 		const randomIndex = Math.floor(Math.random() * items.length);
 		return items[randomIndex];

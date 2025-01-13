@@ -15,7 +15,7 @@ class ItemUserService {
 	async getItemUserById(itemUserId) {
 		const itemUser = await ItemUser.findById(itemUserId);
 		if (!itemUser) {
-			throw new CustomError("ItemUser not found", 404);
+			throw new CustomError(404, "ItemUser not found");
 		}
 		return itemUser;
 	}
@@ -29,7 +29,7 @@ class ItemUserService {
 			}
 		);
 		if (!updatedItemUser) {
-			throw new CustomError("ItemUser not found", 404);
+			throw new CustomError(404, "ItemUser not found");
 		}
 		return updatedItemUser;
 	}
@@ -37,20 +37,20 @@ class ItemUserService {
 	async deleteItemUser(itemUserId) {
 		const itemUser = await ItemUser.findByIdAndDelete(itemUserId);
 		if (!itemUser) {
-			throw new CustomError("ItemUser not found", 404);
+			throw new CustomError(404, "ItemUser not found");
 		}
 		return itemUser;
 	}
 	async getItemUserByUserId(userId) {
 		const itemUsers = await ItemUser.find({ userId: userId });
-		const itemIds = itemUsers.map(itemUser => itemUser.itemId);
+		const itemIds = itemUsers.map((itemUser) => itemUser.itemId);
 		const items = await Item.find({ _id: { $in: itemIds } });
 
-		const itemUserWithItems = itemUsers.map(itemUser => {
-			const item = items.find(item => item._id === itemUser.itemId);
+		const itemUserWithItems = itemUsers.map((itemUser) => {
+			const item = items.find((item) => item._id === itemUser.itemId);
 			return {
 				...itemUser.toObject(),
-				itemId: item
+				itemId: item,
 			};
 		});
 		return itemUserWithItems;

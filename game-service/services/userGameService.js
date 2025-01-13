@@ -15,7 +15,7 @@ class UserGameService {
 	async getUserGameById(userGameId) {
 		const userGame = await UserGame.findById(userGameId);
 		if (!userGame) {
-			throw new CustomError("UserGame not found", 404);
+			throw new CustomError(404, "UserGame not found");
 		}
 		return userGame;
 	}
@@ -29,6 +29,15 @@ class UserGameService {
 		});
 
 		return userCount;
+	}
+
+	async getUserGameByUserIdAndGameId(userId, gameId) {
+		const userGame = await UserGame.findOne({ userId, gameId });
+		console.log(userGame);
+		if (!userGame) {
+			throw new CustomError(404, "UserGame not found");
+		}
+		return userGame;
 	}
 
 	async getUserCountByGameId(gameId, filter) {
@@ -49,7 +58,7 @@ class UserGameService {
 			}
 		);
 		if (!updatedUserGame) {
-			throw new CustomError("UserGame not found", 404);
+			throw new CustomError(404, "UserGame not found");
 		}
 		return updatedUserGame;
 	}
@@ -57,8 +66,32 @@ class UserGameService {
 	async deleteUserGame(userGameId) {
 		const userGame = await UserGame.findByIdAndDelete(userGameId);
 		if (!userGame) {
-			throw new CustomError("UserGame not found", 404);
+			throw new CustomError(404, "UserGame not found");
 		}
+		return userGame;
+	}
+
+	async decreaseUserGameTurn(userGameId) {
+		const userGame = await UserGame.findById(userGameId);
+		if (!userGame) {
+			throw new CustomError(404, "UserGame not found");
+		}
+
+		userGame.remainingTurns -= 1;
+		await userGame.save();
+		return userGame;
+	}
+
+	async increaseUserGameTurn(userGameId) {
+		const userGame = await UserGame.findById(userGameId);
+		if (!userGame) {
+			throw new CustomError(404, "UserGame not found");
+		}
+
+		userGame.remainingTurns += 1;
+		userGame.earnedTurns += 1;
+		await userGame.save();
+
 		return userGame;
 	}
 }

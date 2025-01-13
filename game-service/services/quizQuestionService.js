@@ -14,7 +14,7 @@ class QuizQuestionService {
 	async getQuizQuestionById(quizQuestionId) {
 		const quizQuestion = await QuizQuestion.findById(quizQuestionId);
 		if (!quizQuestion) {
-			throw new CustomError("QuizQuestion not found", 404);
+			throw new CustomError(404, "QuizQuestion not found");
 		}
 		return quizQuestion;
 	}
@@ -28,7 +28,7 @@ class QuizQuestionService {
 			}
 		);
 		if (!updatedQuizQuestion) {
-			throw new CustomError("QuizQuestion not found", 404);
+			throw new CustomError(404, "QuizQuestion not found");
 		}
 		return updatedQuizQuestion;
 	}
@@ -36,7 +36,7 @@ class QuizQuestionService {
 	async deleteQuizQuestion(quizQuestionId) {
 		const quizQuestion = await QuizQuestion.findByIdAndDelete(quizQuestionId);
 		if (!quizQuestion) {
-			throw new CustomError("QuizQuestion not found", 404);
+			throw new CustomError(404, "QuizQuestion not found");
 		}
 		return quizQuestion;
 	}

@@ -215,7 +215,6 @@ class StatisticService {
 				},
 			]);
 
-			console.log(brandId);
 			const testResult = await Promotion.aggregate([
 				{
 					$match: { brandId }, // Filter by brandId

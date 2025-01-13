@@ -15,7 +15,7 @@ class ItemTransactionService {
 	async getItemTransactionById(itemTransactionId) {
 		const itemTransaction = await ItemTransaction.findById(itemTransactionId);
 		if (!itemTransaction) {
-			throw new CustomError("ItemTransaction not found", 404);
+			throw new CustomError(404, "ItemTransaction not found");
 		}
 		return itemTransaction;
 	}
@@ -29,7 +29,7 @@ class ItemTransactionService {
 			}
 		);
 		if (!updatedItemTransaction) {
-			throw new CustomError("ItemTransaction not found", 404);
+			throw new CustomError(404, "ItemTransaction not found");
 		}
 		return updatedItemTransaction;
 	}
@@ -39,7 +39,7 @@ class ItemTransactionService {
 			itemTransactionId
 		);
 		if (!itemTransaction) {
-			throw new CustomError("ItemTransaction not found", 404);
+			throw new CustomError(404, "ItemTransaction not found");
 		}
 		return itemTransaction;
 	}
