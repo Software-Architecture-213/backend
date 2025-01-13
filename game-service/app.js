@@ -36,14 +36,14 @@ app.use(cookieParser());
 // 	})
 // );
 const corsOptions = {
-	origin: true, // Replace with your frontend's URL
+	origin: "http://localhost:5173", // Replace with your frontend's URL
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Allowed HTTP methods
 	allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 	preflightContinue: true,
 	credentials: true,
 };
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // app.options('*',cors(corsOptions));
 //app.use(jwtVerifyHandler);
 app.use(responseMethods);
