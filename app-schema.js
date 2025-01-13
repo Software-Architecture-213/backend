@@ -42,6 +42,7 @@ QuizQuestionSchema({
 		default: "medium",
 	}, // Difficulty level of the question
 	points: { type: Number, default: 10 }, // Points awarded for a correct answer
+	speechUrl: { type: String }, // URL to the speech file
 	createdAt: { type: Date, default: Date.now }, // Creation timestamp
 	updatedAt: { type: Date, default: Date.now }, // Update timestamp
 });

@@ -1,6 +1,5 @@
 [
 	{
-		"_id": "1a1b1c1d-1e1f-1g1h-1i1j-1k1l1m1n1o1p",
 		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"question": "What year was Katinat founded?",
 		"answers": [
@@ -13,7 +12,6 @@
 		"points": 10
 	},
 	{
-		"_id": "2a2b2c2d-2e2f-2g2h-2i2j-2k2l2m2n2o2p",
 		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"question": "What is Katinat's signature coffee drink?",
 		"answers": [
@@ -26,7 +24,6 @@
 		"points": 15
 	},
 	{
-		"_id": "3a3b3c3d-3e3f-3g3h-3i3j-3k3l3m3n3o3p",
 		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"question": "Which Katinat drink is known for its unique salted foam?",
 		"answers": [
@@ -39,7 +36,6 @@
 		"points": 10
 	},
 	{
-		"_id": "4a4b4c4d-4e4f-4g4h-4i4j-4k4l4m4n4o4p",
 		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"question": "What ingredient makes Katinat’s iced teas stand out?",
 		"answers": [
@@ -52,7 +48,6 @@
 		"points": 15
 	},
 	{
-		"_id": "5a5b5c5d-5e5f-5g5h-5i5j-5k5l5m5n5o5p",
 		"gameId": "f56f64d9-5cf4-4b62-b87b-bdf9e4d36a67",
 		"question": "What is the recommended pairing with Katinat’s cold brew coffee?",
 		"answers": [
@@ -65,7 +60,6 @@
 		"points": 20
 	},
 	{
-		"_id": "6a6b6c6d-6e6f-6g6h-6i6j-6k6l6m6n6o6p",
 		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"question": "What year was PhucLong established?",
 		"answers": [
@@ -78,7 +72,6 @@
 		"points": 10
 	},
 	{
-		"_id": "7a7b7c7d-7e7f-7g7h-7i7j-7k7l7m7n7o7p",
 		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"question": "Which PhucLong drink is most popular?",
 		"answers": [
@@ -91,7 +84,6 @@
 		"points": 15
 	},
 	{
-		"_id": "8a8b8c8d-8e8f-8g8h-8i8j-8k8l8m8n8o8p",
 		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"question": "What is the base ingredient of PhucLong's signature iced teas?",
 		"answers": [
@@ -104,7 +96,6 @@
 		"points": 15
 	},
 	{
-		"_id": "9a9b9c9d-9e9f-9g9h-9i9j-9k9l9m9n9o9p",
 		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"question": "What is the key flavor in PhucLong's jasmine tea?",
 		"answers": [
@@ -117,7 +108,6 @@
 		"points": 10
 	},
 	{
-		"_id": "10a10b10c-10e10f-10g10h-10i10j-10k10l10m10n10o10p",
 		"gameId": "3adad5b4-d9d5-42e6-b9fa-493b7bc2c758",
 		"question": "How is PhucLong's iced coffee brewed?",
 		"answers": [

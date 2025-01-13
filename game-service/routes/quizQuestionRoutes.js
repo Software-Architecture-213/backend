@@ -11,4 +11,11 @@ router.put("/:id", QuizQuestionController.updateQuizQuestion);
 router.delete("/:id", QuizQuestionController.deleteQuizQuestion);
 router.get("/games/:id", QuizQuestionController.getQuizQuestionsBygameId);
 
+router.post(
+	"/:id/speech/callback",
+	QuizQuestionController.createSpeechCallback
+);
+router.post("/:id/speech", QuizQuestionController.createSpeech);
+router.get("/:id/speech", QuizQuestionController.getSpeech);
+
 module.exports = router;
