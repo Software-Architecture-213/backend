@@ -33,7 +33,6 @@ class UserGameService {
 
 	async getUserGameByUserIdAndGameId(userId, gameId) {
 		const userGame = await UserGame.findOne({ userId, gameId });
-		console.log(userGame);
 		if (!userGame) {
 			throw new CustomError(404, "UserGame not found");
 		}

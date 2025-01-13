@@ -7,6 +7,10 @@ class QuizQuestionService {
 		return await newQuizQuestion.save();
 	}
 
+	async createManyQuizQuestions(quizQuestions) {
+		return await QuizQuestion.insertMany(quizQuestions);
+	}
+
 	async getQuizQuestions() {
 		return await QuizQuestion.find({});
 	}

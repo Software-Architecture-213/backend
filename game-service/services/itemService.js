@@ -7,6 +7,10 @@ class ItemService {
 		return await newItem.save();
 	}
 
+	async createManyItems(items) {
+		return await Item.insertMany(items);
+	}
+
 	async getItems() {
 		return await Item.find({});
 	}
