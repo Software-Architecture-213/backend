@@ -123,4 +123,5 @@ public class PromotionController {
         ConversionRule response = promotionService.getConversionRuleByPromotionId(promotionId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }
