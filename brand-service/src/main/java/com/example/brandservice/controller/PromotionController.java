@@ -89,6 +89,7 @@ public class PromotionController {
         }
     }
 
+    @PublicEndpoint
     @GetMapping("/{promotionId}/random/voucher")
     public ResponseEntity<VoucherResponse> randomVoucher(@PathVariable String promotionId) {
         try {

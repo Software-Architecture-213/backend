@@ -7,6 +7,7 @@ const ItemTransactionSchema = new mongoose.Schema(
 		senderId: { type: String }, // Người gửi
 		receiverId: { type: String }, // Người nhận
 		itemId: { type: String, ref: "Item" }, // Vật phẩm được gửi
+		promotionId: { type: String, ref: "Promotion" }, // Khuyến mãi được gửi
 		expiredAt: { type: Date }, // Ngày hết hạn
 		status: {
 			type: String,
