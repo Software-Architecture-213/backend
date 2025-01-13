@@ -50,7 +50,6 @@ app.use(jwtVerifyHandler);
 app.use(responseMethods);
 
 // Routes
-app.use("/games", gameRoutes);
 app.use("/promotions", promotionRoutes);
 app.use("/statistics", statisticRoutes);
 app.use("/items", itemRoutes);
@@ -58,6 +57,7 @@ app.use("/itemTransactions", itemTransactionRoutes);
 app.use("/itemUsers", itemUserRoutes);
 app.use("/quizQuestions", quizQuestionRoutes);
 app.use("/userGames", userGameRoutes);
+app.use("/", gameRoutes);
 
 app.use("/health", (req, res) => {
 	res.json({ message: "Welcome to Game Service" });
