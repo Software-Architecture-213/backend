@@ -27,7 +27,6 @@ const StatisticController = {
 	async getGamesStatistic(req, res, next) {
 		const filter = convertTimeQueryParamToFilter(req.query);
 		const statistic = await statisticService.getGamesStatistic(filter);
-		console.log(statistic);
 		res.ok(statistic);
 	},
 
@@ -39,7 +38,6 @@ const StatisticController = {
 	async getUsersStatisticByPromotion(req, res, next) {
 		const promotionId = req.params.id;
 		const filter = convertTimeQueryParamToFilter(req.query);
-		console.log(promotionId, filter);
 		const statistic = await statisticService.getUsersStatisticByPromotion(
 			promotionId,
 			filter

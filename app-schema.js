@@ -233,6 +233,7 @@ UserSchema({
 });
 
 UserGameSchema({
+	_id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // UserGame ID
 	userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	gameId: { type: mongoose.Schema.Types.ObjectId, ref: "Game" },
 	score: { type: Number, default: 0 },
