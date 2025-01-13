@@ -22,6 +22,7 @@ const QuizQuestionSchema = new mongoose.Schema(
 			default: "medium",
 		}, // Difficulty level of the question
 		points: { type: Number, default: 10 }, // Points awarded for a correct answer
+		speechUrl: { type: String }, // URL to the speech file
 	},
 	{ timestamps: true }
 );

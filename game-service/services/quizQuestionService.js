@@ -44,6 +44,20 @@ class QuizQuestionService {
 		const quizQuestions = await QuizQuestion.find({ gameId: gameId });
 		return quizQuestions;
 	}
+
+	async updateSpeechUrl(quizQuestionId, speechUrl) {
+		const quizQuestion = await QuizQuestion.findByIdAndUpdate(
+			quizQuestionId,
+			{ speechUrl },
+			{ new: true }
+		);
+
+		if (!quizQuestion) {
+			throw new CustomError(404, "QuizQuestion not found");
+		}
+
+		return quizQuestion;
+	}
 }
 
 module.exports = new QuizQuestionService();
