@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PromotionRequest {
+    String id;
     String name;
     String description;
     String imageUrl;
@@ -21,4 +22,5 @@ public class PromotionRequest {
     double budget;
     Promotion.PromotionStatus status;
     List<String> games;
+
 }
