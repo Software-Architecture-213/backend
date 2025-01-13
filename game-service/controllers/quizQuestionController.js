@@ -101,11 +101,8 @@ const createSpeech = async (req, res) => {
 	}
 
 	const response = await FPTClient.getSpeech(quizQuestionId, speechText);
-	if (response) {
-		console.log("response", response);
-	}
 
-	if (response.error == 0) {
+	if (response?.error == 0) {
 		// success
 		const updatedQuizQuestion = await QuizQuestionService.updateSpeechUrl(
 			quizQuestionId,

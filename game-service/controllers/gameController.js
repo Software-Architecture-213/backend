@@ -1,4 +1,7 @@
 const GameService = require("../services/gameService");
+const PromotionService = require("../services/promotionService");
+const QuizQuestionService = require("../services/quizQuestionService");
+const ItemService = require("../services/itemService");
 const {
 	convertTimeQueryParamToFilter,
 } = require("../utils/convertQueryParamToFilter");
@@ -45,6 +48,37 @@ const getGamesByPromotionID = async (req, res) => {
 	res.ok(games);
 };
 
+const bulkCreateGames = async (req, res) => {
+	const { game, quizquestions, items } = req.body;
+	// Get promotionId from the request body
+	const promotionId = game.promotionId;
+	const promotion = await PromotionService.getPromotionById(promotionId);
+	game.imageUrl = promotion.imageUrl;
+	const newGame = await GameService.createGame(game);
+
+	const gameId = newGame._id;
+	// Create quiz questions
+	quizquestions.forEach((quizquestion) => {
+		quizquestion.gameId = gameId;
+	});
+	const newQuizQuestions = await QuizQuestionService.createManyQuizQuestions(
+		quizquestions
+	);
+
+	// Create items
+	items.forEach((item) => {
+		item.gameId = gameId;
+		item.imageUrl = promotion.imageUrl;
+	});
+	const newItems = await ItemService.createManyItems(items);
+
+	res.created({
+		game: newGame,
+		quizquestions: newQuizQuestions,
+		items: newItems,
+	});
+};
+
 module.exports = {
 	getAllGames,
 	createGame,
@@ -53,4 +87,5 @@ module.exports = {
 	updateGame,
 	deleteGame,
 	getGamesByPromotionID,
+	bulkCreateGames,
 };

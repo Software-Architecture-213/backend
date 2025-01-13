@@ -4,6 +4,8 @@ const adminVerifyHandler = require("../middlewares/adminVerifyHandler");
 
 const router = express.Router();
 
+router.post("/bulk-create", GameController.bulkCreateGames);
+
 router.get("/", GameController.getAllGames);
 router.post("/", GameController.createGame);
 router.get("/:id", GameController.getGameById);
