@@ -57,6 +57,39 @@ const deleteItemUsersByUserIdAndItemIds = async (req, res) => {
 	res.ok(result);
 };
 
+const checkAndCreateOrUpdateItemUser = async (req, res) => {
+	const { userId, itemId, gameId, quantity } = req.body;
+	const existingItemUser = await ItemUserService.getItemUserByUserIdAndItemId(userId, itemId);
+
+	if (existingItemUser) {
+		// Cập nhật quantity
+		existingItemUser.quantity += quantity;
+		const updatedItemUser = await ItemUserService.updateItemUser(existingItemUser._id, existingItemUser);
+		res.ok(updatedItemUser);
+	} else {
+		// Tạo mới itemUser
+		const newItemUser = await ItemUserService.createItemUser({ userId, itemId, gameId, quantity });
+		res.created(newItemUser);
+	}
+};
+
+const updateItemUserQuantities = async (req, res) => {
+	const userId = req.params.userId;
+	const itemIds = req.body.items; // Lấy items từ body
+
+	// Kiểm tra xem items có tồn tại và là một mảng không
+	if (!itemIds || !Array.isArray(itemIds)) {
+		return res.status(400).json({ message: "items must be an array." });
+	}
+
+	try {
+		const updatedItems = await ItemUserService.updateItemUserQuantities(userId, itemIds);
+		res.ok(updatedItems);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
 module.exports = {
 	getAllItemUsers,
 	createItemUser,
@@ -66,4 +99,6 @@ module.exports = {
 	getItemUserByUserId,
 	getItemUserByUserIdAndPromotionId,
 	deleteItemUsersByUserIdAndItemIds,
+	checkAndCreateOrUpdateItemUser,
+	updateItemUserQuantities,
 };

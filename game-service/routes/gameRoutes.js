@@ -10,6 +10,6 @@ router.get("/:id", GameController.getGameById);
 router.get("/brands/:id", GameController.getGamesByBrandId);
 router.put("/:id", GameController.updateGame);
 router.delete("/:id", GameController.deleteGame);
-router.get("/promotions/:id", GameController.getGamesByPromotionID);
+router.get("/promotion/:id", GameController.getGamesByPromotionID);
 
 module.exports = router;
