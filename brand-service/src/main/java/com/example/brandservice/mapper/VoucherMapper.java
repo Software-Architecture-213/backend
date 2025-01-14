@@ -19,7 +19,7 @@ public interface VoucherMapper {
     @Mapping(source = "expiredAt", target = "expiredAt", qualifiedByName = "dateToLocalDateTime")
     Voucher toVoucher(VoucherRequest voucherRequest);
 
-//    @Mapping(source = "promotion.id", target = "promotionId")
+    @Mapping(source = "promotion.id", target = "promotionId")
     VoucherResponse toVoucherResponse(Voucher voucher);
 
     // Custom method to convert Date to LocalDateTime

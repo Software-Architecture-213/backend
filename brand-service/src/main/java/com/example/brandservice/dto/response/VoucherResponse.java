@@ -27,4 +27,5 @@ public class VoucherResponse {
     int createCounts;
     Date createAt;
     Date updateAt;
+    String promotionId;
 }
