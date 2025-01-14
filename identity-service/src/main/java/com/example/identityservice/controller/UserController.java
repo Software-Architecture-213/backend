@@ -1,5 +1,6 @@
 package com.example.identityservice.controller;
 
+import com.example.identityservice.configuration.PublicEndpoint;
 import com.example.identityservice.dto.request.auth.UserUpdateRequest;
 import com.example.identityservice.dto.request.user.DisableUserRequest;
 import com.example.identityservice.dto.request.user.UsersInfoRequest;
@@ -36,7 +37,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "")
-    public ResponseEntity<UsersInfoResponse> getUsersInfo(Authentication authentication, @ModelAttribute UsersInfoRequest usersInfoRequest) {
+    public ResponseEntity<UsersInfoResponse> getUsersInfo(Authentication authentication,
+            @ModelAttribute UsersInfoRequest usersInfoRequest) {
         UsersInfoResponse usersInfo = userService.getUsersInfo(usersInfoRequest);
         final var notAdminUsers = usersInfo.getData().stream().filter(u -> u.getRole() != Role.ADMIN).toList();
         usersInfo.setData(notAdminUsers);
@@ -55,15 +57,18 @@ public class UserController {
         String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(userId, userUpdateRequest));
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}")
-    public ResponseEntity<UserInfoResponse> updateUserById(@PathVariable String id, @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<UserInfoResponse> updateUserById(@PathVariable String id,
+            @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateByUserId(id, userUpdateRequest));
     }
-    
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{email}/disable")
-    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String email, @RequestBody DisableUserRequest request) {
+    public ResponseEntity<UserInfoResponse> enableUser(@PathVariable String email,
+            @RequestBody DisableUserRequest request) {
         request.setEmail(email);
         return ResponseEntity.status(HttpStatus.OK).body(userService.disableUser(request));
     }
@@ -73,6 +78,13 @@ public class UserController {
             @RequestParam("file") MultipartFile file) {
         String userId = (String) authentication.getPrincipal();
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePhoto(userId, file));
+    }
+
+    @PublicEndpoint
+    @GetMapping("/by-email")
+    public ResponseEntity<UserInfoResponse> getUserInfoByEmail(@RequestParam String email) {
+        UserInfoResponse userInfo = userService.getUserInfoByEmail(email);
+        return ResponseEntity.ok(userInfo);
     }
 
 }
