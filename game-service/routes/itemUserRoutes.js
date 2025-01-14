@@ -12,5 +12,7 @@ router.delete("/:id", ItemUserController.deleteItemUser);
 router.get("/user/:id", ItemUserController.getItemUserByUserId);
 router.get("/user/:userId/promotion/:promotionId", ItemUserController.getItemUserByUserIdAndPromotionId);
 router.delete("/user/:userId/items", ItemUserController.deleteItemUsersByUserIdAndItemIds);
+router.post("/check", ItemUserController.checkAndCreateOrUpdateItemUser);
+router.patch("/user/:userId/items", ItemUserController.updateItemUserQuantities);
 
 module.exports = router;

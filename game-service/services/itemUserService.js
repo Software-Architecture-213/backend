@@ -42,7 +42,7 @@ class ItemUserService {
 		return itemUser;
 	}
 	async getItemUserByUserId(userId) {
-		const itemUsers = await ItemUser.find({ userId: userId });
+		const itemUsers = await ItemUser.find({ userId: userId, quantity: { $gte: 0 } });
 		const itemIds = itemUsers.map((itemUser) => itemUser.itemId);
 		const items = await Item.find({ _id: { $in: itemIds } });
 
@@ -74,6 +74,23 @@ class ItemUserService {
 	async deleteItemUsersByUserIdAndItemIds(userId, items) {
 		const result = await ItemUser.deleteMany({ userId: userId, itemId: { $in: items } });
 		return result;
+	}
+
+	async getItemUserByUserIdAndItemId(userId, itemId) {
+		const itemUser = await ItemUser.findOne({ userId: userId, itemId: itemId });
+		return itemUser;
+	}
+
+	async updateItemUserQuantities(userId, itemIds) {
+		const updatePromises = itemIds.map(itemId => {
+			return ItemUser.findOneAndUpdate(
+				{ userId: userId, itemId: itemId, quantity: { $gt: 0 } },
+				{ $inc: { quantity: -1 } },
+				{ new: true }
+			);
+		});
+
+		return await Promise.all(updatePromises);
 	}
 }
 
