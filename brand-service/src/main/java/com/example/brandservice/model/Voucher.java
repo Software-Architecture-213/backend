@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "vouchers")
+@Table(name = "vouchers", indexes = {
+        @Index(name = "idx_code", columnList = "code"),
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Voucher {
     @Id

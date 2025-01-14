@@ -14,7 +14,9 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "promotions")
+@Table(name = "promotions", indexes = {
+        @Index(name = "idx_name", columnList = "name")
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Promotion {
     @Id
