@@ -56,7 +56,7 @@ app.use("/itemTransactions", itemTransactionRoutes);
 app.use("/itemUsers", itemUserRoutes);
 app.use("/quizQuestions", quizQuestionRoutes);
 app.use("/userGames", userGameRoutes);
-app.use("/", gameRoutes);
+app.use("", gameRoutes);
 
 app.use("/health", (req, res) => {
 	res.json({ message: "Welcome to Game Service" });
