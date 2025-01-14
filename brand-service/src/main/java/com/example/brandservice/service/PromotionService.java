@@ -195,6 +195,12 @@ public class PromotionService {
         return favouritePromotionsRepository.save(favouritePromotions);
     }
 
+    public FavouritePromotions getFavouritePromotionsByUserId(String userId) {
+        return favouritePromotionsRepository.findByUserId(ParseUUID.normalizeUID(userId)).orElseThrow(
+                () -> new RuntimeException("Cant find userid in favourite")
+        );
+    }
+
     public List<ConversionRule> getAllConversionRules() {
         return conversionRuleRepository.findAll();
     }

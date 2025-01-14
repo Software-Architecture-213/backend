@@ -108,6 +108,13 @@ public class PromotionController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/favourite/me")
+    public ResponseEntity<FavouritePromotions> favourite(Authentication authentication) {
+        String userId = (String) authentication.getPrincipal();
+        FavouritePromotions response = promotionService.getFavouritePromotionsByUserId(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @PublicEndpoint
     @PostMapping("/promotion/conversions-rule")
     public ResponseEntity<ConversionRule> createPromotionConversionRule(
