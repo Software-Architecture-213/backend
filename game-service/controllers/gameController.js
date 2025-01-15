@@ -51,7 +51,8 @@ const getGamesByPromotionID = async (req, res) => {
 const bulkCreateGames = async (req, res) => {
 	const { game, quizquestions, items } = req.body;
 	// Get promotionId from the request body
-	// const promotionId = game.promotionId;
+	const promotionId = game.promotionId;
+	console.log("promotion id: " + promotionId);
 	// const promotion = await PromotionService.getPromotionById(promotionId);
 	// game.imageUrl = promotion.imageUrl;
 	const newGame = await GameService.createGame(game);
@@ -68,11 +69,12 @@ const bulkCreateGames = async (req, res) => {
 	}
 
 	// Create items
-	items.forEach((item) => {
-		item.gameId = gameId;
-		// item.imageUrl = promotion.imageUrl;
-	});
-	const newItems = await ItemService.createManyItems(items);
+	const promotionItems = items.map((item) => ({
+		...item,
+		gameId,
+		promotionId,
+	}));
+	const newItems = await ItemService.createManyItems(promotionItems);
 
 	res.created({
 		game: newGame,
