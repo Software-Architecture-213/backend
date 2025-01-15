@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -26,7 +28,18 @@ public class UserService {
     }
 
     public UsersInfoResponse getUsersInfo(UsersInfoRequest usersInfoRequest) {
-        return firebaseUserClient.getUsers(usersInfoRequest.getPageToken(), usersInfoRequest.getMaxResults());
+        UsersInfoResponse usersInfoResponse = firebaseUserClient.getUsers(usersInfoRequest.getPageToken(), usersInfoRequest.getMaxResults());
+        List<UserInfoResponse> data = usersInfoResponse.getData();
+        if (data != null) {
+            data.sort((u1, u2) -> {
+                if (u1.getLastSignIn() == null && u2.getLastSignIn() == null) return 0;
+                if (u1.getLastSignIn() == null) return 1; // Nulls last
+                if (u2.getLastSignIn() == null) return -1;
+                return u1.getLastSignIn().compareTo(u2.getLastSignIn());
+            });
+        }
+        usersInfoResponse.setData(data);
+        return usersInfoResponse;
     }
 
     public UserInfoResponse updateByEmail(@NonNull String email, @NonNull UserUpdateRequest userUpdateRequest) {
