@@ -23,6 +23,15 @@ class ItemService {
 		return item;
 	}
 
+	async getItemByPromotionId(promotionId) {
+		const item = await Item.find({ promotionId: promotionId });
+		console.log(item)
+		if (!item) {
+			throw new CustomError(404, "Item not found by promotion id");
+		}
+		return item;
+	}
+
 	async updateItem(itemId, item) {
 		const updatedItem = await Item.findByIdAndUpdate(itemId, item, {
 			new: true,

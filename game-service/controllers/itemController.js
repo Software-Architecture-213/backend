@@ -21,6 +21,13 @@ const getItemById = async (req, res) => {
 	res.ok(item);
 };
 
+const getItemByPromotionId = async (req, res) => {
+	const promotionId = req.params.promotionId;
+	console.log(promotionId)
+	const item = await ItemService.getItemByPromotionId(promotionId);
+	res.ok(item);
+};
+
 const updateItem = async (req, res) => {
 	const itemId = req.params.id;
 	const item = req.body;
@@ -54,4 +61,5 @@ module.exports = {
 	deleteItem,
 	getItemsByGameId,
 	getRandomItemByGameId,
+	getItemByPromotionId,
 };

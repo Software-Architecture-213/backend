@@ -11,5 +11,5 @@ router.put("/:id", ItemController.updateItem);
 router.delete("/:id", ItemController.deleteItem);
 router.get("/game/:gameId", ItemController.getItemsByGameId);
 router.get("/game/:gameId/random", ItemController.getRandomItemByGameId);
-
+router.get("/promotion/:promotionId", ItemController.getItemByPromotionId)
 module.exports = router;

@@ -51,6 +51,11 @@ public class VoucherService {
         // Add the new voucher to the promotion's vouchers list
         promotion.getVouchers().add(voucher);
 
+        if (promotion.getRemainingBudget() < voucher.getMaxCounts()){
+            throw new RuntimeException("Remaining budget exceeded");
+        }
+        promotion.setRemainingBudget(promotion.getRemainingBudget() - voucher.getMaxCounts());
+
         // Save the voucher to the repository
         voucherRepository.save(voucher);
 

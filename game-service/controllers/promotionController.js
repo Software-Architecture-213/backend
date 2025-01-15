@@ -12,6 +12,7 @@ const getAllPromotions = async (req, res) => {
 const createPromotion = async (req, res) => {
 	const promotion = req.body;
 	const newPromotion = await PromotionService.createPromotion(promotion);
+	console.log(newPromotion);
 	res.created(newPromotion);
 };
 

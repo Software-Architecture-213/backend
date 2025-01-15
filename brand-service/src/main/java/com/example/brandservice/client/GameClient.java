@@ -8,6 +8,8 @@ import com.example.brandservice.model.Promotion;
 import com.example.brandservice.utility.DateUtility;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +29,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class GameClient {
+    private static final Logger log = LoggerFactory.getLogger(GameClient.class);
     @Value("${service.game-url}")
     private String GAME_URL;
 
@@ -101,6 +104,7 @@ public class GameClient {
         promotionMap.put("createdAt", Date.from(promotion.getCreateAt().atZone(ZoneId.systemDefault()).toInstant()));
 
         var response = restTemplate.postForObject(url, promotionMap, Object.class);
+        log.info("Promotion create: " + response.toString());
     }
 
     public Object getGameById(String gameId) {
@@ -115,9 +119,9 @@ public class GameClient {
         }
     }
 
-    public Object getGameByPromotionId(String promotionId){
+    public Object getItemByPromotionId(String promotionId){
         String url = UriComponentsBuilder.fromUriString(GAME_URL)
-                .path("/promotions/{id}")
+                .path("/promotion/{id}")
                 .buildAndExpand(promotionId)
                 .toUriString();
         try {
