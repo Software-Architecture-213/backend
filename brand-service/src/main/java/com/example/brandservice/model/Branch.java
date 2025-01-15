@@ -1,6 +1,5 @@
 package com.example.brandservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -8,7 +7,9 @@ import lombok.experimental.FieldDefaults;
 
 @Entity
 @Data
-@Table(name = "branches")
+@Table(name = "branches", indexes = {
+        @Index(name = "idx_name", columnList = "name")
+})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Branch {
     @Id
